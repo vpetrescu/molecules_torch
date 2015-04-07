@@ -40,7 +40,7 @@ noutputs = 1
 
 -- input dimensions
 nfeats = 1
-width = 32
+width = 759
 height = 1
 ninputs = nfeats*width*height
 
@@ -48,8 +48,8 @@ ninputs = nfeats*width*height
 nhiddens = ninputs / 2
 
 -- hidden units, filter sizes (for ConvNet only):
-nstates = {30,104,128}
-wfiltersize = 5
+nstates = {5,5,50}
+wfiltersize = 3
 hfiltersize = 1
 poolsize = 1
 --normkernel = image.gaussian1D(7)
@@ -82,12 +82,13 @@ elseif opt.model == 'convnet' then
       model = nn.Sequential()
 
       -- stage 1 : filter bank -> squashing -> L2 pooling -> normalization
-      model:add(nn.SpatialConvolution(nfeats, nstates[1], wfiltersize, hfiltersize))
+      model:add(nn.SpatialConvolution(nfeats, nstates[1], wfiltersize, hfiltersize, 3, 1))
       model:add(nn.Tanh())
   --    model:add(nn.SpatialLPPooling(nstates[1], 2,poolsize,poolsize,poolsize,poolsize))
    --   model:add(nn.SpatialSubtractiveNormalization(nstates[1], normkernel) )
-      nwidth =  width - wfiltersize + 1
-      nwidth = nwidth / poolsize
+     -- nwidth =  width - wfiltersize + 1
+     --- nwidth = nwidth / poolsize
+      nwidth = width / 3
 
       nheight =  height - hfiltersize + 1
       nheight = nheight / poolsize

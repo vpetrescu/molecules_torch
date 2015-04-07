@@ -28,6 +28,8 @@ function test()
 
    -- test over test data
    print('==> testing on test set:')
+   error_rmse = 0
+   error_mae = 0
    for t = 1,testData:size() do
       -- disp progress
       xlua.progress(t, testData:size())
@@ -41,10 +43,20 @@ function test()
       -- test sample
       local pred = model:forward(input)
       --confusion:add(pred, target)
-      print 'prediction and target'
-      print(target)
-      print(pred)
+      error_rmse = error_rmse + (target - pred) * (target - pred)
+      --if (target - pred > 0) then
+         -- factor =  target - pred
+     -- else
+        --  factor = pred - target
+      --end
+      --error_mae = error_mae + factor
    end
+   error_rmse = torch.sqrt(error_rmse / testData:size())
+   error_mae =  error_mae / testData:size()
+   print('error rmse')
+   print(error_rmse)
+   print('error mae')
+   print(error_mae)
 
    -- timing
    time = sys.clock() - time

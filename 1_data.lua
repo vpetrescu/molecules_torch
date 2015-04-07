@@ -13,7 +13,7 @@
 --
 -- Clement Farabet
 ----------------------------------------------------------------------
-
+require 'matio'
 require 'torch'   -- torch
 require 'image'   -- for color transforms
 require 'nn'      -- provides a normalization operator
@@ -57,42 +57,35 @@ print '==> downloading dataset'
 opt.size = 'small'
 if opt.size == 'small' then
    print '==> using reduced training data, for fast experiments'
-   trsize = 1000
-   tesize = 200
+   trsize = 1433*3
+   tesize = 1433
 end
 
 ----------------------------------------------------------------------
 print '==> loading dataset'
 
--- We load the dataset from disk, and re-arrange it to be compatible
--- with Torch's representation. Matlab uses a column-major representation,
--- Torch is row-major, so we just have to transpose the data.
-
--- Note: the data, in X, is 4-d: the 1st dim indexes the samples, the 2nd
--- dim indexes the color channels (RGB), and the last two dims index the
--- height and width of the samples.
 noutputs = 1
+a = require 'matio'
+loaded = a.load('trainData.mat') 
 trainData = {
-   data = torch.randn(trsize, 1, 1,32),
-   labels = torch.randn(trsize, noutputs),
+   data =  loaded.trainData.data, --torch.randn(trsize, 1, 1, 32),
+   labels = loaded.trainData.labels, --torch.randn(trsize, noutputs),
    size = function() return trsize end
 }
 
+print(trainData.data:size())
 -- If extra data is used, we load the extra file, and then
 -- concatenate the two training sets.
-
--- Torch's slicing syntax can be a little bit frightening. I've
--- provided a little tutorial on this, in this same directory:
--- A_slicing.lua
-
 -- Finally we load the test data.
 
+ltemp = a.load('testData.mat')
 testData = {
-   data = torch.randn(tesize, 1, 1,32),
-   labels = torch.randn(tesize, noutputs),
+   data = ltemp.testData.data, --torch.randn(tesize, 1, 1,32),
+   labels = ltemp.testData.labels, --torch.randn(tesize, noutputs),
    size = function() return tesize end
 }
 
+print(testData.data:size())
 ----------------------------------------------------------------------
 print '==> preprocessing data'
 
