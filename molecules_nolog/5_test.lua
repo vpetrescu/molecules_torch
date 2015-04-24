@@ -51,11 +51,11 @@ function test()
       all_errors[t] = torch.abs(target - pred)
      -- print(target)
    end
-   error_rmse = torch.sqrt(error_rmse / testData:size())
-   error_mae =  error_mae / testData:size()
+   error_rmse_test = torch.sqrt(error_rmse / testData:size())
+   error_mae_test =  error_mae / testData:size()
    print('error rmse')
-   print(error_rmse)
-   print(error_mae)
+   print(error_rmse_test)
+   print(errorG_mae_test)
    --gnuplot.plot(all_labels, all_errors, '+')
   -- print(all_errors)
 
@@ -87,7 +87,7 @@ function test()
    print(sorted_indices[tN])
    print(sorted_mae_errors[tN-1])
    print(sorted_indices[tN-1])
-   gnuplot.plot(all_labels, all_errors, '+')
+   --gnuplot.plot(all_labels, all_errors, '+')
    print(error_rmse)
    -- timing
    time = sys.clock() - time
@@ -100,7 +100,8 @@ function test()
       -- restore parameters
       parameters:copy(cachedparams)
    end
-   
+
+   return error_rmse_test, error_rmse
    -- next iteration:
    --confusion:zero()
 end

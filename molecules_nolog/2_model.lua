@@ -17,17 +17,6 @@ require 'torch'   -- torch
 require 'image'   -- for image transforms
 require 'nn'      -- provides all sorts of trainable modules/layers
 require 'InputDropout'
-----------------------------------------------------------------------
--- parse command line arguments
-if not opt then
-   print '==> processing options'
-   cmd = torch.CmdLine()
-   cmd:text()
-   cmd:text('Options:')
-   cmd:option('-model', 'convnet', 'type of model to construct: linear | mlp | convnet')
-   cmd:text()
-   opt = cmd:parse(arg or {})
-end
 
 ----------------------------------------------------------------------
 print '==> define parameters'
@@ -37,7 +26,7 @@ noutputs = 1
 
 -- input dimensions
 nfeats = 1
-width = trainData.size(4)
+width = trainData.data:size(4)
 height = 1
 ninputs = nfeats*width*height
 
@@ -50,11 +39,14 @@ wfiltersize = 20
 hfiltersize = 1
 poolsize = 1
 
-nhiddens1 = 100
-nhiddens2 = 300
-activation_type = 'Tanh'
+nhiddens1 = opt.nhiddens1
+nhiddens2 = opt.nhiddens2
+activation_type = opt.activation_type
 ----------------------------------------------------------------------
 print '==> construct model'
+print(nhiddens1)
+print(nhiddens2)
+print(ninputs)
 
 opt.model = 'mlp'
 if opt.model == 'mlp' then

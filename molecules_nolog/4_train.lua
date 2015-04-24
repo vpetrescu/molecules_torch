@@ -41,8 +41,8 @@ if not opt then
 end
 
 ----------------------------------------------------------------------
-opt.batchSize = 1
-opt.learningRate = 1e-6--1e-5
+--opt.batchSize = 1
+--opt.learningRate = 1e-6--1e-5
 ----------------------------------------------------------------------
 print '==> defining some tools'
 
@@ -106,10 +106,10 @@ end
 ----------------------------------------------------------------------
 print '==> defining training procedure'
 
-function train()
+function train(epoch)
 
    -- epoch tracker
-   epoch = epoch or 1
+   --epoch = epoch 
 
    -- local vars
    local time = sys.clock()

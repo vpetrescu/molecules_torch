@@ -11,22 +11,22 @@ matio = require 'matio'
 print '==> loading dataset'
 
 noutputs = 1
-tmp_train = matio.load('../data/train_desc_SemiSortedColoumb_fold_5.mat') 
-tr_size = tmp_train.trainData.data:size(1)
+tmp_train = matio.load('../../data/train_desc_SemiSortedColoumb_fold_5.mat') 
+trsize = tmp_train.trainData.data:size(1)
 trainData = {
    data =  tmp_train.trainData.data,
    labels = tmp_train.trainData.labels,
-   size = function() return tr_size end
+   size = function() return trsize end
 }
 
 print(trainData.data:size())
 
-tmp_test = matio.load('../data/test_desc_SemiSortedColoumb_fold_5.mat')
-te_size = tmp_test.testData.data:size(1)
+tmp_test = matio.load('../../data/test_desc_SemiSortedColoumb_fold_5.mat')
+tesize = tmp_test.testData.data:size(1)
 testData = {
    data = tmp_test.testData.data,
    labels =  tmp_test.testData.labels,
-   size = function() return te_size end
+   size = function() return tesize end
 }
 
 print(testData.data:size())
@@ -49,7 +49,7 @@ testData.data = testData.data:float()
 -- using these values.
 print '==> preprocessing data:'
 
-preprocessing_type = 'none' -- N(0,1), [0,1], global N(0,1), global [0,1]
+preprocessing_type = opt.preprocessing_type -- N(0,1), [0,1], global N(0,1), global [0,1]
               --  local standardization, local normalization
               --  global standardization, global normalization
 
@@ -102,7 +102,7 @@ elseif preprocessing_type == 'global-standardization' then
    mean_global = trainData.data[{ {},1,1,{} }]:mean()
    std_global = trainData.data[{ {},1,1,{} }]:std()
    -- train data standardization
-   trainData.data[{ {},1,1,{} }]:add(-mean_global])
+   trainData.data[{ {},1,1,{} }]:add(-mean_global)
    trainData.data[{ {},1,1,{} }]:div(std_global)
    -- test data standardization
    testData.data[{ {},1,1,{} }]:add(-mean_global)
@@ -110,24 +110,3 @@ elseif preprocessing_type == 'global-standardization' then
 end
 
 
-----------------------------------------------------------------------
-print '==> verify statistics'
-
--- It's always good practice to verify that data is properly
--- normalized.
-
-for i,channel in ipairs(channels) do
-   trainMean = trainData.data[{ {},i }]:mean()
-   trainStd = trainData.data[{ {},i }]:std()
-
-   testMean = testData.data[{ {},i }]:mean()
-   testStd = testData.data[{ {},i }]:std()
-
-   print('training data, '..channel..'-channel, mean: ' .. trainMean)
-   print('training data, '..channel..'-channel, standard deviation: ' .. trainStd)
-
-   print('test data, '..channel..'-channel, mean: ' .. testMean)
-   print('test data, '..channel..'-channel, standard deviation: ' .. testStd)
-end
-
-----------------------------------------------------------------------
