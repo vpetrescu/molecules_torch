@@ -17,7 +17,7 @@ require 'torch'   -- torch
 require 'image'   -- for image transforms
 require 'nn'      -- provides all sorts of trainable modules/layers
 require 'InputDropout'
-
+require 'AtomLookupTable'
 ----------------------------------------------------------------------
 print '==> define parameters'
 
@@ -26,7 +26,7 @@ noutputs = 1
 
 -- input dimensions
 nfeats = 1
-width = trainData.data:size(4)
+width = trainData.data:size(2)
 height = 1
 ninputs = nfeats*width*height
 
@@ -48,7 +48,7 @@ print(nhiddens1)
 print(nhiddens2)
 print(ninputs)
 
-nbr_input_size = 23*12 -- 23 * 24/2
+nbr_input_size = 23*11*3 -- 23 * 24/2
 nbr_atom_types = 6
 descriptor_length = 7
 
@@ -71,11 +71,11 @@ if opt.model == 'mlp' then
 
     model:add(nn.Tanh())
     nhiddens = {100,200}
-    model:add(nn.Linear(nbr_input_size, nhiddens[1]))
+    model:add(nn.Linear(nbr_input_size, nhiddens1))
     model:add(nn.Tanh())
-    model:add(nn.Linear(nhiddnes[1], nhiddens[2]))
+    model:add(nn.Linear(nhiddens1, nhiddens2))
     model:add(nn.Tanh())
-    model:add(nn.Linear(nhiddens[2], 1))
+    model:add(nn.Linear(nhiddens2, 1))
 else
 
    error('unknown -model')

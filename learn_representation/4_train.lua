@@ -12,7 +12,7 @@
 --
 -- Clement Farabet
 ----------------------------------------------------------------------
-
+require 'input_transform_for_learning'
 require 'torch'   -- torch
 require 'xlua'    -- xlua provides useful tools, like progress bars
 require 'optim'   -- an optimization package, for online and batch methods
@@ -129,15 +129,20 @@ function train(epoch)
 
       -- create mini batch
       local inputs = {}
+      local distances = {}
       local targets = {}
       for i = t,math.min(t+opt.batchSize-1,trainData:size()) do
          -- load new sample
-         local input = trainData.data[shuffle[i]]
+         -- input contains triplets of the form (Zi, Zj, Rij)
+         --  and needs to be transformed in pairs of indices
+         local inputpairs, distance = transform_input_pairs(trainData.data[shuffle[i]])
          local target = trainData.labels[shuffle[i]]
-         if opt.type == 'double' then input = input:double()
-         elseif opt.type == 'cuda' then input = input:cuda() end
-         table.insert(inputs, input)
+         --if opt.type == 'double' then input = input:double()
+         -- elseif opt.type == 'cuda' then input = input:cuda() end
+         local inputpairs, distance = (input)
+         table.insert(inputs, inputpairs)
          table.insert(targets, target)
+         table.insert(distances, distance)
       end
 
       -- create closure to evaluate f(X) and df/dX

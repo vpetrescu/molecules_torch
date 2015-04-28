@@ -11,7 +11,7 @@ matio = require 'matio'
 print '==> loading dataset'
 
 noutputs = 1
-tmp_train = matio.load('../../data/train_desc_SemiSortedColoumb_fold_5.mat') 
+tmp_train = matio.load('../../data/train_desc_Triplets_fold_5.mat') 
 trsize = tmp_train.trainData.data:size(1)
 trainData = {
    data =  tmp_train.trainData.data,
@@ -21,7 +21,7 @@ trainData = {
 
 print(trainData.data:size())
 
-tmp_test = matio.load('../../data/test_desc_SemiSortedColoumb_fold_5.mat')
+tmp_test = matio.load('../../data/test_desc_Triplets_fold_5.mat')
 tesize = tmp_test.testData.data:size(1)
 testData = {
    data = tmp_test.testData.data,
@@ -56,57 +56,57 @@ preprocessing_type = opt.preprocessing_type -- N(0,1), [0,1], global N(0,1), glo
 if preprocessing_type == 'none' then
     print 'No preprocessing'
 elseif preprocessing_type == 'local-normalization' then
-    local N = trainData.data:size(4)
+    local N = trainData.data:size(2)
     local max = {}
     for i = 1,N do
         -- normalize each feature globally:
-        max[i] = trainData.data[{ {},1,1, i}]:max()
+        max[i] = trainData.data[{ {}, i}]:max()
         if max[i] ~= 0 then
-            trainData.data[{ {},1,1,i }]:div(max[i])
+            trainData.data[{ {},i }]:div(max[i])
         end
     end
-    for i =1,testData.data:size(4) do
+    for i =1,testData.data:size(2) do
        if max[i] ~= 0 then
-          testData.data[{{},1,1,i}]:div(max[i])
+          testData.data[{{},i}]:div(max[i])
        end
     end
 
 elseif preprocessing_type == 'local-standardization' then
-    local N = trainData.data:size(4)
+    local N = trainData.data:size(2)
     local mean = {}
     local std = {}
     for i = 1,N do
         -- stadardize each feature globally:
-        mean[i] = trainData.data[{ {},1,1, i}]:mean()
-        std[i] = trainData.data[{ {},1,1,i }]:std()
-        trainData.data[{ {},1,1,i }]:add(-mean[i])
+        mean[i] = trainData.data[{ {}, i}]:mean()
+        std[i] = trainData.data[{ {},i }]:std()
+        trainData.data[{ {},i }]:add(-mean[i])
         if std[i] ~= 0 then
-            trainData.data[{ {},1,1,i }]:div(std[i])
+            trainData.data[{ {},i }]:div(std[i])
         end
     end
-    for i =1,testData.data:size(4) do
-       testData.data[{{},1,1,i}]:add(-mean[i]) 
+    for i =1,testData.data:size(2) do
+       testData.data[{{},i}]:add(-mean[i]) 
        if std[i] ~= 0 then
-          testData.data[{{},1,1,i}]:div(std[i])
+          testData.data[{{},i}]:div(std[i])
        end
     end
 
 elseif preprocessing_type == 'global-normalization' then
-   max_global = trainData.data[{ {},1,1,{} }]:max()
+   max_global = trainData.data[{ {},{} }]:max()
    -- train data normalization
-   trainData.data[{ {},1,1,{} }]:div(max_global)
+   trainData.data[{ {},{} }]:div(max_global)
    -- test data normalization
-   testData.data[{ {},1,1,{} }]:div(max_global)
+   testData.data[{ {},{} }]:div(max_global)
 
 elseif preprocessing_type == 'global-standardization' then
-   mean_global = trainData.data[{ {},1,1,{} }]:mean()
-   std_global = trainData.data[{ {},1,1,{} }]:std()
+   mean_global = trainData.data[{ {},{} }]:mean()
+   std_global = trainData.data[{ {},{} }]:std()
    -- train data standardization
-   trainData.data[{ {},1,1,{} }]:add(-mean_global)
-   trainData.data[{ {},1,1,{} }]:div(std_global)
+   trainData.data[{ {},{} }]:add(-mean_global)
+   trainData.data[{ {},{} }]:div(std_global)
    -- test data standardization
-   testData.data[{ {},1,1,{} }]:add(-mean_global)
-   testData.data[{ {},1,1,{} }]:div(std_global)
+   testData.data[{ {},{} }]:add(-mean_global)
+   testData.data[{ {},{} }]:div(std_global)
 end
 
 

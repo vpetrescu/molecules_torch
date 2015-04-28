@@ -15,17 +15,26 @@ function  transform_input_pairs(triplets_array)
         b is {3,30,300}
 --]]
 -- Assumes the array is column oriented
-N = #triplets_array
-if N%3 ~= 0 then
+N = triplets_array:size(1)
+if N % 3 ~= 0 then
     print("Input size not div by 3")
     error()
 end
 newN = N / 3;
 output_pairs = {}
 output_distances = {}
+charge_to_index = {}
+charge_to_index[1] = 1
+charge_to_index[6] = 2
+charge_to_index[7] = 3
+charge_to_index[8] = 4
+charge_to_index[16] = 5
+charge_to_index[0] = 6
+
 for i=1,newN do
     index = 3* (i - 1) + 1
-    output_pairs[i] = {triplets_array[index], triplets_array[index+1]}
+    output_pairs[i] = {charge_to_index[triplets_array[index]], 
+                       charge_to_index[triplets_array[index+1]]}
     output_distances[i] = triplets_array[index+2]
 end
 
