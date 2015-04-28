@@ -32,11 +32,7 @@ function AtomLookupTable:__init(nIndex, ...)
    self.accUpdate = false
 
    self.nBackward = 0
-   print('weight is before ')
-   print(self.weight)
    self:reset()
-   print('weight is after ')
-   print(self.weight)
 end
 
 function AtomLookupTable:accUpdateOnly()
@@ -53,11 +49,6 @@ function AtomLookupTable:reset(stdv)
    else
       self.weight:normal(0, stdv)
    end
-   self.weight:fill(1)
-   self.weight:select(1,2):fill(2)
-   self.weight:select(1,3):fill(3)
-   self.weight:select(1,4):fill(4)
-   self.weight:select(1,5):fill(5)
 end
 
 function AtomLookupTable:updateOutput(input)

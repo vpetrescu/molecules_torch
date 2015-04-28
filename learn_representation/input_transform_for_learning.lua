@@ -21,7 +21,7 @@ if N % 3 ~= 0 then
     error()
 end
 newN = N / 3;
-output_pairs = {}
+output_pairs = torch.Tensor(newN, 2)
 output_distances = {}
 charge_to_index = {}
 charge_to_index[1] = 1
@@ -33,8 +33,8 @@ charge_to_index[0] = 6
 
 for i=1,newN do
     index = 3* (i - 1) + 1
-    output_pairs[i] = {charge_to_index[triplets_array[index]], 
-                       charge_to_index[triplets_array[index+1]]}
+    output_pairs[{i,{1,2}}] = torch.Tensor({charge_to_index[triplets_array[index]], 
+                       charge_to_index[triplets_array[index+1]]})
     output_distances[i] = triplets_array[index+2]
 end
 

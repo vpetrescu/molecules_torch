@@ -139,7 +139,6 @@ function train(epoch)
          local target = trainData.labels[shuffle[i]]
          --if opt.type == 'double' then input = input:double()
          -- elseif opt.type == 'cuda' then input = input:cuda() end
-         local inputpairs, distance = (input)
          table.insert(inputs, inputpairs)
          table.insert(targets, target)
          table.insert(distances, distance)
@@ -161,6 +160,8 @@ function train(epoch)
                        -- evaluate function for complete mini batch
                        for i = 1,#inputs do
                           -- estimate f
+                          print(inputs[i])
+                          print(type(inputs[i]))
                           local output = model:forward(inputs[i])
                           local err = criterion:forward(output, targets[i])
                           f = f + err

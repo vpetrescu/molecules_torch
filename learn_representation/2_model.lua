@@ -69,6 +69,8 @@ if opt.model == 'mlp' then
     model:add(p)
     model:add(nn.JoinTable(1))
 
+    model:add(nn.Cmul(nbr_input_size))
+
     model:add(nn.Tanh())
     nhiddens = {100,200}
     model:add(nn.Linear(nbr_input_size, nhiddens1))
