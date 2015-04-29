@@ -21,8 +21,6 @@ if N % 3 ~= 0 then
     error()
 end
 newN = N / 3;
-print('input size is ')
-print(newN)
 output_pairs = torch.Tensor(newN, 2)
 output_distances = torch.Tensor(newN)
 charge_to_index = {}

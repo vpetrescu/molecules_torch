@@ -161,17 +161,13 @@ function train(epoch)
                        for i = 1,#inputs do
                           -- estimate f
                         --  print(inputs[i])
-                          print('model forward start\n')
                           -- Set the scaling factors to CMul
                           model:get(5).weight = distances[i]
                           local output = model:forward(inputs[i])
-                          print('model forward end')
                           local err = criterion:forward(output, targets[i])
                           f = f + err
                           -- estimate df/dW
-                          print('criterion forward end')
                           local df_do = criterion:backward(output, targets[i])
-                          print('model barckward end')
                           model:backward(inputs[i], df_do)
 
                           -- update confusion
