@@ -49,6 +49,6 @@ require 'AtomLookupTable'
    lerr = criterion:forward(loutput, ltarget)
    ldf_fo = criterion:backward(loutput, ltarget)
 
-   model:backward(input, ldf_do)
+   model:backward(input, ldf_fo)
 
 
