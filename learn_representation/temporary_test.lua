@@ -39,12 +39,14 @@ require 'AtomLookupTable'
    inputtable[2] = input
    criterion = nn.MSECriterion()
    criterion.sizeAverage = false
+   print(input)
    print(type(input))
 
    model:training()
    parameters, gradParameters = model:getParameters()
    gradParameters:zero()
    ltarget = torch.Tensor({100})
+   type(input)
    loutput = model:forward(input)
    lerr = criterion:forward(loutput, ltarget)
    ldf_fo = criterion:backward(loutput, ltarget)

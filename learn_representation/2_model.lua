@@ -48,7 +48,7 @@ print(nhiddens1)
 print(nhiddens2)
 print(ninputs)
 
-nbr_input_size = 23*11*3 -- 23 * 24/2
+nbr_input_size = 253 -- 23 * 24/2
 nbr_atom_types = 6
 descriptor_length = 7
 
@@ -69,10 +69,9 @@ if opt.model == 'mlp' then
     model:add(p)
     model:add(nn.JoinTable(1))
 
-    model:add(nn.Cmul(nbr_input_size))
+    model:add(nn.CMul(nbr_input_size))
 
     model:add(nn.Tanh())
-    nhiddens = {100,200}
     model:add(nn.Linear(nbr_input_size, nhiddens1))
     model:add(nn.Tanh())
     model:add(nn.Linear(nhiddens1, nhiddens2))
