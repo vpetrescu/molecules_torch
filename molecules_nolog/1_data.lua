@@ -11,7 +11,7 @@ matio = require 'matio'
 print '==> loading dataset'
 
 noutputs = 1
-tmp_train = matio.load('../../data/train_desc_SemiSortedColoumb_fold_5.mat') 
+tmp_train = matio.load('../../data/train_desc_BoB-20_fold_5.mat') 
 trsize = tmp_train.trainData.data:size(1)
 trainData = {
    data =  tmp_train.trainData.data,
@@ -21,7 +21,7 @@ trainData = {
 
 print(trainData.data:size())
 
-tmp_test = matio.load('../../data/test_desc_SemiSortedColoumb_fold_5.mat')
+tmp_test = matio.load('../../data/test_desc_BoB-20_fold_5.mat')
 tesize = tmp_test.testData.data:size(1)
 testData = {
    data = tmp_test.testData.data,

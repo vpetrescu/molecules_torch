@@ -14,7 +14,7 @@
 -- Clement Farabet
 ----------------------------------------------------------------------
 require 'torch'
-
+require 'math'
 function run_neural_net(nhiddens1, nhiddens2, learning_rate, preprocessing_type, activation_type)
 ----------------------------------------------------------------------
 print '==> processing options'
@@ -23,7 +23,7 @@ opt.seed = 1
 opt.threads = 2
 opt.save = 'results' -- 'subdirectory to save/log experiments in')
 opt.optimization = 'SGD' -- 'optimization method: SGD | ASGD | CG | LBFGS')
-opt.learningRate = 1e-3 --'learning rate at t=0')
+opt.learningRate = learning_rate --'learning rate at t=0')
 opt.batchSize = 1 -- 'mini-batch size (1 = pure stochastic)')
 opt.weightDecay = 0 -- 'weight decay (SGD only)')
 opt.momentum = 0 -- 'momentum (SGD only)')
@@ -32,7 +32,7 @@ opt.momentum = 0 -- 'momentum (SGD only)')
 opt.type = 'double' -- | float | cuda')
 opt.nhiddens1 = nhiddens1
 opt.nhiddens2 = nhiddens2
-opt.activation_type = 'Tanh'
+opt.activation_type = activation_type
 opt.preprocessing_type = preprocessing_type
 -- nb of threads and fixed seed (for repeatable experiments)
 if opt.type == 'float' then
@@ -58,17 +58,25 @@ dofile '5_test.lua'
 ----------------------------------------------------------------------
 print '==> training!'
 old_rmse = 1000
-for i= 1,1000 do
-   train(i)
+for xi= 1,80 do
+   train(xi)
    test_rmse, train_rmse = test()
-   if i > 20 and  train_rmse > 200 then
+--[[   if math.isnan(test_rmse) or math.isnan(train_rmse) then
+       break
+   endi--]]
+   if xi > 10 and  train_rmse > 200 then
        break
    end
-   if old_rmse  + 200 < train_rmse then
-     break
+   if xi > 200 and  train_rmse > 30 then
+       break
    end
+  --[[ if old_rmse  + 100 < train_rmse then
+     break
+   end]]
    old_rmse = train_rmse
 end
-
-return test_rmse
+if test_rmse > 250 then
+    return 10
+end
+return 250 - test_rmse
 end

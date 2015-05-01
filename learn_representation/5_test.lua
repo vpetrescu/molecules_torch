@@ -8,7 +8,7 @@ require 'gnuplot'
 require 'torch'   -- torch
 require 'xlua'    -- xlua provides useful tools, like progress bars
 require 'optim'   -- an optimization package, for online and batch methods
-
+require 'input_transform_for_learning'
 ----------------------------------------------------------------------
 print '==> defining test procedure'
 
@@ -26,6 +26,7 @@ function test()
    -- set model to evaluate mode (for modules that differ in training and testing, like Dropout)
    model:evaluate()
 
+   print(model:get(1).weight)
    -- test over test data
    print('==> testing on test set:')
    error_rmse = 0
@@ -37,13 +38,15 @@ function test()
       --xlua.progress(t, testData:size())
 
       -- get new sample
-      local input = testData.data[t]
-      if opt.type == 'double' then input = input:double()
-      elseif opt.type == 'cuda' then input = input:cuda() end
+     --local inputpairs, distance = transform_input_pairs(trainData.data[shuffle[i]])
+      local inputpairs, distance = transform_input_pairs(testData.data[t])
+      --if opt.type == 'double' then input = input:double()
+     -- elseif opt.type == 'cuda' then input = input:cuda() end
       local target = testData.labels[t]
 
       -- test sample
-      local pred = model:forward(input)
+      model:get(5).weight = distance
+      local pred = model:forward(inputpairs)
       error_rmse = error_rmse + (target- pred) * (target - pred)
       factor =  torch.abs(target - pred)
       error_mae = error_mae + factor
@@ -55,7 +58,7 @@ function test()
    error_mae_test =  error_mae / testData:size()
    print('error rmse')
    print(error_rmse_test)
-   print(errorG_mae_test)
+   print(error_mae_test)
    --gnuplot.plot(all_labels, all_errors, '+')
   -- print(all_errors)
 
@@ -67,12 +70,14 @@ function test()
       xlua.progress(t, trainData:size())
 
       -- get new sample
-      local input = trainData.data[t]
-      if opt.type == 'double' then input = input:double()
-      elseif opt.type == 'cuda' then input = input:cuda() end
-      local target = trainData.labels[t]
+      local inputpairs, distance = transform_input_pairs(trainData.data[t])
+     -- if opt.type == 'double' then input = input:double()
+     -- elseif opt.type == 'cuda' then input = input:cuda() end
+     -- local target = trainData.labels[t]
       -- test sample
-      local pred = model:forward(input)
+      model:get(5).weight = distance
+      local pred = model:forward(inputpairs)
+      local target = trainData.labels[t]
       error_rmse = error_rmse + (target - pred) * (target - pred)
       factor =  torch.abs(target - pred)
       error_mae = error_mae + factor

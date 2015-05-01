@@ -55,7 +55,7 @@ function test()
    error_mae_test =  error_mae / testData:size()
    print('error rmse')
    print(error_rmse_test)
-   print(errorG_mae_test)
+   print(error_mae_test)
    --gnuplot.plot(all_labels, all_errors, '+')
   -- print(all_errors)
 

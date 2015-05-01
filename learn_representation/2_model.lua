@@ -16,7 +16,6 @@
 require 'torch'   -- torch
 require 'image'   -- for image transforms
 require 'nn'      -- provides all sorts of trainable modules/layers
-require 'InputDropout'
 require 'AtomLookupTable'
 ----------------------------------------------------------------------
 print '==> define parameters'
