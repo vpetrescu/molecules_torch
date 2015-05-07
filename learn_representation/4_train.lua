@@ -32,7 +32,7 @@ if not opt then
    cmd:option('-optimization', 'SGD', 'optimization method: SGD | ASGD | CG | LBFGS')
    cmd:option('-learningRate', 1e-3, 'learning rate at t=0')
    cmd:option('-batchSize', 500, 'mini-batch size (1 = pure stochastic)')
-   cmd:option('-weightDecay', 0.0005, 'weight decay (SGD only)')
+   cmd:option('-weightDecay', 0.0000, 'weight decay (SGD only)')
    cmd:option('-momentum', 0.0, 'momentum (SGD only)')
    cmd:option('-t0', 1, 'start averaging at t0 (ASGD only), in nb of epochs')
    cmd:option('-maxIter', 2, 'maximum nb of iterations for CG and LBFGS')

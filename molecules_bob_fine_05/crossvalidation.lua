@@ -13,6 +13,7 @@
 --
 -- Clement Farabet
 ----------------------------------------------------------------------
+require '1_data'
 require 'torch'
 require 'math'
 function run_neural_net(nhiddens1, nhiddens2, learning_rate, preprocessing_type, activation_type)
@@ -49,34 +50,24 @@ torch.manualSeed(opt.seed)
 ----------------------------------------------------------------------
 print '==> executing all'
 
-dofile '1_data.lua'
-dofile '2_model.lua'
-dofile '3_loss.lua'
-dofile '4_train.lua'
-dofile '5_test.lua'
 
 ----------------------------------------------------------------------
 print '==> training!'
 old_rmse = 1000
-for xi= 1,300 do
-   train(xi)
-   test_rmse, train_rmse = test()
---[[   if math.isnan(test_rmse) or math.isnan(train_rmse) then
-       break
-   end --]]
-   if xi > 20 and  train_rmse > 200 then
-       break
-   end
-   if xi > 200 and  train_rmse > 30 then
-       break
-   end
-   if old_rmse  + 100 < train_rmse then
-     break
-   end
-   old_rmse = train_rmse
+
+-- the bucket that will be left over
+test_bucket = 5
+data_filename = 'desc_BoB-20-fine05'
+for fold_nbr=1,4 do
+    load_molecules_data(data_filename, fold_nbr, test_bucket)
+    dofile '2_model.lua'
+    dofile '3_loss.lua'
+    dofile '4_train.lua'
+    dofile '5_test.lua'
+    for epoch_id = 1,900 do
+        train(epoch_id, fold_nbr)
+        test_rmse, train_rmse = test()
+    end
 end
-if test_rmse > 250 then
-    test_rmse = 250
-end
-return 250 - test_rmse
+
 end

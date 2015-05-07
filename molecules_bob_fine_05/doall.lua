@@ -58,7 +58,7 @@ dofile '5_test.lua'
 ----------------------------------------------------------------------
 print '==> training!'
 old_rmse = 1000
-for xi= 1,300 do
+for xi= 1,900 do
    train(xi)
    test_rmse, train_rmse = test()
 --[[   if math.isnan(test_rmse) or math.isnan(train_rmse) then

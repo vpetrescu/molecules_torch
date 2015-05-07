@@ -92,7 +92,7 @@ function test()
    print(sorted_indices[tN])
    print(sorted_mae_errors[tN-1])
    print(sorted_indices[tN-1])
-   --gnuplot.plot(all_labels, all_errors, '+')
+   gnuplot.plot(all_labels, all_errors, '+')
    print(error_rmse)
    -- timing
    time = sys.clock() - time
