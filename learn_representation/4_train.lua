@@ -162,7 +162,7 @@ function train(epoch)
                           -- estimate f
                         --  print(inputs[i])
                           -- Set the scaling factors to CMul
-                          model:get(5).weight = distances[i]
+                          model:get(5).scalable_weight = distances[i]
                           local output = model:forward(inputs[i])
                           local err = criterion:forward(output, targets[i])
                           f = f + err

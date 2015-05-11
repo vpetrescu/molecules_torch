@@ -17,6 +17,7 @@ require 'torch'   -- torch
 require 'image'   -- for image transforms
 require 'nn'      -- provides all sorts of trainable modules/layers
 require 'AtomLookupTable'
+require 'ConstantMul'
 ----------------------------------------------------------------------
 print '==> define parameters'
 
@@ -68,7 +69,7 @@ if opt.model == 'mlp' then
     model:add(p)
     model:add(nn.JoinTable(1))
 
-    model:add(nn.CMul(nbr_input_size))
+    model:add(nn.ConstantMul(nbr_input_size))
 
     model:add(nn.Linear(nbr_input_size, nhiddens1))
     model:add(nn.Tanh())

@@ -45,7 +45,7 @@ function test()
       local target = testData.labels[t]
 
       -- test sample
-      model:get(5).weight = distance
+      model:get(5).scalable_weight = distance
       local pred = model:forward(inputpairs)
       error_rmse = error_rmse + (target- pred) * (target - pred)
       factor =  torch.abs(target - pred)

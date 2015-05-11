@@ -16,7 +16,8 @@ require 'AtomLookupTable'
   p = nn.ParallelTable()
   for i = 1, n_replications do
     p2 = nn.Sequential()
-    p2:add(nn.Euclidean(input_dim, n_bumps))
+    p2:add(nn.WeightedEuclidean(input_dim, n_bumps))
+    -- add -1 here
     p2:add(nn.CMul(n_bumps))
     p2:add(nn.Exp())
     ndim=2
