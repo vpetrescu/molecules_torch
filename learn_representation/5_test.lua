@@ -75,7 +75,7 @@ function test()
      -- elseif opt.type == 'cuda' then input = input:cuda() end
      -- local target = trainData.labels[t]
       -- test sample
-      model:get(5).weight = distance
+      model:get(5).scalable_weight = distance
       local pred = model:forward(inputpairs)
       local target = trainData.labels[t]
       error_rmse = error_rmse + (target - pred) * (target - pred)
