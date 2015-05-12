@@ -1,17 +1,17 @@
 
 special_name = 'special';
-current_method = 'Bob-20-80values';
+current_method = 'BoB-20';
 
-method = {'Coloumb', ...
-          'SortedColoumb', ...
-          'RandomSortedColoumb',...
-          'BoB-20',...
-          'BoB-20-noise',...
-          'Bob-20-fine05',...
-          'Bob-20-80values',...
-          'SemiSortedColoumb',...
-          'Triplets',...
-          'SemiSortedTriples'};
+method = {'Coloumb', ... % Original Coloumb matrix
+          'SortedColoumb', ... % Coloumb matrix sorted by row norm
+          'RandomSortedColoumb',... % 10x Sorted Coloumb by noise
+          'BoB-20',... % Bob with every distance binned into 20 buckets
+          'BoB-20-noise',... % same as above but with small noise added to the distances
+          'Bob-20-fine05',... % same as Bob-20 but with 40 buckets
+          'Bob-20-80values',... % same as Bob-20 but with distance bins with 0 elements removed
+          'SemiSortedColoumb',... % BoB type of descritptor
+          'Triplets',... % {{Zi,Zj,1/Rij}, {...},..} sorted according to Coloumb
+          'SemiSortedTriples'}; % sorted according to BoB
       
 data = load('qm7.mat');      
 for fold_nbr=1:5
@@ -25,8 +25,8 @@ for fold_nbr=1:5
     
     out_data = []; out_labels = [];
     if strcmp(current_method, 'BoB-20')
-        [trainData.data, trainData.labels] = compute_descriptor_bob20(trindices, data);
-        [testData.data, testData.labels] = compute_descriptor_bob20(teindices, data);
+        [trainData.data, trainData.labels] = compute_descriptor_bob20_map(trindices, data);
+        [testData.data, testData.labels] = compute_descriptor_bob20_map(teindices, data);
     elseif strcmp(current_method, 'BoB-20-noise')
         [trainData.data, trainData.labels] = compute_descriptor_bob20_noise(trindices, data);
         [testData.data, testData.labels] = compute_descriptor_bob20_noise(teindices, data);
@@ -73,9 +73,9 @@ for fold_nbr=1:5
             
     end
     
-    filename_train = sprintf('train_desc_%s_fold_%d.mat', ...
+    filename_train = sprintf('../../data/train_desc_%s_fold_%d.mat', ...
                             current_method,fold_nbr);
-    filename_test = sprintf('test_desc_%s_fold_%d.mat', ...
+    filename_test = sprintf('../../data/test_desc_%s_fold_%d.mat', ...
                             current_method,fold_nbr);
     
     save(filename_train, 'trainData');

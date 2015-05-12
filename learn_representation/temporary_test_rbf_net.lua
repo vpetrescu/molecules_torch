@@ -18,15 +18,17 @@ require 'AtomLookupTable'
     p2 = nn.Sequential()
     p2:add(nn.WeightedEuclidean(input_dim, n_bumps))
     -- add -1 here
-    p2:add(nn.CMul(n_bumps))
+    p2:add(nn.Square())
+    p2:add(nn.MulConstant(-1))
     p2:add(nn.Exp())
     ndim=2
-    p2:add(nn.Sum(ndim))
+    p2:add(nn.Linear(n_bumps,1))
     p:add(p2)
   end
   model:add(p)
   model:add(nn.JoinTable(1))
-  model:add(nn.Sum(1))
+  model:add(nn.Transpose({1,2}))
+  model:add(nn.Linear(n_replications, 1))
   print(model:forward(x))
 --  print(type(model.output))
 --[[ p = nn.ParallelTable()

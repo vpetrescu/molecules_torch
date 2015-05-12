@@ -33,7 +33,7 @@ if not opt then
    cmd:option('-learningRate', 1e-3, 'learning rate at t=0')
    cmd:option('-batchSize', 500, 'mini-batch size (1 = pure stochastic)')
    cmd:option('-weightDecay', 0.0, 'weight decay (SGD only)') --0.0005
-   cmd:option('-momentum', 0.005, 'momentum (SGD only)')
+   cmd:option('-momentum', 0.9, 'momentum (SGD only)')
    cmd:option('-t0', 1, 'start averaging at t0 (ASGD only), in nb of epochs')
    cmd:option('-maxIter', 2, 'maximum nb of iterations for CG and LBFGS')
    cmd:text()
@@ -41,7 +41,6 @@ if not opt then
 end
 
 ----------------------------------------------------------------------
-opt.batchSize = 1
 --opt.learningRate = 1e-6--1e-5
 ----------------------------------------------------------------------
 print '==> defining some tools'

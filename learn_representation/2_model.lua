@@ -50,7 +50,7 @@ print(ninputs)
 
 nbr_input_size = 253 -- 23 * 24/2
 nbr_atom_types = 6
-descriptor_length = 3
+descriptor_length = 4
 
 opt.model = 'mlp'
 if opt.model == 'mlp' then
@@ -72,7 +72,7 @@ if opt.model == 'mlp' then
     model:add(nn.ConstantMul(nbr_input_size))
 
     model:add(nn.Linear(nbr_input_size, nhiddens1))
-    model:add(nn.Tanh())
+    model:add(nn.ReLU())
     model:add(nn.Linear(nhiddens1, 1))
 --    model:add(nn.Linear(nhiddens1, nhiddens2))
 --    model:add(nn.Tanh())

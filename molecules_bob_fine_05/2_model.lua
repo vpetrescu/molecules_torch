@@ -21,7 +21,7 @@ require 'nn'      -- provides all sorts of trainable modules/layers
 print '==> define parameters'
 
 -- 10-class problem
-noutputs = 1
+noutputs = trainData.labels:size(2)
 
 -- input dimensions
 nfeats = 1
@@ -56,26 +56,26 @@ if opt.model == 'mlp' then
 --   model:add(nn.InputDropout(0))
    model:add(nn.Linear(ninputs,nhiddens1))
    if (activation_type == 'Tanh') then
-       model:add(nn.Tanh())
+      -- model:add(nn.Tanh())
    elseif (activation_type =='ReLU') then
-       model:add(nn.ReLU())
+      -- model:add(nn.ReLU())
    else
-       model:add(nn.HardTanh())
+      -- model:add(nn.HardTanh())
    end
-
-   model:add(nn.Linear(nhiddens1, 1))
-   --[[model:add(nn.ReLU())
+model:add(nn.ReLU())
+  -- model:add(nn.Linear(nhiddens1, noutputs))
    model:add(nn.Linear(nhiddens1, nhiddens2))
    if (activation_type == 'Tanh') then
-       model:add(nn:Tanh())
+      -- model:add(nn:Tanh())
   elseif (activation_type == 'ReLU') then
-      model:add(nn:ReLU())
+     -- model:add(nn:ReLU())
   else
-    model:add(nn.HardTanh())
+   -- model:add(nn.HardTanh())
   end
+  model:add(nn.Tanh())
    --model:add(nn.Dropout(0.5))
    model:add(nn.Linear(nhiddens2, noutputs))
----]]
+--]]
 elseif opt.model == 'convnet' then
 
       -- a typical convolutional network, with locally-normalized hidden

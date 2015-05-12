@@ -56,10 +56,11 @@ print '==> training!'
 old_rmse = 1000
 
 -- the bucket that will be left over
-test_bucket = 5
-data_filename = 'desc_BoB-20-fine05'
-for fold_nbr=1,4 do
-    load_molecules_data(data_filename, fold_nbr, test_bucket)
+test_bucket = 1
+--data_filename = 'desc_BoB-20-fine05'
+data_filename = 'desc_BoB-20-80values'
+for fold_nbr=2,5 do
+    load_molecules_data(data_filename, 0, test_bucket)
     dofile '2_model.lua'
     dofile '3_loss.lua'
     dofile '4_train.lua'
