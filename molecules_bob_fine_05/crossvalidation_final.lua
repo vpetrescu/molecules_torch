@@ -13,6 +13,7 @@
 --
 -- Clement Farabet
 ----------------------------------------------------------------------
+require '1_data'
 require 'torch'
 require 'math'
 function run_neural_net(nhiddens1, nhiddens2, learning_rate, preprocessing_type, activation_type)
@@ -25,8 +26,8 @@ opt.save = 'results' -- 'subdirectory to save/log experiments in')
 opt.optimization = 'SGD' -- 'optimization method: SGD | ASGD | CG | LBFGS')
 opt.learningRate = learning_rate --'learning rate at t=0')
 opt.batchSize = 1 -- 'mini-batch size (1 = pure stochastic)')
-opt.weightDecay = 0 -- 'weight decay (SGD only)')
-opt.momentum = 0 -- 'momentum (SGD only)')
+opt.weightDecay = 0.0005 -- 'weight decay (SGD only)')
+opt.momentum = 0.0 -- 'momentum (SGD only)')
 --cmd:option('-t0', 1, 'start averaging at t0 (ASGD only), in nb of epochs')
 --cmd:option('-maxIter', 2, 'maximum nb of iterations for CG and LBFGS')
 opt.type = 'double' -- | float | cuda')
@@ -48,34 +49,36 @@ torch.manualSeed(opt.seed)
 
 ----------------------------------------------------------------------
 print '==> executing all'
-data_filename = 'desc_BoB-20'
-test_bucket = 5
-load_molecules_data(data_filename, 0, test_bucket)
-dofile '2_model.lua'
-dofile '3_loss.lua'
+
 
 ----------------------------------------------------------------------
 print '==> training!'
 old_rmse = 1000
-for xi= 1,600 do
-   train(xi, 5)
-   test_rmse, train_rmse = test()
---[[   if math.isnan(test_rmse) or math.isnan(train_rmse) then
-       break
-   end --]]
-   if xi > 20 and  train_rmse > 200 then
-       break
-   end
-   if xi > 200 and  train_rmse > 30 then
-       break
-   end
-   if old_rmse  + 100 < train_rmse then
-     break
-   end
-   old_rmse = train_rmse
+
+-- the bucket that will be left over
+test_bucket = 5
+--data_filename = 'desc_BoB-20-fine05'
+data_filename = 'desc_BoB-20'
+avg_rmse = 0
+for fold_nbr=1,5 do
+    test_bucket = fold_nbr
+    load_molecules_data(data_filename, 0, test_bucket)
+    dofile '2_model.lua'
+    dofile '3_loss.lua'
+    dofile '4_train.lua'
+    dofile '5_test.lua'
+    for epoch_id = 1,200 do
+        train(epoch_id, fold_nbr)
+        test_rmse, train_rmse = test()
+        if epoch_id > 20 and test_rmse > 200 then
+            return 0
+        end
+        if epoch_id > 200 and test_rmse > 150 then
+            return 0
+        end
+    end
+    avg_rmse = avg_rmse + test_rmse
 end
-if test_rmse > 250 then
-    test_rmse = 250
-end
-return 250 - test_rmse
+avg_rmse = avg_rmse/4
+return 250 - avg_rmse
 end
