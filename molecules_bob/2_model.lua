@@ -21,22 +21,10 @@ require 'nn'      -- provides all sorts of trainable modules/layers
 print '==> define parameters'
 
 -- 10-class problem
-noutputs = 1
+noutputs = trainData.labels:size(2)
 
 -- input dimensions
-nfeats = 1
-width = trainData.data:size(4)
-height = 1
-ninputs = nfeats*width*height
-
--- number of hidden units (for MLP only):
-nhiddens = ninputs / 2
-
--- hidden units, filter sizes (for ConvNet only):
-nstates = {20, 400, 500}
-wfiltersize = 20
-hfiltersize = 1
-poolsize = 1
+ninputs = trainData.data:size(2)
 
 nhiddens1 = opt.nhiddens1
 nhiddens2 = opt.nhiddens2
@@ -52,23 +40,27 @@ if opt.model == 'mlp' then
 
    -- Simple 2-layer neural network, with tanh hidden units
    model = nn.Sequential()
-   model:add(nn.Reshape(ninputs))
 --   model:add(nn.InputDropout(0))
    model:add(nn.Linear(ninputs,nhiddens1))
    if (activation_type == 'Tanh') then
        model:add(nn.Tanh())
-   else
+   elseif (activation_type =='ReLU') then
        model:add(nn.ReLU())
+   else
+       model:add(nn.HardTanh())
    end
+   --model:add(nn.Linear(nhiddens1, noutputs))
    model:add(nn.Linear(nhiddens1, nhiddens2))
    if (activation_type == 'Tanh') then
-       model:add(nn:Tanh())
+     model:add(nn:Tanh())
+  elseif (activation_type == 'ReLU') then
+     model:add(nn:ReLU())
   else
-      model:add(nn:ReLU())
+    model:add(nn.HardTanh())
   end
    --model:add(nn.Dropout(0.5))
    model:add(nn.Linear(nhiddens2, noutputs))
-
+--]]
 elseif opt.model == 'convnet' then
 
       -- a typical convolutional network, with locally-normalized hidden
@@ -125,15 +117,6 @@ end
 print '==> here is the model:'
 print(model)
 
---print(model:get(1).weight)
-a = torch.Tensor(3,1,1,3)
-a[{1,1,1,1}] = 2.4
-
-a[{2,1,1,2}] = 2.4
-
-a[{3,1,1,1}] = 1
-a[{3,1,1,2}] = 1
-a[{3,1,1,3}]  = -1
 --model:get(1).weight = a -- torch.Tensor(2,1,1,3)
 
 --print(model:get(1).weight)
