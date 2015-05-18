@@ -58,7 +58,7 @@ old_rmse = 1000
 -- the bucket that will be left over
 test_bucket = 5
 --data_filename = 'desc_BoB-20-fine05'
-data_filename = 'desc_SemiSortedColoumb'
+data_filename = 'desc_BoB-20'
 for fold_nbr=1,4 do
     load_molecules_data(data_filename, fold_nbr, test_bucket)
     dofile '2_model.lua'
