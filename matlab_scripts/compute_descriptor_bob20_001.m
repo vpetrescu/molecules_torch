@@ -1,10 +1,10 @@
-function [out_data, out_labels] = compute_descriptor_bob20_05(indices, data)
+function [out_data, out_labels] = compute_descriptor_bob20_001(indices, data)
 %% transform molecules
 % number of distinct atoms H,O,C,S,N
 n_distinct = 5;
 % the binning of the distances
 nbr_dist_bins = 20;
-quantization_level = 2;
+quantization_level = 10;
 n_samples = size(indices,1);
 pairs_structure = zeros(n_samples, n_distinct, n_distinct, ...
                      nbr_dist_bins * quantization_level);
@@ -39,11 +39,9 @@ for sample = 1:n_samples
           fdistanceR = sqrt(sum((Rs(i,:) - Rs(j,:)).^2));
           distanceR = floor(fdistanceR);
           distanceR = min(distanceR, nbr_dist_bins);
-          if fdistanceR - distanceR > 0.5
-              half_bucket = 2;
-          else
-              half_bucket = 1;
-          end
+          half_bucket = abs(fdistanceR - distanceR);
+          half_bucket = floor(half_bucket*10);
+          
           minz = min(mr(Zs(i)), mr(Zs(j)));
           maxz = max(mr(Zs(i)), mr(Zs(j)));
           pairs_structure(sample, minz,maxz, quantization_level*distanceR + half_bucket) = ...
