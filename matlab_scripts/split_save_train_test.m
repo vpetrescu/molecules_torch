@@ -1,6 +1,6 @@
 
 special_name = 'special';
-current_method = 'BoB-20';
+current_method = 'SemiSortedColoumb';
 
 method = {'Coloumb', ... % Original Coloumb matrix
           'SortedColoumb', ... % Coloumb matrix sorted by row norm
@@ -41,10 +41,10 @@ for fold_nbr=1:5
         [testData.data, testData.labels] = ...
                     compute_descriptor_sorted_coloumb(teindices, data);
     elseif strcmp(current_method, 'SemiSortedColoumb')
-        [trainData.data, trainData.labels] = ...
-                    compute_descriptor_semi_sorted_coloumb(trindices, data);
+   %     [trainData.data, trainData.labels] = ...
+   %                 compute_descriptor_semi_sorted_coloumb_map(trindices, data);
         [testData.data, testData.labels] = ...
-                    compute_descriptor_semi_sorted_coloumb(teindices, data);
+                    compute_descriptor_semi_sorted_coloumb_map(teindices, data);
     elseif strcmp(current_method, 'Triplets')
         % for three atoms Z1,Z2,Z3, the result would be
         % the indices of the atoms are sorted according to the 
@@ -55,10 +55,10 @@ for fold_nbr=1:5
         [testData.data, testData.labels] = ...
                     compute_descriptor_triplets(teindices, data);
     elseif strcmp(current_method, 'SemiSortedTriplets')
-        [trainData.data, trainData.labels] = ...
-                    compute_descriptor_semi_sorted_triplets(trindices, data);
+      %  [trainData.data, trainData.labels] = ...
+      %              compute_descriptor_semi_sorted_triplets(trindices, data);
         [testData.data, testData.labels] = ...
-                    compute_descriptor_semi_sorted_triplets(teindices, data);
+                    compute_descriptor_semi_sorted_triplets_map(teindices, data);
     elseif strcmp(current_method, 'Bob-20-fine05')
         [trainData.data, trainData.labels] = ...
                     compute_descriptor_bob20_05(trindices, data);
@@ -73,8 +73,8 @@ for fold_nbr=1:5
             
     end
     
-    filename_train = sprintf('../../data/train_desc_%s_fold_%d.mat', ...
-                            current_method,fold_nbr);
+ %   filename_train = sprintf('../../data/train_desc_%s_fold_%d.mat', ...
+ %                           current_method,fold_nbr);
     filename_test = sprintf('../../data/test_desc_%s_fold_%d.mat', ...
                             current_method,fold_nbr);
     
