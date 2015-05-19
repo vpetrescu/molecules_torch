@@ -24,19 +24,20 @@ M = 23;
 for sample = 1:n_samples
   indext = indices(sample) + 1;
   out_labels(sample) = data.T(indext);
-  Zs = data.Z(indext,:);
-  Zs = reshape(Zs, [23,1]);
-  Rs = data.R(indext,:,:);
-  Rs = reshape(Rs, [23,3]);
+  Zs = zeros([23,1]);
+  Xs = data.X(indext,:,:);
+  Xs = reshape(Xs, [23, 23]);
   for i=1:M
+    Zs(i) = round((2*Xs(i,i))^(1/2.4));
     % increase count of this molecule
     if (Zs(i) ~= 0)
         atoms_count(sample, mr(Zs(i))) = atoms_count(sample, mr(Zs(i))) + 1;
     end
     for j=i+1:M   
+        Zs(j) = round((2*Xs(j,j))^(1/2.4));
         if (Zs(i) ~= 0 && Zs(j)~= 0)
           %% increase count of Zs(i), Zs(j) pair  
-          fdistanceR = sqrt(sum((Rs(i,:) - Rs(j,:)).^2));
+          fdistanceR = Zs(i)*Zs(j)/Xs(i,j);
           distanceR = floor(fdistanceR);
           distanceR = min(distanceR, nbr_dist_bins);
           if fdistanceR - distanceR > 0.75

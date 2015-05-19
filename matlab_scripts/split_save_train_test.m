@@ -1,6 +1,6 @@
 
 special_name = 'special';
-current_method = 'SemiSortedColoumb';
+current_method = 'BoB-20-fine025';
 
 method = {'Coloumb', ... % Original Coloumb matrix
           'SortedColoumb', ... % Coloumb matrix sorted by row norm
@@ -8,6 +8,8 @@ method = {'Coloumb', ... % Original Coloumb matrix
           'BoB-20',... % Bob with every distance binned into 20 buckets
           'BoB-20-noise',... % same as above but with small noise added to the distances
           'Bob-20-fine05',... % same as Bob-20 but with 40 buckets
+          'Bob-20-fine025',... % same as Bob-20 but with 40 buckets
+           'Bob-20-fine001',... % s
           'Bob-20-80values',... % same as Bob-20 but with distance bins with 0 elements removed
           'SemiSortedColoumb',... % BoB type of descritptor
           'Triplets',... % {{Zi,Zj,1/Rij}, {...},..} sorted according to Coloumb
@@ -59,12 +61,22 @@ for fold_nbr=1:5
       %              compute_descriptor_semi_sorted_triplets(trindices, data);
         [testData.data, testData.labels] = ...
                     compute_descriptor_semi_sorted_triplets_map(teindices, data);
-    elseif strcmp(current_method, 'Bob-20-fine05')
-        [trainData.data, trainData.labels] = ...
-                    compute_descriptor_bob20_05(trindices, data);
+    elseif strcmp(current_method, 'BoB-20-fine05')
+     %   [trainData.data, trainData.labels] = ...
+     %               compute_descriptor_bob20_05(trindices, data);
         [testData.data, testData.labels] = ...
                     compute_descriptor_bob20_05(teindices, data);
-                
+     elseif strcmp(current_method, 'BoB-20-fine025')
+     %   [trainData.data, trainData.labels] = ...
+     %               compute_descriptor_bob20_05(trindices, data);
+        [testData.data, testData.labels] = ...
+                    compute_descriptor_bob20_025(teindices, data);
+     elseif strcmp(current_method, 'BoB-20-fine001')
+     %   [trainData.data, trainData.labels] = ...
+     %               compute_descriptor_bob20_05(trindices, data);
+        [testData.data, testData.labels] = ...
+                    compute_descriptor_bob20_001(teindices, data);
+                                     
      elseif strcmp(current_method, 'Bob-20-80values')
         [trainData.data, trainData.labels] = compute_descriptor_bob20(trindices, data);
         [testData.data, testData.labels] = compute_descriptor_bob20(teindices, data);
@@ -78,7 +90,7 @@ for fold_nbr=1:5
     filename_test = sprintf('../../data/test_desc_%s_fold_%d.mat', ...
                             current_method,fold_nbr);
     
-    save(filename_train, 'trainData');
+   % save(filename_train, 'trainData');
     save(filename_test, 'testData');
 end
 

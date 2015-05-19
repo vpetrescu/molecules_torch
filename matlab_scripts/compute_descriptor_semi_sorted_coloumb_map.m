@@ -17,7 +17,6 @@ for sample = 1:n_samples
   indext = indices(sample) + 1;
   out_labels(sample) = data.T(indext);
   data2.X(sample,:,:) = data.X(indext,:,:);
-  data2.Z(sample,:) = data.Z(indext,:);
 end
 
 N = computeSize(max_z_count);
@@ -30,7 +29,11 @@ pairs_indices = ones(n_samples, n_atom_types, n_atom_types);
 for s = 1:n_samples
     s
   % The size of the descriptor 
-  z_values = data2.Z(s,:);
+  z_values = zeros([23,1]);
+  for i=1:23
+    data2.X(s,:,:);
+    z_values(i) = round((2*data2.X(s,i,i))^(1/2.4));
+  end
   z_values = z_values(z_values ~= 0);
   
 
