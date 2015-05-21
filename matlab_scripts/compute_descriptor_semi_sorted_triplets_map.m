@@ -19,13 +19,12 @@ for sample = 1:n_samples
   indext = indices(sample) + 1;
   out_labels(sample) = data.T(indext);
   data2.X(sample,:,:) = data.X(indext,:,:);
-  data2.Z(sample,:) = data.Z(indext,:);
 end
 
 % compute size of the output descriptor
-N = computeSize(max_z_count);
-% multiply with 3 to make every index appear
-out_data_triplets = zeros(n_samples, 3*N);
+nbr_triplets = computeSize(max_z_count);
+% multiply with 3 to account for (zi,zj,1/Rij) triplets
+out_data_triplets = zeros(n_samples, 3*nbr_triplets);
 
 n_atom_types = 5;
 max_pairs_length = nchoose2(max(max_z_count));
@@ -34,9 +33,13 @@ pairs_indices = ones(n_samples, n_atom_types, n_atom_types);
 for s = 1:n_samples
     s
   % keep only the non zero values
-  z_values = data2.Z(s,:);
+  z_values = zeros([23,1]);
+  Xs = data.X2(s,:,:);
+  Xs = reshape(Xs, [23, 23]);
+  for i=1:23
+    z_values(i) = round((2*Xs(i,i))^(1/2.4));
+  end
   z_values = z_values(z_values ~= 0);
-
   % loop over non zero charges
   for z1 = 1:size(z_values,2)
     for z2 = z1+1:size(z_values,2)
@@ -59,7 +62,7 @@ end
 for s = 1:n_samples
     s
   % loop over non zero charges
-  temp = zeros(1,3*N);
+  temp = zeros(1,3*nbr_triplets);
   idx = 1;
   for z1 = 1:n_atom_types
     for z2 = z1:n_atom_types
@@ -72,20 +75,22 @@ for s = 1:n_samples
         Nsize1 = max_z_count(mini);
         Nsize2 = max_z_count(maxi);
         if mini == maxi
-            max_nbr_pairs = nchoose2(Nsize1);
+            max_nbr_triplets = nchoose2(Nsize1);
         else
-            max_nbr_pairs = Nsize1*Nsize2;
+            max_nbr_triplets = Nsize1*Nsize2;
         end
-        Length = max_nbr_pairs;
+        Length = max_nbr_triplets;
         Length = Length*3;
-        tempvalues = pairs_structure(s,mini,maxi,1:max_nbr_pairs);
+        tempvalues = pairs_structure(s,mini,maxi,1:max_nbr_triplets);
         tempvalues = tempvalues(:);
         nonzeros = sum(tempvalues~=0);
         
-        temp(idx:3:idx + Length -1) = [min(z_values(z1), z_values(z2))*ones([1,nonzeros]), zeros([1,max_nbr_pairs-nonzeros])];
-        temp(idx+1:3:idx +Length-1) = [max(z_values(z1), z_values(z2))*ones([1,nonzeros]), zeros([1,max_nbr_pairs-nonzeros])];
-
-        temp(idx+2:3:idx+ Length-1)  =  sort(pairs_structure(s,mini,maxi,1:max_nbr_pairs), 'descend');
+        temp(idx:3:idx + Length -1) = [min(z_values(z1),z_values(z2))*ones([1,nonzeros]),...
+                                       zeros([1,max_nbr_triplets-nonzeros])];
+        temp(idx+1:3:idx +Length-1) = [max(z_values(z1),z_values(z2))*ones([1,nonzeros]),...
+                                       zeros([1,max_nbr_triplets-nonzeros])];
+        temp(idx+2:3:idx+ Length-1)  =  sort(pairs_structure(s, mini, maxi, ...
+                                           1:max_nbr_triplets), 'descend');
         idx = idx + Length;
     end
   end
@@ -103,16 +108,13 @@ function [N] = computeSize(max_z_count)
 N = 0;
 n_atom_types = size(max_z_count,2);
 % that many pairs of (H,H), (H,C)
-idx = 0;
 for i =1:n_atom_types
     N = N + nchoose2(max_z_count(i));
-    idx = idx + 1;
     % find the end of the first bucket
     % it contains pairs of atoms of the same type
 
     for j=i+1:n_atom_types
         N = N + max_z_count(i) * max_z_count(j);
-        idx = idx + 1;
     end
 end
 end
