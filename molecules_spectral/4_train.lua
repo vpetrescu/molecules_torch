@@ -57,7 +57,7 @@ testLogger = optim.Logger(paths.concat(opt.save, 'test.log'))
 -- this extracts and flattens all the trainable parameters of the mode
 -- into a 1-dim vector
 if model then
-   parameters,gradParameters = model:getParameters()
+   parameters,gradParameters = model:parameters()
 end
 opt.optimization = 'SGD'
 ----------------------------------------------------------------------

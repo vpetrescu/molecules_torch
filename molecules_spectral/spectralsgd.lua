@@ -27,20 +27,22 @@ function optim.spectralsgd(opfunc, nparameters, config, state)
     local clr = lr / (1 + nevals*lrd)
     -- normal code would be  x:add(-clr, dfdx)
     state.evalCounter = state.evalCounter + 1
-    print(#nparameters)
-    print(#dfdx)
     for i=1,#nparameters do
---        print(dfdx[i])
-        print(i)
-        local U,S,V = torch.svd(dfdx[i])
-        local gsum = torch.Tensor(U:size(1),V:size(1)):zero()
-        for j=1,S:size(1) do
-            local temp = torch.Tensor(U:size(1), V:size(1)):zero()
-            torch.addr(temp, U[{{},j}],V[{{},j}])
-            gsum = gsum + temp 
+        if (dfdx[i]:dim() == 1) then
+            nparameters[i]:add(-clr, dfdx[i])
+        else
+            --print(dfdx[i]:size(2))
+ --           print(dfdx[i])
+            local U,S,V = torch.svd(dfdx[i])
+            local gsum = torch.Tensor(U:size(1),V:size(1)):zero()
+            for j=1,S:size(1) do
+                local temp = torch.Tensor(U:size(1), V:size(1)):zero()
+                torch.addr(temp, U[{{},j}],V[{{},j}])
+                gsum = gsum + temp 
+            end
+            clr = clr * S:sum()
+            nparameters[i]:add(-clr, dfdx[i])
         end
-        clr = clr * S:sum()
-        nparameters[i]:add(-clr, dfdx[i])
     end
     return nparameters,{fx}
 end
