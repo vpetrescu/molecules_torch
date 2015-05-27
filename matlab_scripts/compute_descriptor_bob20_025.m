@@ -1,9 +1,12 @@
 function [out_data, out_labels] = compute_descriptor_bob20_025(indices, data)
 %% transform molecules
 % number of distinct atoms H,O,C,S,N
-n_distinct = 5;
-% the binning of the distances
-nbr_dist_bins = 20;
+% n_distinct = 6;
+% % the binning of the distances
+% nbr_dist_bins = 18;
+n_distinct = 6;
+nbr_dist_bins = 19;
+
 quantization_level = 4;
 n_samples = size(indices,1);
 pairs_structure = zeros(n_samples, n_distinct, n_distinct, ...
@@ -12,18 +15,20 @@ atoms_count = zeros(n_samples, n_distinct);
 
 n_samples = size(indices,1);
 
-out_labels = zeros(n_samples, 1);
+%out_labels = zeros(n_samples, 1); % );
+out_labels = zeros(n_samples, size(data.T,2));
 
-
-keySet   = {1,6,7,8,16};
-valueSet = [ 1,2,3,4,5];
+keySet   = {1,6,7,8,16,17};
+valueSet = [ 1,2,3,4,5, 6];
 mr = containers.Map(keySet,valueSet);
 
 %% Hard coded here
 M = 23;
+maxDistance = 0;
 for sample = 1:n_samples
   indext = indices(sample) + 1;
-  out_labels(sample) = data.T(indext);
+ out_labels(sample,:) = data.T(indext,:);
+ %out_labels(sample) = data.T(indext);
   Zs = zeros([23,1]);
   Xs = data.X(indext,:,:);
   Xs = reshape(Xs, [23, 23]);
@@ -31,6 +36,7 @@ for sample = 1:n_samples
     Zs(i) = round((2*Xs(i,i))^(1/2.4));
     % increase count of this molecule
     if (Zs(i) ~= 0)
+        Zs(i)
         atoms_count(sample, mr(Zs(i))) = atoms_count(sample, mr(Zs(i))) + 1;
     end
     for j=i+1:M   
@@ -40,6 +46,9 @@ for sample = 1:n_samples
           fdistanceR = Zs(i)*Zs(j)/Xs(i,j);
           distanceR = floor(fdistanceR);
           distanceR = min(distanceR, nbr_dist_bins);
+          if maxDistance < distanceR
+            maxDistance = distanceR;
+          end
           if fdistanceR - distanceR > 0.75
               half_bucket = 4;
           elseif fdistanceR - distanceR > 0.5
@@ -60,6 +69,8 @@ for sample = 1:n_samples
  end
 end
 
+maxDistance
+pause
 NN = n_distinct*(n_distinct+1)/2* nbr_dist_bins * quantization_level + n_distinct;
 uniq_out_data = zeros(n_samples, NN);
 
@@ -83,5 +94,4 @@ for s = 1: n_samples
 end
 
 out_data = uniq_out_data;
-
 end

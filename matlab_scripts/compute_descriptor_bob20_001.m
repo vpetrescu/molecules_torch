@@ -40,7 +40,7 @@ for sample = 1:n_samples
           distanceR = floor(fdistanceR);
           distanceR = min(distanceR, nbr_dist_bins);
           half_bucket = abs(fdistanceR - distanceR);
-          half_bucket = floor(half_bucket*10);
+          half_bucket = floor(half_bucket*10)+1;
           
           minz = min(mr(Zs(i)), mr(Zs(j)));
           maxz = max(mr(Zs(i)), mr(Zs(j)));
