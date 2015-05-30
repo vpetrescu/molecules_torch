@@ -1,0 +1,130 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Invariance to atom permutations - Bag of Quantized Bonds}
+\author{Viviana Petrescu }
+\date{May 2015}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+
+\begin{document}
+
+\maketitle
+
+\section{Abstract}
+The high computational cost of quantum chemistry calculations have prompted the use of less expensive machine learning methods for predicting molecular properties in chemical compound space.
+Finding good feature representations for molecules is hard, in part because of the graph-like structure geometry of the molecules that need to be represented as high dimensional vectors. The desired properties of a descriptor are invariance to rotation and translation of the molecule and invariance with respect to the permutation of atom indexes.
+In this work we present a new histogram based descriptor which tries to overcome the above problems. While there are other descriptors which overcome the translation and rotation invariance using Coloumb repulsion information, the main property of the proposed descriptor is its invariance to atom indexing. Moreover, its dimensionality is independent of the size of the molecules and it only varies with the number of \textit{distinct} atom types in the dataset.
+We evaluate its predictive performance on two datasets (with approx 7k molecules each) which gives close to state of the art predictions of atomization energy using neural networks. 
+
+\section{Introduction}
+The discovery of new molecular materials in chemistry has the potential of solving many of the problems we face today.
+Having a system which predicts both accurately and at a small computational cost the properties of new materials is highly desirable and has applications ranging from novel drugs discovery, water purification to efficient materials for high energy transmission and storage\cite{cleanenergy}.
+
+Any molecular property can be derived numerically by solving Schröedinger's equation, a setup which is computationally feasible only for small systems. Many approximation algorithms with polynomial complexity in the number of atoms exists. However, they can also be prohibitive in practice, since predicting one property can take hours or even days for certain system sizes.
+If instead, the properties of molecules can be estimated using trained machine learning models, the prediction for a new property of a new unseen molecule can take a couple of milliseconds. To date, kernel ridge regression, Gaussian processes and neural networks have been successfully applied to predicting properties of molecules such as atomization energy, averaged molecular polarizability, HOMO and LUMO eigenvalues or ionization potentials.
+
+Machine Learning models are as powerful as the feature descriptors used are. There is a long history of molecular descriptors \cite{todeschini2000handbook} that aim at encoding the information in molecules in a discriminative manner. While some of them require extensive domain knowledge, recent approaches \cite{initialcoloumb} use only the 3D position of atoms and their nuclear charges for describing a molecule.
+
+In the following section we describe two popular descriptors based on Coloumb interactions and we introduce our novel descriptor. In section 3[] we describe the datasets on which we evaluate the performance of our algorithms and present in more detail the experimental results. We summarize the contributions of this work in the last section.
+
+\section{Molecular descriptors}
+
+To better describe the datasets and the properties of the molecular descriptors, we introduce the notations below:
+\begin{itemize}
+\item $max_N$ maximum number of atoms in a molecule (present in our dataset)
+\item $max_Ni$ maximum number of atoms of type $i$ that appear in a molecule, where $i$ $\in$ {H, O, C, N, S}
+\item $N_A$ number of different atom types
+\item $max_D$ maximum distance between two pairs of atoms in a molecule (present in our dataset)
+\end{itemize}
+The desired properties of a molecular descriptor are
+\begin{itemize}
+ \item invariance to atom permutation
+ \item invariance to translation and rotation
+\end{itemize}
+
+\subsection{Coloumb Matrix}
+The size of the Coloumb descriptor is given by $max_N*(max_N - 1)/2$ if we take into account the fact that the matrix is symmetric.
+
+While the Coloumb matrix solves the translation and rotation invariance, the permutation of the atom indexes still remains. This is solved by defining an order of the atoms given by the norms of the rows of the SortedColoumb matrix.
+Since sometimes the norm of the rows are very close to each other and susceptible to small noise, Randomly Sorted Coloumb matrices have been introduced which
+add a small Gaussian noise to every row and sort according to the new noisy value.
+
+\subsection{Bag Of Bonds}
+The descriptor which currently gives state of the art result is called Bag of Bonds and it was inspired from natural language processing. In BoB every bag contains all the pairwise interaction between two types of atoms (the types can be identical).
+Invariance through permutation is given by sorting the values inside each bag.
+Its advantage is that terms in the feature descriptor that are responsible for certain types 
+of interaction are always present in a certain interval in the vector.
+Its dimensionality  is given by $\sum max_Ni*(max_Ni-1)/2$ .
+
+
+\section{Bag of Quantised Bonds}
+We propose a new descriptor whose size is not dependent on the number of atoms in the molecules. Similarly with BoB, every bag is responsible for encoding information about certain types of bonds. Unlike BoB, where the elements in every bag are sorted according to their intensity, in BoQB case every bag is a histogram.
+The size of  the bag histogram is given by the maximum distance between two pairs
+of atoms (pertaining to the bag type). The quantization level of the distances varies between bag types and we exeperimentally found that quantization level of 0.2 or 0.25 perform well in practice.
+
+Every entry of the descriptors contains a count
+\begin{itemize}
+\item 
+For every different atom type present in the dataset, count how many times it appears in the molecules
+\item  
+Bin all the distances between atoms in different buckets according to their value
+\end{itemize}
+
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{HistogramOfDistances.png}
+\caption{Bag of Quantised Bonds.
+Sample computation of Bag of Quantized Bonds. For a dataset which contains only atoms of type O,C and H where the maximum distance between two atoms is 3, the size of the boQB descriptor with quantization level is 15, as shown above. The first entry encodes the number of H atoms, 4. The following 3 elements encode the number of (H,H) distances that fall in the interval [0,1), [1,2) and [2,3).
+//TODO -> add cool picture showin an actual histogram
+}
+\label{fig:univerise}
+\end{figure}
+
+Table summarizing the properties of different descriptor properties
+BagOfBonds gives state of the art result on the GDB dataset
+but it is harder to retrieve the actual molecule from the descriptor. Coloumb Matrix is invariant to translation and rotation but it is more difficult to make it invariant to atom permutation. Variant such as Sorted Coloumb Matrix have been proposed.
+
+\subsection{State of the art results}
+The result of \cite{montavon2012learning} were the first ones using neural networks...bla bla
+
+\begin{tabular}{ l l l l }
+& Dimensionality & Invariance  & \\ 
+&  & to rotation and translation & to permutation \\ 
+ Coloumb Matrix& 1& 2 & 3 \\
+ Bag Of Bonds & 1& 2 & 3 \\
+ Histogram Of Quantised Distances &1 & 2 & 3  \\
+\end{tabular}
+
+\section{Experiments}
+The data was normalised to have values between 0 and 1. Unlike standardization,
+we believe this helps more the network to learn, since it keeps the values in the same regime as the initialization fo the weights and biases.
+We experimented with various quantization level, between 1 to 0.20.
+We used Whetlab tool for finding best network arhitecture. Unlike grid search, the tool uses gaussian processes to find the best parameters for a model.
+Since for us ReLU activation seemed to perform better, possibly also due to its inherently nature of generating sparse representations and for the inherently sparse nature of our feature descriptor.
+
+\subsection{Datasets description}
+Our currated dataset GDB-7 consists of 7122 molecules containing at most 23 atoms per molecules and at most 5 types of atoms (H,C,O,S,N), out of which only one is a heavy atom. We found the model parameters using cross validation on the training set and reported the results on the test set. The folds of the cross validation contain stratified samples.
+Also false big data talk \cite{falsebigdata}
+They were trained with Whetlab \cite{whetlab}
+
+This is the best neural network model and it comes at a fraction of cost in time, without even augumentening the dataset like in Random Sorted Coloumb with NN.
+
+\subsection{Results}
+
+\section{Future work}
+Learning invariant features, trying RBF networks or using ConvNet on 2D matrix.
+
+\section{Conclusions}
+We proposed a new descriptor which solves the invariability to atom permutations problem. It gives best performance on both datasets using a neural network model and second after a BoB using Laplacian kernels. The downside of using kernel regression is the fact that it scales cubically with the number of samples in the training data. 
+The comparison of its performance on the large dataset will be investigated.
+
+We believe that besides vision and natural language processing tasks, chemoinformatics  should start gaining more attention  in the machine learning community, given the potentials benefits for our society.
+
+
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}

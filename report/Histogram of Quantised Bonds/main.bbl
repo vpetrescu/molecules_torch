@@ -1,0 +1,62 @@
+\begin{thebibliography}{1}
+
+\bibitem{cleanenergy}
+Johannes Hachmann, Roberto Olivares-Amaya, Sule Atahan-Evrenk, Carlos
+  Amador-Bedolla, Roel~S. Sánchez-Carrera, Aryeh Gold-Parker, Leslie Vogt,
+  Anna~M. Brockway, and Alán Aspuru-Guzik.
+\newblock The harvard clean energy project: Large-scale computational screening
+  and design of organic photovoltaics on the world community grid.
+\newblock {\em The Journal of Physical Chemistry Letters}, 2(17):2241--2251,
+  2011.
+
+\bibitem{assessment}
+Katja Hansen, Grégoire Montavon, Franziska Biegler, Siamac Fazli, Matthias
+  Rupp, Matthias Scheffler, O.~Anatole von Lilienfeld, Alexandre Tkatchenko,
+  and Klaus-Robert Müller.
+\newblock Assessment and validation of machine learning methods for predicting
+  molecular atomization energies.
+\newblock {\em Journal of Chemical Theory and Computation}, 9(8):3404--3419,
+  2013.
+
+\bibitem{bob}
+O.A. von Lilienfeld K.-R.~Müller K.~Hansen, F.~Biegler and A.~Tkatchenko.
+\newblock {\em Interaction Potentials in Molecules and Non-Local Information in
+  Chemical Space.}
+\newblock Phys. Rev. Lett. (March 10, 2014)., 2014.
+
+\bibitem{montavon2012learning}
+Gr{\'e}goire Montavon, Katja Hansen, Siamac Fazli, Matthias Rupp, Franziska
+  Biegler, Andreas Ziehe, Alexandre Tkatchenko, Anatole~V Lilienfeld, and
+  Klaus-Robert M{\"u}ller.
+\newblock Learning invariant representations of molecules for atomization
+  energy prediction.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  440--448, 2012.
+
+\bibitem{falsebigdata}
+Raghunathan Ramakrishnan, Pavlo~O. Dral, Matthias Rupp, and O.~Anatole von
+  Lilienfeld.
+\newblock Big data meets quantum chemistry approximations: The delta-machine
+  learning approach.
+\newblock {\em Journal of Chemical Theory and Computation}, 11(5):2087--2096,
+  2015.
+
+\bibitem{initialcoloumb}
+Matthias Rupp, Alexandre Tkatchenko, Klaus-Robert M\"uller, and O.~Anatole von
+  Lilienfeld.
+\newblock Fast and accurate modeling of molecular atomization energies with
+  machine learning.
+\newblock {\em Phys. Rev. Lett.}, 108:058301, Jan 2012.
+
+\bibitem{whetlab}
+Jasper Snoek, Hugo Larochelle, and Ryan~P Adams.
+\newblock Practical bayesian optimization of machine learning algorithms.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  2951--2959, 2012.
+
+\bibitem{todeschini2000handbook}
+Roberto Todeschini and Viviana Consonni.
+\newblock {\em Handbook of molecular descriptors}, volume~11.
+\newblock Wiley-VCH, 2000.
+
+\end{thebibliography}
