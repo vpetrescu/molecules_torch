@@ -33,10 +33,10 @@ In the following section we describe two popular descriptors based on Coloumb in
 
 To better describe the datasets and the properties of the molecular descriptors, we introduce the notations below:
 \begin{itemize}
-\item $max_N$ maximum number of atoms in a molecule (present in our dataset)
-\item $max_Ni$ maximum number of atoms of type $i$ that appear in a molecule, where $i$ $\in$ {H, O, C, N, S}
-\item $N_A$ number of different atom types
-\item $max_D$ maximum distance between two pairs of atoms in a molecule (present in our dataset)
+\item $N$ maximum number of atoms in a molecule (present in our dataset)
+\item $N_i$ maximum number of atoms of type $i$ that constitute a molecule, where $i$ $\in \{H, O, C, N, S\}$
+\item $N_A$ number of different atom types in the dataset
+\item $D_{max}$ maximum distance between two pairs of atoms in a molecule
 \end{itemize}
 The desired properties of a molecular descriptor are
 \begin{itemize}
@@ -45,26 +45,32 @@ The desired properties of a molecular descriptor are
 \end{itemize}
 
 \subsection{Coloumb Matrix}
-The size of the Coloumb descriptor is given by $max_N*(max_N - 1)/2$ if we take into account the fact that the matrix is symmetric.
+The Coloumb matrix is a popular descriptors which stores pairwise Coloumb interaction terms between pairs of atoms. These are the terms that appear in equation.//TODO
 
-While the Coloumb matrix solves the translation and rotation invariance, the permutation of the atom indexes still remains. This is solved by defining an order of the atoms given by the norms of the rows of the SortedColoumb matrix.
-Since sometimes the norm of the rows are very close to each other and susceptible to small noise, Randomly Sorted Coloumb matrices have been introduced which
-add a small Gaussian noise to every row and sort according to the new noisy value.
+\[M(i,j) = \left\{
+  \begin{array}{lr}
+    0.5*Z_i^2.4 & if i = j\\
+    Z_i * Z_j / |R_i - R_j| & otherwise
+  \end{array}
+\right.
+\]
+
+The size of the Coloumb descriptor is given by $\frac{N*(N - 1)}{2}$ if we take into account the fact that the matrix is symmetric.
+
+While the Coloumb matrix solves the translation and rotation invariance, the permutation of the atom indexes is solved using variants of the descriptor called Sorted Coloumb Matrix or Randomly Sorted Coloumb Matrices.  Sorted Coloumb Matrix defines an order of the atoms given by the norms of the rows of the Coloumb matrix. Unlike the simple Coloumb matrix, any molecule has a unique Sorted Coloumb matrix representation.
+In practice,  the norm of the rows of a matrix are very close to each other and therefor susceptible to small noise which can lead to a different ordering of the atoms in a molecule. Randomly Sorted Coloumb matrices have been introduced to cope with this issue by adding a small Gaussian noise to every row and sort according to the new noisy norm value.
 
 \subsection{Bag Of Bonds}
-The descriptor which currently gives state of the art result is called Bag of Bonds and it was inspired from natural language processing. In BoB every bag contains all the pairwise interaction between two types of atoms (the types can be identical).
-Invariance through permutation is given by sorting the values inside each bag.
+The descriptor which gives state of the art results on the datasets we are interested in is called Bag of Bonds (BoB), whose name was inspired from natural language processing bag of words. In BoB every bag contains all the pairwise interactions between two types of atoms (the types can be identical). Invariance to indexing of the atoms is given by sorting the values inside each bag according to their magnitude.
 Its advantage is that terms in the feature descriptor that are responsible for certain types 
 of interaction are always present in a certain interval in the vector.
-Its dimensionality  is given by $\sum max_Ni*(max_Ni-1)/2$ .
+Its dimensionality  is given by $\sum \frac{Ni*(Ni-1)}{2}$ .
 
 
 \section{Bag of Quantised Bonds}
-We propose a new descriptor whose size is not dependent on the number of atoms in the molecules. Similarly with BoB, every bag is responsible for encoding information about certain types of bonds. Unlike BoB, where the elements in every bag are sorted according to their intensity, in BoQB case every bag is a histogram.
-The size of  the bag histogram is given by the maximum distance between two pairs
-of atoms (pertaining to the bag type). The quantization level of the distances varies between bag types and we exeperimentally found that quantization level of 0.2 or 0.25 perform well in practice.
+We propose a new descriptor Bag of Quantised Bonds(BoQB), whose size is not dependent on the number of atoms in the molecules. Similarly with BoB, every bag  encodes information about certain types of bonds. Unlike BoB, where the elements in every bag are sorted according to their magnitude, in BoQB case every bag is a histogram. The size of  the bag histogram is given by the maximum distance between two pairs of atoms (pertaining to the bag type). The quantization level of the distances varies between bag types and we experimentally found that a quantization level of 0.2 or 0.25 perform well in practice, but this will vary for different datasets.
 
-Every entry of the descriptors contains a count
+Thus, every entry of the descriptors contains a count
 \begin{itemize}
 \item 
 For every different atom type present in the dataset, count how many times it appears in the molecules
