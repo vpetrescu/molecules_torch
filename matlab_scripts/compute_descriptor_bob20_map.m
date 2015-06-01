@@ -1,4 +1,4 @@
-function [out_data, out_labels] = compute_descriptor_bob20_map(indices, data)
+ function [out_data, out_labels] = compute_descriptor_bob20_map(indices, data)
 %% transform molecules
 % number of distinct atoms H,O,C,S,N
 n_distinct = 5;

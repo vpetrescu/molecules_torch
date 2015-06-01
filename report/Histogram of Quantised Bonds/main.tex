@@ -37,6 +37,7 @@ To better describe the datasets and the properties of the molecular descriptors,
 \item $N_i$ maximum number of atoms of type $i$ that constitute a molecule, where $i$ $\in \{H, O, C, N, S\}$
 \item $N_A$ number of different atom types in the dataset
 \item $D_{max}$ maximum distance between two pairs of atoms in a molecule
+\item $q$ quantization level, a number in $(0,1]$ which defines the coarseness of the histogram of distances
 \end{itemize}
 The desired properties of a molecular descriptor are
 \begin{itemize}
@@ -63,45 +64,50 @@ In practice,  the norm of the rows of a matrix are very close to each other and 
 \subsection{Bag Of Bonds}
 The descriptor which gives state of the art results in predicting atomization energy is called Bag of Bonds (BoB), whose name was inspired from natural language processing bag of words. In BoB, every bag contains all the pairwise interactions between two types of atoms (the types can be identical). Invariance to indexing of the atoms is obtained by sorting the values inside each bag according to their magnitude.
 One possible cause for the robustness of the descriptor is the fact that one bag is responsible for certain types of bonds only.
-Its dimensionality  is given by $\sum_i \frac{N_i*(N_i-1)}{2} + \sum_{i,j, i!=j} N_i*N_j	$  .
+Its dimensionality  is given by $\sum_i \frac{N_i*(N_i-1)}{2} + \sum_{i,j, i!=j} N_i*N_j	$ .
 The first term counts the number of bonds between atoms of the same type and the second term counts the number of bonds between different atom types.
 
-\section{Bag of Bonds Histogram}
-We propose a new descriptor Bag of Bonds Hisotgram(BoBH), whose size is not dependent on the number of atoms in the molecules. Similarly with BoB, every bag  encodes information about certain types of bonds. Unlike BoB, where the elements in every bag are sorted according to their magnitude, in BoBH case every bag is a histogram. The size of the bag histogram is given by the maximum distance between two pairs of atoms (pertaining to that bag type). The quantization level of the distances varies between bag types and we experimentally found that a quantization level of 0.2 or 0.25 perform well in practice, but this will vary for different datasets.
+\subsection{Bag of Bonds Histogram}
+We propose a new descriptor Bag of Bonds Histogram(BoBH), whose size is not dependent on the number of atoms in the molecules. Similarly with BoB, every bag  encodes information about certain types of bonds. Unlike BoB, where the elements in every bag are sorted according to their magnitude, in BoBH case every bag is a histogram of quantized distances. The size of the bag histogram is given by the maximum distance between two pairs of atoms (pertaining to that bag type). The quantization level of the distances varies between bag types and we experimentally found that a quantization level of 0.2 or 0.25 perform well in practice, but this will vary for different datasets.
 
-Thus, every entry of the descriptors contains a count
+Thus, for a given molecule, the BoBH descriptor will encode
 \begin{itemize}
 \item 
-For every different atom type present in the dataset, count how many times it appears in the molecules
+for every different atom type present in the dataset, count how many times it appears in the molecule
 \item  
-Bin all the distances between atoms in different buckets according to their value
+for every pair of atoms of certain type, count how many times the distance between them is in a given quantization interval 
 \end{itemize}
 
+An example is given in Fig \ref{fig:BoBH} for a molecule $C_{4}H_{2}O$ with a quantization level of $q=1$. In this example, first the bags containing H were concatenated, then the ones containing C and in the end the ones containing O, resulting in a descriptor of size 21. In general, the size of the descriptor is given by $NA + \sum_i \frac{N_A*(N_A+1)}{2} *\frac{D_{max}}{q} $ 
 
 \begin{figure}[h!]
-\centering
-\includegraphics[scale=0.5]{HistogramOfDistances.png}
+
+\includegraphics[scale=0.4]{HistogramOfDistances.png}
 \caption{Bag of Quantised Bonds.
-Sample computation of Bag of Quantized Bonds. For a dataset which contains only atoms of type O,C and H where the maximum distance between two atoms is 3, the size of the boQB descriptor with quantization level is 15, as shown above. The first entry encodes the number of H atoms, 4. The following 3 elements encode the number of (H,H) distances that fall in the interval [0,1), [1,2) and [2,3).
+Sample computation of Bag of Bonds Histogram for $C_2H_4O$ for a dataset which contains only atoms of type O, C and H. If the maximum distance between any two atoms in our dataset is 3, the size of the BoBH descriptor with quantization level  1 is 21, as shown above. The first entry encodes the number of H atoms, 4. The following 3 elements encode the number of (H,H) distances that fall in the interval [0,1), [1,2) and [2,3).
 //TODO -> add cool picture showin an actual histogram
 }
-\label{fig:univerise}
+\label{fig:BoBH}
 \end{figure}
 
-Table summarizing the properties of different descriptor properties
-BagOfBonds gives state of the art result on the GDB dataset
-but it is harder to retrieve the actual molecule from the descriptor. Coloumb Matrix is invariant to translation and rotation but it is more difficult to make it invariant to atom permutation. Variant such as Sorted Coloumb Matrix have been proposed.
+
+To sum up, all descriptors achieve translation and rotation invariance through the use of
+distances between atoms instead of the actual 3D positions. Sorted Coloumb and Randomly Sorted Coloumb achieve invariance to index permutation by sorting the rows of the matrix according to their norm. Bag of Bonds sorts the bonds inside each bag and Bag of Bonds Histogram quantizes the distances into bins to bypass the sorting step present in other descriptors.
+
+%//TODO maybe remove this BagOfBonds gives state of the art result on the GDB dataset
+%but it is harder to retrieve the actual molecule from the descriptor.
+%\begin{tabular}{ l l l l }
+%& Dimensionality & Invariance  & \\ 
+%&  & to rotation and translation & to permutation \\ 
+% Coloumb Matrix& 1& 2 & 3 \\
+% Bag Of Bonds & 1& 2 & 3 \\
+% Histogram Of Quantised Distances &1 & 2 & 3  \\
+%\end{tabular}
+
 
 \subsection{State of the art results}
 The result of \cite{montavon2012learning} were the first ones using neural networks...bla bla
 
-\begin{tabular}{ l l l l }
-& Dimensionality & Invariance  & \\ 
-&  & to rotation and translation & to permutation \\ 
- Coloumb Matrix& 1& 2 & 3 \\
- Bag Of Bonds & 1& 2 & 3 \\
- Histogram Of Quantised Distances &1 & 2 & 3  \\
-\end{tabular}
 
 \section{Experiments}
 The data was normalised to have values between 0 and 1. Unlike standardization,

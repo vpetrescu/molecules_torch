@@ -26,7 +26,7 @@ opt.save = 'results' -- 'subdirectory to save/log experiments in')
 opt.optimization = 'SGD' -- 'optimization method: SGD | ASGD | CG | LBFGS')
 opt.learningRate = learning_rate --'learning rate at t=0')
 opt.batchSize = 1 -- 'mini-batch size (1 = pure stochastic)')
-opt.weightDecay = 0.0005 -- 'weight decay (SGD only)')
+opt.weightDecay = 0.0000 -- 'weight decay (SGD only)')
 opt.momentum = 0.0 -- 'momentum (SGD only)')
 --cmd:option('-t0', 1, 'start averaging at t0 (ASGD only), in nb of epochs')
 --cmd:option('-maxIter', 2, 'maximum nb of iterations for CG and LBFGS')
@@ -58,10 +58,10 @@ old_rmse = 1000
 -- the bucket that will be left over
 test_bucket = 5
 --data_filename = 'desc_BoB-20-fine05'
-data_filename = 'desc_SemiSortedColoumb'
+data_filename = 'desc_BoB-20'
 avg_rmse = 0
 for fold_nbr=1,1 do
-    load_molecules_data(data_filename, fold_nbr, test_bucket)
+    load_molecules_data(data_filename, 0, test_bucket)
     dofile '2_model.lua'
     dofile '3_loss.lua'
     dofile '4_train.lua'
@@ -70,13 +70,13 @@ for fold_nbr=1,1 do
         train(epoch_id, fold_nbr)
         test_rmse, train_rmse = test()
         if  test_rmse~= test_rmse then
-            return 0
+            return -250
         end
         if epoch_id > 20 and test_rmse > 100 then
-            return 0
+            return 250-test_rmse
         end
         if epoch_id > 200 and test_rmse > 90 then
-            return 0
+            return 250-test_rmse
         end
     end
     avg_rmse = avg_rmse + test_rmse

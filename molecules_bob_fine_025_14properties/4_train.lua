@@ -59,7 +59,7 @@ testLogger = optim.Logger(paths.concat(opt.save, 'test.log'))
 if model then
    parameters,gradParameters = model:getParameters()
 end
-opt.optimization = 'CG'
+opt.optimization = 'SGD'
 ----------------------------------------------------------------------
 print '==> configuring optimizer'
 if opt.optimization == 'CG' then

@@ -13,7 +13,8 @@ for ei = 1,1 do
     print 'trail number'
     print(ei)
     --valid_accuracy = run_neural_net(job.nhiddens1, job.nhiddens2,  job.learning_rate, job.preprocessing_type, job.activation)
-    valid_accuracy = run_neural_net(219, 230,  0.00000000859469, 'local-normalization', 'ReLU')
+    --valid_accuracy = run_neural_net(219, 100,  1e-2, 'local-normalization', 'ReLU')
+    valid_accuracy = run_neural_net(219, 80,  1e-6, 'local-normalization', 'ReLU')
     print('valid accuracy')
     print(valid_accuracy)
 end

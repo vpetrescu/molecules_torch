@@ -39,7 +39,7 @@ if not opt then
    cmd:text()
    opt = cmd:parse(arg or {})
 end
-
+--opt.learningRateDecay = 1e-4
 ----------------------------------------------------------------------
 --opt.learningRate = 1e-6--1e-5
 ----------------------------------------------------------------------
@@ -59,7 +59,6 @@ testLogger = optim.Logger(paths.concat(opt.save, 'test.log'))
 if model then
    parameters,gradParameters = model:getParameters()
 end
-opt.optimization = 'SGD'
 ----------------------------------------------------------------------
 print '==> configuring optimizer'
 if opt.optimization == 'CG' then
@@ -204,7 +203,7 @@ function train(epoch)
    end
 
    -- save/log current net
-   local filename = paths.concat(opt.save, 'model.net')
+   local filename = paths.concat(opt.save, 'modelbest.net')
    os.execute('mkdir -p ' .. sys.dirname(filename))
    print('==> saving model to '..filename)
    torch.save(filename, model)

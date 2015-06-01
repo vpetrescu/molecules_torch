@@ -13,6 +13,7 @@
 -- Clement Farabet
 ----------------------------------------------------------------------
 require 'spectralsgd'
+require 'full_spectralsgd'
 require 'torch'   -- torch
 require 'xlua'    -- xlua provides useful tools, like progress bars
 require 'optim'   -- an optimization package, for online and batch methods
@@ -169,8 +170,6 @@ function train(epoch)
                           local df_do = criterion:backward(output, targets[i])
                           model:backward(inputs[i], df_do)
 
-                          -- update confusion
-                          --confusion:add(output, targets[i])
                        end
 
                        -- normalize gradients and f(X)
@@ -185,7 +184,7 @@ function train(epoch)
 
 	  --itorch.image(model:get(1).weight)
       -- optimize on current mini-batch
-       optim.spectralsgd(feval, parameters, optimState)
+       optim.full_spectralsgd(feval, parameters, optimState)
    end
 
    -- time taken

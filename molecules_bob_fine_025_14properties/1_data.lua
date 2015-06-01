@@ -22,7 +22,7 @@ function load_molecules_data(base_filename, valid_bucket, test_bucket)
 -- Initially the train set contains all the folds
 -- Iterate over all the folds in the train set and add them to trainData structure
 
-local tmp_train = matio.load('../../data14properties/train_'..base_filename..'_fold_'..tonumber(test_bucket)..'.mat')
+local tmp_train = matio.load('../../data14properties/trainE0_'..base_filename..'_fold_'..tonumber(test_bucket)..'.mat')
 trsize = tmp_train.trainData.data:size(1)
 trainData = {
    data =  tmp_train.trainData.data,
@@ -33,7 +33,9 @@ print('Final training data size '..tonumber(trainData.labels:size(1)))
 
 -- Load testing or validation data
 -- local tmp_test = matio.load('../../data14properties/test_'..base_filename..'_fold_'..tonumber(testid)..'.mat')
-local tmp_test = matio.load('../../data14properties/test_'..base_filename..'_fold_'..tonumber(test_bucket)..'.mat')
+testfilename = '../../data14properties/testE0_'..base_filename..'_fold_'..tonumber(test_bucket)..'.mat'
+print(testfilename)
+local tmp_test = matio.load(testfilename)
 tesize = tmp_test.testData.data:size(1)
 testData = {
    data = tmp_test.testData.data,
@@ -138,8 +140,11 @@ elseif preprocessing_type == 'global-standardization' then
    testData.data[{ {},{} }]:div(std_global)
 end
 
+local N  = trainData.labels:size(2)
+global_std = torch.Tensor(N):fill(1)
+
 --local label_preprocessing_type = 'two-local-normalization';
-local label_preprocessing_type = 'local-standardization';
+--local label_preprocessing_type = 'local-standardization';
 if label_preprocessing_type == 'two-local-normalization' then
     local a = -1
     local b = 1

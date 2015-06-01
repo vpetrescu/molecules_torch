@@ -166,7 +166,7 @@ function train(epoch)
                           -- estimate df/dW
                           local df_do = criterion:backward(output, targets[i])
                           model:backward(inputs[i], df_do)
-
+                          collectgarbage()
                           -- update confusion
                           --confusion:add(output, targets[i])
                        end

@@ -25,19 +25,9 @@ print '==> define parameters'
 noutputs = 1
 
 -- input dimensions
-nfeats = 1
-width = trainData.data:size(2)
-height = 1
-ninputs = nfeats*width*height
+nbr_input_size = trainData.data:size(2)/3
 
--- number of hidden units (for MLP only):
-nhiddens = ninputs / 2
 
--- hidden units, filter sizes (for ConvNet only):
-nstates = {20, 400, 500}
-wfiltersize = 20
-hfiltersize = 1
-poolsize = 1
 
 nhiddens1 = opt.nhiddens1
 nhiddens2 = opt.nhiddens2
@@ -48,7 +38,6 @@ print(nhiddens1)
 print(nhiddens2)
 print(ninputs)
 
-nbr_input_size = 253 -- 23 * 24/2
 nbr_atom_types = 6
 descriptor_length = 4
 

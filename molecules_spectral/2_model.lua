@@ -45,8 +45,8 @@ if opt.model == 'mlp' then
    if (activation_type == 'Tanh') then
        model:add(nn.Tanh())
    elseif (activation_type =='ReLU') then
-      -- model:add(nn.ReLU())
-       model:add(nn.SoftPlus())
+      model:add(nn.ReLU())
+      -- model:add(nn.SoftPlus())
    else
        model:add(nn.HardTanh())
    end
@@ -55,8 +55,8 @@ if opt.model == 'mlp' then
    if (activation_type == 'Tanh') then
      model:add(nn.Tanh())
   elseif (activation_type == 'ReLU') then
-    -- model:add(nn:ReLU())
-     model:add(nn.SoftPlus())
+    model:add(nn:ReLU())
+     --model:add(nn.SoftPlus())
   else
     model:add(nn.HardTanh())
   end

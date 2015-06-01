@@ -58,26 +58,26 @@ old_rmse = 1000
 -- the bucket that will be left over
 test_bucket = 5
 --data_filename = 'desc_BoB-20-fine05'
-data_filename = 'desc_BoB-20'
+data_filename = 'desc_BoB-20-fine05'
 avg_rmse = 0
-for fold_nbr=1,4 do
-    load_molecules_data(data_filename, fold_nbr, test_bucket)
+for fold_nbr=1,1 do
+    load_molecules_data(data_filename, 0, test_bucket)
     dofile '2_model.lua'
     dofile '3_loss.lua'
     dofile '4_train.lua'
     dofile '5_test.lua'
-    for epoch_id = 1,200 do
+    for epoch_id = 1,300 do
         train(epoch_id, fold_nbr)
         test_rmse, train_rmse = test()
         if epoch_id > 20 and test_rmse > 200 then
-            return 0
+            return 250-test_rmse
         end
-        if epoch_id > 200 and test_rmse > 150 then
-            return 0
+        if epoch_id > 200 and test_rmse > 100 then
+            return 250 - test_rmse
         end
     end
     avg_rmse = avg_rmse + test_rmse
 end
-avg_rmse = avg_rmse/4
+avg_rmse = avg_rmse/1
 return 250 - avg_rmse
 end

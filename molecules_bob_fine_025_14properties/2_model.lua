@@ -58,7 +58,7 @@ if opt.model == 'mlp' then
   else
     model:add(nn.HardTanh())
   end
-  model:add(nn.Linear(nhiddens2, nhiddens2))
+  --[[model:add(nn.Linear(nhiddens2, nhiddens2))
     if (activation_type == 'Tanh') then
      model:add(nn:Tanh())
   elseif (activation_type == 'ReLU') then

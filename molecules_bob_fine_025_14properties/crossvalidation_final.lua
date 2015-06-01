@@ -25,7 +25,7 @@ opt.threads = 2
 opt.save = 'results' -- 'subdirectory to save/log experiments in')
 opt.optimization = 'SGD' -- 'optimization method: SGD | ASGD | CG | LBFGS')
 opt.learningRate = learning_rate --'learning rate at t=0')
-opt.batchSize = 100-- 'mini-batch size (1 = pure stochastic)')
+opt.batchSize = 1-- 'mini-batch size (1 = pure stochastic)')
 opt.weightDecay = 0.0000 -- 'weight decay (SGD only)')
 opt.momentum = 0.0 -- 'momentum (SGD only)')
 --cmd:option('-t0', 1, 'start averaging at t0 (ASGD only), in nb of epochs')
@@ -59,7 +59,8 @@ old_rmse = 1000
 test_bucket = 1
 --data_filename = 'desc_BoB-20-fine05'
 data_filename = 'desc_BoB-20-fine025'
-avg_rmse = torch.Tensor(14):fill(0)
+-- WARNING! this should be 14 or 1 sometimes
+avg_rmse = torch.Tensor(1):fill(0)
 for fold_nbr=1,1 do
     test_bucket = fold_nbr
     load_molecules_data(data_filename, 0, test_bucket)
@@ -67,7 +68,7 @@ for fold_nbr=1,1 do
     dofile '3_loss.lua'
     dofile '4_train.lua'
     dofile '5_test.lua'
-    for epoch_id = 1,100 do
+    for epoch_id = 1,600 do
         train(epoch_id, fold_nbr)
         if epoch_id % 1 == 0 then
             te,tt = test()

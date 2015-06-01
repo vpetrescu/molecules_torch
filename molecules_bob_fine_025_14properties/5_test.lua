@@ -28,10 +28,11 @@ function test()
 
    -- test over test data
    print('==> testing on test set:')
-   error_rmse = torch.Tensor(14):fill(0)
-   error_mae = torch.Tensor(14):fill(0)
-   all_errors = torch.Tensor(testData:size(),14):fill(0)
-   all_labels = torch.Tensor(testData:size(),14):fill(0)
+   N = trainData.labels:size(2)
+   error_rmse = torch.Tensor(N):fill(0)
+   error_mae = torch.Tensor(N):fill(0)
+   all_errors = torch.Tensor(testData:size(),N):fill(0)
+   all_labels = torch.Tensor(testData:size(),N):fill(0)
    for t = 1,testData:size() do
       -- disp progress
       --xlua.progress(t, testData:size())
@@ -60,9 +61,9 @@ function test()
    --gnuplot.plot(all_labels, all_errors, '+')
   -- print(all_errors)
 
-   all_errors = torch.Tensor(trainData:size(),14):fill(0)
-   all_labels = torch.Tensor(trainData:size(),14):fill(0)
-   error_rmse = torch.Tensor(14):fill(0)
+   all_errors = torch.Tensor(trainData:size(),N):fill(0)
+   all_labels = torch.Tensor(trainData:size(),N):fill(0)
+   error_rmse = torch.Tensor(N):fill(0)
    for t = 1,trainData:size() do
       -- disp progress
       xlua.progress(t, trainData:size())

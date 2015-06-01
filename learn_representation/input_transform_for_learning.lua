@@ -3,10 +3,10 @@ require 'torch'
 
 function  transform_input_pairs(triplets_array)
 --[[ The function takes as input an array of multiples of 3.
-    Every triplet is of the form (Zi,Zj, Rij).
+    Every triplet is of the form (Zi,Zj, 1/Rij).
     The functions outputs two variables
         - one containing a table of pairs {{Zi,Zj}, {Zi,Zt}, ...}
-        - one containing the corresponding distances {Rij, Rit, ...}
+        - one containing the corresponding  inverse distances {1/Rij, 1/Rit, ...}
     The two array should have the same size
 
     Example:

@@ -1,7 +1,7 @@
 require 'crossvalidation'
 local parameters = {}
-parameters.nhiddens1 = {type = 'int', min = 40, max = 350}
-parameters.nhiddens2 = {type = 'int', min = 40, max = 410}
+parameters.nhiddens1 = {type = 'int', min = 40, max = 750}
+--parameters.nhiddens2 = {type = 'int', min = 40, max = 410}
 parameters.activation = {type = 'enum', options = {'Tanh', 'ReLU'}}
 parameters.learning_rate = {type ='float', min = 1e-7, max = 1e-5}
 parameters.preprocessing_type = {type = 'enum', options = {'none','local-normalization'}}
@@ -10,13 +10,13 @@ local outcome = {}
 outcome.name = 'Regression 250 - rmse_test'
 
 whetlab = require 'whetlab'
-local scientist = whetlab('SemiSortedColoumb', 'is nan not ignored', parameters, outcome, True,'a6cea373-547c-4810-9023-32de11d09012')
+local scientist = whetlab('BoB one layer', 'is nan not ignored', parameters, outcome, True,'a6cea373-547c-4810-9023-32de11d09012')
 local job = scientist:suggest()
-for ei = 1,200 do
+for ei = 1,100 do
     print 'trail number'
     print(ei)
     job = scientist:suggest()
-    valid_accuracy = run_neural_net(job.nhiddens1, job.nhiddens2,  job.learning_rate, job.preprocessing_type, job.activation)
+    valid_accuracy = run_neural_net(job.nhiddens1, 0,  job.learning_rate, job.preprocessing_type, job.activation)
     --valid_accuracy = run_neural_net(job.nhiddens1, job.nhiddens2,  job.learning_rate, 'local-normalization', 'ReLU')
     for k,v in pairs(job) do print(k,v) end
     scientist:update(job, valid_accuracy);

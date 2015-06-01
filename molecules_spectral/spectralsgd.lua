@@ -32,16 +32,28 @@ function optim.spectralsgd(opfunc, nparameters, config, state)
             nparameters[i]:add(-clr, dfdx[i])
         else
             --print(dfdx[i]:size(2))
- --           print(dfdx[i])
-            local U,S,V = torch.svd(dfdx[i])
-            local gsum = torch.Tensor(U:size(1),V:size(1)):zero()
-            for j=1,S:size(1) do
+            --print(dfdx[i])
+             U,S,V = torch.svd(dfdx[i])
+             gsum = torch.Tensor(U:size(1),V:size(1)):zero()
+             if U~=U then
+                 print 'is nan U'
+             end
+             if V~=V then
+                 print 'is nan U'
+             end
+             for j=1,S:size(1) do
                 local temp = torch.Tensor(U:size(1), V:size(1)):zero()
                 torch.addr(temp, U[{{},j}],V[{{},j}])
                 gsum = gsum + temp 
             end
-            clr = clr * S:sum()
-            nparameters[i]:add(-clr, dfdx[i])
+            collectgarbage()
+            --print(collectgarbage("count")*1024)
+
+           -- clr = clr * S:sum()
+           gsum = gsum *S[1]
+          -- print(i)
+           nparameters[i]:add(-clr, gsum)
+           -- nparameters[i]:add(-clr, dfdx[i])
         end
     end
     return nparameters,{fx}
