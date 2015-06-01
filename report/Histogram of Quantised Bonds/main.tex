@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 
-\title{Invariance to atom permutations - Bag of Quantized Bonds}
+\title{Invariance to atom permutations - Bag of Histogram Bonds}
 \author{Viviana Petrescu }
 \date{May 2015}
 
@@ -15,19 +15,19 @@
 \section{Abstract}
 The high computational cost of quantum chemistry calculations have prompted the use of less expensive machine learning methods for predicting molecular properties in chemical compound space.
 Finding good feature representations for molecules is hard, in part because of the graph-like structure geometry of the molecules that need to be represented as high dimensional vectors. The desired properties of a descriptor are invariance to rotation and translation of the molecule and invariance with respect to the permutation of atom indexes.
-In this work we present a new histogram based descriptor which tries to overcome the above problems. While there are other descriptors which overcome the translation and rotation invariance using Coloumb repulsion information, the main property of the proposed descriptor is its invariance to atom indexing. Moreover, its dimensionality is independent of the size of the molecules and it only varies with the number of \textit{distinct} atom types in the dataset.
+In this work we present a new histogram based descriptor which tries to overcome the above problems. While there are other descriptors which overcome the translation and rotation invariance using Coloumb repulsion information, the main property of the proposed descriptor is its invariance to atom indexing. Moreover, its dimensionality is independent of the size of the molecules and it varies with the number of \textit{distinct} atom types in the dataset.
 We evaluate its predictive performance on two datasets (with approx 7k molecules each) which gives close to state of the art predictions of atomization energy using neural networks. 
 
 \section{Introduction}
 The discovery of new molecular materials in chemistry has the potential of solving many of the problems we face today.
 Having a system which predicts both accurately and at a small computational cost the properties of new materials is highly desirable and has applications ranging from novel drugs discovery, water purification to efficient materials for high energy transmission and storage\cite{cleanenergy}.
 
-Any molecular property can be derived numerically by solving Schröedinger's equation, a setup which is computationally feasible only for small systems. Many approximation algorithms with polynomial complexity in the number of atoms exists. However, they can also be prohibitive in practice, since predicting one property can take hours or even days for certain system sizes.
-If instead, the properties of molecules can be estimated using trained machine learning models, the prediction for a new property of a new unseen molecule can take a couple of milliseconds. To date, kernel ridge regression, Gaussian processes and neural networks have been successfully applied to predicting properties of molecules such as atomization energy, averaged molecular polarizability, HOMO and LUMO eigenvalues or ionization potentials.
+Any molecular property can be derived numerically by solving Schröedinger's equation, a setup which is computationally feasible only for small systems. Many approximation algorithms exists which have polynomial complexity in the number of atoms. However, they can also be prohibitive in practice, since predicting one property can take hours or even days for certain system sizes.
+If instead, the properties of molecules can be estimated using trained machine learning models, the prediction for a new property of a new unseen molecule can take a couple of milliseconds. To date, kernel ridge regression, Gaussian processes and neural networks have been successfully applied to predicting properties of molecules such as atomization energy, averaged molecular polarizability, HOMO and LUMO eigenvalues or ionization potentials \citep{assessment}.
 
 Machine Learning models are as powerful as the feature descriptors used are. There is a long history of molecular descriptors \cite{todeschini2000handbook} that aim at encoding the information in molecules in a discriminative manner. While some of them require extensive domain knowledge, recent approaches \cite{initialcoloumb} use only the 3D position of atoms and their nuclear charges for describing a molecule.
 
-In the following section we describe two popular descriptors based on Coloumb interactions and we introduce our novel descriptor. In section 3[] we describe the datasets on which we evaluate the performance of our algorithms and present in more detail the experimental results. We summarize the contributions of this work in the last section.
+In the following section we describe two popular descriptors based on Coloumb interactions and we introduce our novel descriptor. In section 3 we describe the datasets on which we evaluate the performance of our model and discuss our experimental results. We summarize the contributions of this work in the last section.
 
 \section{Molecular descriptors}
 
@@ -45,30 +45,29 @@ The desired properties of a molecular descriptor are
 \end{itemize}
 
 \subsection{Coloumb Matrix}
-The Coloumb matrix is a popular descriptors which stores pairwise Coloumb interaction terms between pairs of atoms. These are the terms that appear in equation.//TODO
+The Coloumb matrix\citep{initialcoloumb} $M^{NxN}$ is a descriptor based on  Coloumb interaction terms between pairs of atoms. These are the terms that appear in equation.//TODO
 
 \[M(i,j) = \left\{
   \begin{array}{lr}
-    0.5*Z_i^2.4 & if i = j\\
+    0.5*Z_i^{2.4} & if i = j\\
     Z_i * Z_j / |R_i - R_j| & otherwise
   \end{array}
 \right.
 \]
 
-The size of the Coloumb descriptor is given by $\frac{N*(N - 1)}{2}$ if we take into account the fact that the matrix is symmetric.
+The size of the Coloumb descriptor is given by $\frac{N*(N - 1)}{2}$ if we take into account the symmetry of the matrix.
 
-While the Coloumb matrix solves the translation and rotation invariance, the permutation of the atom indexes is solved using variants of the descriptor called Sorted Coloumb Matrix or Randomly Sorted Coloumb Matrices.  Sorted Coloumb Matrix defines an order of the atoms given by the norms of the rows of the Coloumb matrix. Unlike the simple Coloumb matrix, any molecule has a unique Sorted Coloumb matrix representation.
-In practice,  the norm of the rows of a matrix are very close to each other and therefor susceptible to small noise which can lead to a different ordering of the atoms in a molecule. Randomly Sorted Coloumb matrices have been introduced to cope with this issue by adding a small Gaussian noise to every row and sort according to the new noisy norm value.
+While the Coloumb matrix solves the translation and rotation invariance, the permutation of atom indexes is solved using variants of the descriptor called Sorted Coloumb Matrix or Randomly Sorted Coloumb Matrices.  Sorted Coloumb Matrix uses the ordering of the atoms obtained by sorting the rows according to their norm. Unlike the simple Coloumb matrix, any molecule has a unique Sorted Coloumb matrix representation.
+In practice,  the norm of the rows of a matrix are very close to each other and therefore susceptible to small noise which can lead to a different ordering of the atoms for a molecule. Randomly Sorted Coloumb matrices have been introduced to cope with this issue by adding a small Gaussian noise to every row in the Coloumb Matrix and sort according to the new noisy norm value.
 
 \subsection{Bag Of Bonds}
-The descriptor which gives state of the art results on the datasets we are interested in is called Bag of Bonds (BoB), whose name was inspired from natural language processing bag of words. In BoB every bag contains all the pairwise interactions between two types of atoms (the types can be identical). Invariance to indexing of the atoms is given by sorting the values inside each bag according to their magnitude.
-Its advantage is that terms in the feature descriptor that are responsible for certain types 
-of interaction are always present in a certain interval in the vector.
-Its dimensionality  is given by $\sum \frac{Ni*(Ni-1)}{2}$ .
+The descriptor which gives state of the art results in predicting atomization energy is called Bag of Bonds (BoB), whose name was inspired from natural language processing bag of words. In BoB, every bag contains all the pairwise interactions between two types of atoms (the types can be identical). Invariance to indexing of the atoms is obtained by sorting the values inside each bag according to their magnitude.
+One possible cause for the robustness of the descriptor is the fact that one bag is responsible for certain types of bonds only.
+Its dimensionality  is given by $\sum_i \frac{N_i*(N_i-1)}{2} + \sum_{i,j, i!=j} N_i*N_j	$  .
+The first term counts the number of bonds between atoms of the same type and the second term counts the number of bonds between different atom types.
 
-
-\section{Bag of Quantised Bonds}
-We propose a new descriptor Bag of Quantised Bonds(BoQB), whose size is not dependent on the number of atoms in the molecules. Similarly with BoB, every bag  encodes information about certain types of bonds. Unlike BoB, where the elements in every bag are sorted according to their magnitude, in BoQB case every bag is a histogram. The size of  the bag histogram is given by the maximum distance between two pairs of atoms (pertaining to the bag type). The quantization level of the distances varies between bag types and we experimentally found that a quantization level of 0.2 or 0.25 perform well in practice, but this will vary for different datasets.
+\section{Bag of Bonds Histogram}
+We propose a new descriptor Bag of Bonds Hisotgram(BoBH), whose size is not dependent on the number of atoms in the molecules. Similarly with BoB, every bag  encodes information about certain types of bonds. Unlike BoB, where the elements in every bag are sorted according to their magnitude, in BoBH case every bag is a histogram. The size of the bag histogram is given by the maximum distance between two pairs of atoms (pertaining to that bag type). The quantization level of the distances varies between bag types and we experimentally found that a quantization level of 0.2 or 0.25 perform well in practice, but this will vary for different datasets.
 
 Thus, every entry of the descriptors contains a count
 \begin{itemize}
