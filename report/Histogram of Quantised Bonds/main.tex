@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 
-\title{Invariance to atom permutations - Bag of Histogram Bonds}
+\title{Invariance to atom permutations - Bag of Bonds Histogram}
 \author{Viviana Petrescu }
 \date{May 2015}
 
@@ -105,28 +105,39 @@ distances between atoms instead of the actual 3D positions. Sorted Coloumb and R
 %\end{tabular}
 
 
-\subsection{State of the art results}
-The result of \cite{montavon2012learning} were the first ones using neural networks...bla bla
-
-
-\section{Experiments}
-The data was normalised to have values between 0 and 1. Unlike standardization,
-we believe this helps more the network to learn, since it keeps the values in the same regime as the initialization fo the weights and biases.
-We experimented with various quantization level, between 1 to 0.20.
-We used Whetlab tool for finding best network arhitecture. Unlike grid search, the tool uses gaussian processes to find the best parameters for a model.
-Since for us ReLU activation seemed to perform better, possibly also due to its inherently nature of generating sparse representations and for the inherently sparse nature of our feature descriptor.
+\section{Experimental Results}
 
 \subsection{Datasets description}
-Our currated dataset GDB-7 consists of 7122 molecules containing at most 23 atoms per molecules and at most 5 types of atoms (H,C,O,S,N), out of which only one is a heavy atom. We found the model parameters using cross validation on the training set and reported the results on the test set. The folds of the cross validation contain stratified samples.
-Also false big data talk \cite{falsebigdata}
+We tested the performance of BoBH on two datasets for predicting atomization energy.
+The first curated dataset GDB-7 consists of 7165 molecules containing at most 23 atoms per molecules and at most 5 types of atoms (H,C,O,S,N). Five stratified folds for cross-validation were already given to us and are the same on which other people report their result.
+The other dataset consists of 7211 molecules containing at most 29 atoms per molecules and 6 types of atoms (H,C,O,S,N, Cl). Here we used 5000 training samples drawn randomly from the dataset and remaining 2211 for testing.
+
+
+\subsection{State of the art results}
+For the first dataset,  \cite{montavon2012learning} used a 2-layer neural networks with Random Coloumb matrices for predicting atomization energy with a MAE of 3.1 kcal/mol.
+It was noticed that both augumententing the dataset and binarizing the input was beneficial for the learning algorithm. Best performance of 1.5 kcal/mol was later obtained using BoB\citep{bob} features and Laplacian kernel regression.
+
+Although not a purely machine learning approach, in \cite{falsebigdata} they combine chemical approximation methods with machine learning models to obtain results at the density functional theory level of accuracy.
+
+For the second dataset,\cite{montavon2012learning} trained a 3 layer NN with Random Coloumb matrices as input and successfully predicted simultaneously 14 properties of the molecules (in particular for atomization energy they obtained MAE of 3.68 kcal/mol).
+
+
+\subsection{BoBH Results}
+The data was normalised to have values between 0 and 1. Unlike standardization,we believe this helps more the network to learn, since it keeps the values in the same scale as the initialization of the weights and biases.
+We experimented with various quantization level, between [1.0.5,0.25,0.20, 0.125]. We noticed an improvement in performance with decreasing quantization level up to  $q=0.20$. We believe that further decreasing the quantization level did not improve the results because the size of the descriptor was quite large (almost 3000) and our dataset was relatively small. 
+
+Finding the best arhitecture for a dataset can be quite challenging since we need to choose the number of neurons for every hidden layer, the type of activation and the leanring rate.
+We used the Whetlab tool for finding best network setup TODO cite whetlab here. Unlike grid search, the tool uses gaussian processes to for finding optimal parameters of the network.
+The best setup was a fully connected NN, with 250 and 80 neurons for the first and second layers and with ReLU activation function. 
+ReLU activation function was shown to work well on sparse descriptors seemed to perform better, possibly also due to its inherently nature of generating sparse representations and for the inherently sparse nature of our feature descriptor.
+TODO add citation to parse Dense Sparse ReLU
 They were trained with Whetlab \cite{whetlab}
 
 This is the best neural network model and it comes at a fraction of cost in time, without even augumentening the dataset like in Random Sorted Coloumb with NN.
 
-\subsection{Results}
-
 \section{Future work}
 Learning invariant features, trying RBF networks or using ConvNet on 2D matrix.
+Compare BoBH with Laplacian kernels.
 
 \section{Conclusions}
 We proposed a new descriptor which solves the invariability to atom permutations problem. It gives best performance on both datasets using a neural network model and second after a BoB using Laplacian kernels. The downside of using kernel regression is the fact that it scales cubically with the number of samples in the training data. 
