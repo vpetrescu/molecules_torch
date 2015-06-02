@@ -24,27 +24,22 @@ function optim.full_spectralsgd(opfunc, nparameters, config, state)
     local fx,dfdx = opfunc(nparameters)
     local lrd = config.learningRateDecay or 0
     local nevals = state.evalCounter
-    lrd = 0
     local clr = lr / (1 + nevals*lrd)
+
     -- normal code would be  x:add(-clr, dfdx)
     state.evalCounter = state.evalCounter + 1
     for i=1,#nparameters do
         if (dfdx[i]:dim() == 1) then
            -- nparameters[i]:add(-clr, dfdx[i])
         else
---            print(dfdx[i]:size(2))
---            print(dfdx[i])
---             print(dfdx[i]:size())
-           --  print(dfdx[i+1]:size())
              local newdfdx = torch.Tensor(dfdx[i]:size(1), dfdx[i]:size(2)+1):zero()
              local DD = nparameters[i]:size(2)
-          --   newdfdx:indexCopy(2, indices:type('torch.LongTensor'), dfdx[i])
-             local oneindex = torch.Tensor({dfdx[i]:size(2) + 1})
+             local indices = torch.range(1,dfdx[i]:size(2))
+             newdfdx:indexCopy(2, indices:type('torch.LongTensor'), dfdx[i])
+           --  local oneindex = torch.Tensor({dfdx[i]:size(2) + 1})
+           --  newdfdx:indexCopy(2, oneindex:type('torch.LongTensor'), dfdx[i+1])
              for x=1,nparameters[i]:size(1) do
-                 for y = 1,nparameters[i]:size(2) do
-                    newdfdx[{{x},{y}}] = dfdx[i][{{x},{y}}]
-                 end
-                 newdfdx[{{x},{DD+1}}] = dfdx[i+1][x]
+                newdfdx[{{x},{DD+1}}] = dfdx[i+1][x]
              end
 
              U,S,V = torch.svd(newdfdx)
@@ -57,6 +52,7 @@ function optim.full_spectralsgd(opfunc, nparameters, config, state)
            gsum = gsum *S[1]
            local reshaped_bias = torch.Tensor(dfdx[i]:size(1))
            local t1 = torch.Tensor(nparameters[i]:size(1), DD)
+           --t1 = gsum[{{},{indices:type('torch.LongTensor')}}]
            for x = 1,nparameters[i]:size(1) do
                 for y = 1,nparameters[i]:size(2) do
                     t1[{{x},{y}}] = gsum[{{x},{y}}]
