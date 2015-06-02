@@ -89,6 +89,7 @@ function test()
    print(sorted_indices[tN-1])
    gnuplot.plot(all_labels, all_errors, '+')
    print(error_rmse)
+   --print(model:get(1).weight)
    -- timing
    time = sys.clock() - time
    time = time / testData:size()

@@ -26,7 +26,7 @@ opt.threads = 1
 opt.save = 'results' -- 'subdirectory to save/log experiments in')
 opt.optimization = 'SGD' -- 'optimization method: SGD | ASGD | CG | LBFGS')
 opt.learningRate = learning_rate --'learning rate at t=0')
-opt.batchSize = 400 -- 'mini-batch size (1 = pure stochastic)')
+opt.batchSize = 25 -- 'mini-batch size (1 = pure stochastic)')
 opt.weightDecay = 0.000 -- 'weight decay (SGD only)')
 opt.momentum = 0.0 -- 'momentum (SGD only)')
 --cmd:option('-t0', 1, 'start averaging at t0 (ASGD only), in nb of epochs')
