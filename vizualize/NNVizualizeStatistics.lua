@@ -38,6 +38,7 @@ function NNVizualizeStatistics:plotWeights(weights, nbr)
     N1 = weights:size(1)
     N2 = weights:size(2)
     weightsfile = string.format('weights%d', nbr)
+    local timer = torch.Timer()
     file = torch.DiskFile(weightsfile,'w')
     for i=1,N1 do
         for j=1,N2 do
@@ -46,10 +47,18 @@ function NNVizualizeStatistics:plotWeights(weights, nbr)
         end
     end
     file:close()
-    gnuplot.raw(string.format('set term wxt %d', nbr -1))
+    print('Time for writing to file ' .. timer:time().real)
+
+    timer = torch.Timer()
+    gnuplot.raw('set term png')
+    gnuplot.raw(string.format('set output "printme%d.png"', nbr))
     gnuplot.raw(string.format('set dgrid3d %d ,%d', N1, N2))
     gnuplot.raw('set hidden3d')
     gnuplot.raw(string.format('splot "%s" u 1:2:3 with lines', weightsfile))
+    print('Time elapsed '.. timer:time().real)
+    gnuplot.raw('set term wxt')
+    gnuplot.raw(string.format('set term wxt %d', nbr -1))
+    gnuplot.raw('replot')
 end
 
 function NNVizualizeStatistics:plotActivations()
