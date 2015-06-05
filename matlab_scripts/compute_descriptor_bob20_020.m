@@ -2,7 +2,8 @@ function [out_data, out_labels] = compute_descriptor_bob20_020(indices, ...
                                                                data, ...
                                                                n_distinct,...
                                                                mr,...
-                                                               nbr_dist_bins)
+                                                               nbr_dist_bins,...
+                                                               molecule_size)
 
 
 quantization_level = 5;
@@ -24,9 +25,9 @@ for sample = 1:n_samples
   indext = indices(sample) + 1;
   out_labels(sample,:) = data.T(indext,:);
 % out_labels(sample) = data.T(indext);
-  Zs = zeros([23,1]);
+  Zs = zeros([M,1]);
   Xs = data.X(indext,:,:);
-  Xs = reshape(Xs, [23, 23]);
+  Xs = reshape(Xs, [M, M]);
   for i=1:M
     Zs(i) = round((2*Xs(i,i))^(1/2.4));
     % increase count of this molecule

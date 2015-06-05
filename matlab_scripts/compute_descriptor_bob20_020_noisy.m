@@ -1,15 +1,16 @@
-function [out_data, out_labels] = compute_descriptor_bob20_020_noisy(indices, data)
+function [out_data, out_labels] = compute_descriptor_bob20_020_noisy(indices, ...
+                                                               data, ...
+                                                               n_distinct,...
+                                                               mr,...
+                                                               nbr_dist_bins,...
+                                                               molecule_size)
 %% transform molecules
-% number of distinct atoms H,O,C,S,N
-% n_distinct = 6;
-% % the binning of the distances
-% nbr_dist_bins = 18;
-n_distinct = 5;
-nbr_dist_bins = 19;
+
 
 quantization_level = 5;
-n_samples = size(indices,1) * quantization_level;
 noise_levels = 5;
+n_samples = size(indices,1) * noise_levels;
+
 pairs_structure = zeros(n_samples*noise_levels, n_distinct, n_distinct, ...
     nbr_dist_bins * quantization_level);
 atoms_count = zeros(n_samples, n_distinct);
@@ -18,12 +19,9 @@ atoms_count = zeros(n_samples, n_distinct);
 out_labels = zeros(n_samples, 1); % );
 %out_labels = zeros(n_samples, size(data.T,2));
 
-keySet   = {1,6,7,8,16,17};
-valueSet = [ 1,2,3,4,5, 6];
-mr = containers.Map(keySet,valueSet);
 
 %% Hard coded here
-M = 23;
+M = molecule_size;
 maxDistance = 0;
 for sample = 1:size(indices,1)
     for nl = 1:noise_levels
@@ -31,9 +29,9 @@ for sample = 1:size(indices,1)
         indext = indices(sample) + 1;
         % out_labels(sample,:) = data.T(indext,:);
         out_labels(currenti) = data.T(indext);
-        Zs = zeros([23,1]);
+        Zs = zeros([M,1]);
         Xs = data.X(indext,:,:);
-        Xs = reshape(Xs, [23, 23]);
+        Xs = reshape(Xs, [M, M]);
         for i=1:M
             Zs(i) = round((2*Xs(i,i))^(1/2.4));
             % increase count of this molecule
