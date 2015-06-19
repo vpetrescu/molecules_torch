@@ -120,7 +120,9 @@ for fold_nbr=1:5
         [testData.data, testData.labels] = compute_descriptor_bob20(teindices, data);
         [trainData.data, testData.data] = remove_0values_from_descriptor(trainData.data, testData.data); 
       elseif strcmp(current_method, 'BoB-20-fine020-noisy')
-        [testData.data, testData.labels] = compute_descriptor_bob20_020_noisy(teindices, data);
+        [testData.data, testData.labels] = compute_descriptor_bob20_020_noisy(teindices, data,...
+                                                 n_distinct, mr,...
+                                                 nbr_dist_bins, molecule_size););
     end
     
  %   filename_train = sprintf('../../data/train_desc_%s_fold_%d.mat', ...

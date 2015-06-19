@@ -46,7 +46,7 @@ size(teindices3)
 
 %% Sort the other indices according to the number of atoms
 %% Split it into 5 sets
-current_method = 'BoB-20-fine025';
+current_method = 'BoB-20-fine020';
 
 method = {'Coloumb', ... % Original Coloumb matrix
           'SortedColoumb', ... % Coloumb matrix sorted by row norm
@@ -66,14 +66,14 @@ path_to_data = 'data14properties';
 %path_to_data = 'data14properties';
 
 
-for fold_nbr=1:1
+for fold_nbr=2:3
     %% get train indices
     if fold_nbr == 1
         teindices = teindices1 - 1;
     elseif fold_nbr == 2
-        teindices = teindices2;
+        teindices = teindices2 - 1;
     else
-        teindices = teindices3;
+        teindices = teindices3 - 1;
     end
     teindices=teindices(:);
     out_data = []; out_labels = [];
@@ -82,11 +82,11 @@ for fold_nbr=1:1
     trindices = 1:N - 1;
     trindices = setdiff(trindices, teindices);
     trindices = trindices(:);
-    if strcmp(current_method, 'BoB-20-fine025')
+    if strcmp(current_method, 'BoB-20-fine020')
         [trainData.data, trainData.labels] = ...
-                    compute_descriptor_bob20_025(trindices, data);
+                    compute_descriptor_bob20_020(trindices, data);
         [testData.data, testData.labels] = ...
-                    compute_descriptor_bob20_025(teindices, data);
+                    compute_descriptor_bob20_020(teindices, data);
     end
      
 %     a = -1;

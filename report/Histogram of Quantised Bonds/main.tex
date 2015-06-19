@@ -110,7 +110,9 @@ distances between atoms instead of the actual 3D positions. Sorted Coloumb and R
 \subsection{Datasets description}
 We tested the performance of BoBH on two datasets for predicting atomization energy.
 The first curated dataset GDB-7 consists of 7165 molecules containing at most 23 atoms per molecules and at most 5 types of atoms (H,C,O,S,N). Five stratified folds for cross-validation were already given to us and are the same on which other people report their result.
-The other dataset consists of 7211 molecules containing at most 29 atoms per molecules and 6 types of atoms (H,C,O,S,N, Cl). Here we used 5000 training samples drawn randomly from the dataset and remaining 2211 for testing.
+The other dataset consists of 7211 molecules containing at most 29 atoms per molecules and 6 types of atoms (H,C,O,S,N, Cl). Here we used 5000 training samples drawn randomly from the dataset and remaining 2211 for testing. The splitting was done as mentioned in Machine Learning Tutorial. First the molecules that contained very few non Hidrogen atoms per molecule were added to the dataset. Then, the molecules were sorted according to the number of atoms they have and split into 3 folds by adding to fold $i$ every other $i$th molecule.
+The third dataset contained 120000 molecules with 5 types of atoms (H,C,O,F,S) and 15 properties.
+We experimented only with atomization energy values.
 
 
 \subsection{State of the art results}
@@ -126,14 +128,13 @@ For the second dataset,\cite{montavon2012learning} trained a 3 layer NN with Ran
 The data was normalised to have values between 0 and 1. Unlike standardization,we believe this helps more the network to learn, since it keeps the values in the same scale as the initialization of the weights and biases.
 We experimented with various quantization level, between [1.0.5,0.25,0.20, 0.125]. We noticed an improvement in performance with decreasing quantization level up to  $q=0.20$. We believe that further decreasing the quantization level did not improve the results because the size of the descriptor was quite large (almost 3000) and our dataset was relatively small. 
 
-Finding the best arhitecture for a dataset can be quite challenging since we need to choose the number of neurons for every hidden layer, the type of activation and the leanring rate.
-We used the Whetlab tool for finding best network setup TODO cite whetlab here. Unlike grid search, the tool uses gaussian processes to for finding optimal parameters of the network.
-The best setup was a fully connected NN, with 250 and 80 neurons for the first and second layers and with ReLU activation function. 
-ReLU activation function was shown to work well on sparse descriptors seemed to perform better, possibly also due to its inherently nature of generating sparse representations and for the inherently sparse nature of our feature descriptor.
-TODO add citation to parse Dense Sparse ReLU
-They were trained with Whetlab \cite{whetlab}
+Finding the best arhitecture for a dataset can be quite challenging since we need to choose the number of neurons for every hidden layer, the type of activation and the learning rate.
+We used the Whetlab tool for finding best network setup \citep{whetlab} here. Unlike grid search, the tool uses gaussian processes for finding optimal parameters of the network.
+The best setup was a fully connected NN, with 200 and 80 neurons for the first and second layers and with ReLU activation function. 
+ReLU activation function was shown to work well on sparse descriptors seemed to perform better, possibly also due to its inherently nature of generating sparse representations and for the inherently sparse nature of our feature descriptor. It was shown to work well for other histogram or sparse data \cite{relu}. Reducing the dummy 0 variables did not show a significant improvement. The descriptor was very sparse ->
 
-This is the best neural network model and it comes at a fraction of cost in time, without even augumentening the dataset like in Random Sorted Coloumb with NN.
+
+This is the best neural network model and it comes at a fraction of cost in time, without even augumenting the dataset like in Random Sorted Coloumb with NN.
 
 \section{Future work}
 Learning invariant features, trying RBF networks or using ConvNet on 2D matrix.

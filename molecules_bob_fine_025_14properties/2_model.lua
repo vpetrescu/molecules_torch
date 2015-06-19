@@ -21,7 +21,10 @@ require 'nn'      -- provides all sorts of trainable modules/layers
 print '==> define parameters'
 
 -- 10-class problem
-noutputs = trainData.labels:size(2)
+noutputs = 1
+if trainData.labels:nDimension() > 1 then
+    noutputs = trainData.labels:size(2)
+end
 
 -- input dimensions
 ninputs = trainData.data:size(2)

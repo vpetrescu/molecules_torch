@@ -7,7 +7,7 @@ require 'torch'   -- torch
 require 'nn'      -- provides a normalization operator
 matio = require 'matio'
 
-function load_molecules_data(base_filename, valid_bucket, test_bucket)
+function load_molecules_data(base_filename, valid_bucket, test_bucket, property_nbr)
 --[[
 -- @base_filename The name of the descriptor which is used as filename basepath
 -- All the data is split into 5 folds.
@@ -22,27 +22,28 @@ function load_molecules_data(base_filename, valid_bucket, test_bucket)
 -- Initially the train set contains all the folds
 -- Iterate over all the folds in the train set and add them to trainData structure
 
-local tmp_train = matio.load('../../data14properties/trainE0_'..base_filename..'_fold_'..tonumber(test_bucket)..'.mat')
+local tmp_train = matio.load('../../data14properties/train_'..base_filename..'_fold_'..tonumber(test_bucket)..'.mat')
 trsize = tmp_train.trainData.data:size(1)
 trainData = {
    data =  tmp_train.trainData.data,
-   labels = tmp_train.trainData.labels,
+   labels = tmp_train.trainData.labels[{{},property_nbr}],
    size = function() return trsize end
 }
+trainData.labels:resize(trsize,1)
 print('Final training data size '..tonumber(trainData.labels:size(1)))
 
 -- Load testing or validation data
 -- local tmp_test = matio.load('../../data14properties/test_'..base_filename..'_fold_'..tonumber(testid)..'.mat')
-testfilename = '../../data14properties/testE0_'..base_filename..'_fold_'..tonumber(test_bucket)..'.mat'
+testfilename = '../../data14properties/test_'..base_filename..'_fold_'..tonumber(test_bucket)..'.mat'
 print(testfilename)
 local tmp_test = matio.load(testfilename)
 tesize = tmp_test.testData.data:size(1)
 testData = {
    data = tmp_test.testData.data,
-   labels =  tmp_test.testData.labels,
+   labels =  tmp_test.testData.labels[{{}, property_nbr}],
    size = function() return tesize end
 }
-
+testData.labels:resize(tesize, 1)
 print('Validation/Testing data size '..tonumber(testData.data:size(1)))
 print '==> preprocessing data'
 
@@ -66,7 +67,7 @@ preprocessing_type = opt.preprocessing_type -- N(0,1), [0,1], global N(0,1), glo
               --  local standardization, local normalization
               --  global standardization, global normalization
 
-if preprocessing_type == 'none' then
+if preprocessing_type == 'local-normalization' then
     print 'No preprocessing'
 elseif preprocessing_type == 'local-normalization' then
     local max = {}
@@ -140,11 +141,15 @@ elseif preprocessing_type == 'global-standardization' then
    testData.data[{ {},{} }]:div(std_global)
 end
 
-local N  = trainData.labels:size(2)
-global_std = torch.Tensor(N):fill(1)
+if trainData.labels:nDimension() > 1 then
+    local N  = trainData.labels:size(2)
+    global_std = torch.Tensor(N):fill(1)
+end
 
 --local label_preprocessing_type = 'two-local-normalization';
 --local label_preprocessing_type = 'local-standardization';
+local label_preprocessing_type = 'none';
+--
 if label_preprocessing_type == 'two-local-normalization' then
     local a = -1
     local b = 1

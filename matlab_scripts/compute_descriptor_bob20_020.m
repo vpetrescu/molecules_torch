@@ -68,7 +68,7 @@ for sample = 1:n_samples
 end
 
 maxDistance
-pause
+%pause
 NN = n_distinct*(n_distinct+1)/2* nbr_dist_bins * quantization_level + n_distinct;
 uniq_out_data = zeros(n_samples, NN);
 

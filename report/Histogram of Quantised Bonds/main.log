@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.5.29)  1 JUN 2015 16:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.5.29)  1 JUN 2015 17:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -398,7 +398,11 @@ Overfull \hbox (1.72285pt too wide) in paragraph at lines 94--96
 tion in-vari-ance through
  []
 
-[4 <./HistogramOfDistances.png>] [5]
+[4 <./HistogramOfDistances.png>]
+
+Package natbib Warning: Citation `relu' on page 5 undefined on input line 133.
+
+[5]
 Overfull \hbox (5.66727pt too wide) in paragraph at lines 146--147
 []\OT1/cmr/m/n/10 We be-lieve that be-sides vi-sion and nat-u-ral lan-guage pro
 -cess-ing tasks, chemoin-
@@ -410,32 +414,36 @@ Underfull \hbox (badness 1824) in paragraph at lines 13--20
 ac Fa-zli,
  []
 
-[6]) [7] (./main.aux) ) 
+[6])
+
+Package natbib Warning: There were undefined citations.
+
+[7] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 2080 strings out of 493117
- 28229 string characters out of 6135433
+ 2083 strings out of 493117
+ 28256 string characters out of 6135433
  91384 words of memory out of 5000000
- 5527 multiletter control sequences out of 15000+600000
- 7933 words of font info for 28 fonts, out of 8000000 for 9000
+ 5529 multiletter control sequences out of 15000+600000
+ 8241 words of font info for 29 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  37i,7n,23p,689b,218s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2014/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmbx12.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmex10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmmi10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmmi5.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmmi7.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr12.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr17.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r7.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
-0.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.
-pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.p
-fb>
-Output written on main.pdf (7 pages, 184230 bytes).
+</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmbx10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmbx12.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmex10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmmi5.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmmi7.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
+2.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.
+pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
+></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></
+usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on main.pdf (7 pages, 193088 bytes).
 PDF statistics:
- 79 PDF objects out of 1000 (max. 8388607)
- 55 compressed objects within 1 object stream
+ 83 PDF objects out of 1000 (max. 8388607)
+ 58 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

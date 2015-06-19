@@ -5,6 +5,7 @@
 require 'matio'
 require 'torch'   -- torch
 require 'nn'      -- provides a normalization operator
+require 'unsup'
 matio = require 'matio'
 
 function load_molecules_data(base_filename, valid_bucket, test_bucket)
@@ -51,6 +52,7 @@ trainData = {
 }
 print('Final training data size '..tonumber(trainData.labels:size(1)))
 
+base_filename = 'desc_BoB-20-fine020' 
 -- Load testing or validation data
 local testid = test_bucket
 if valid_bucket ~= 0 then
@@ -130,7 +132,6 @@ elseif preprocessing_type == 'local-standardization' then
     for i = 1,N do
         -- stadardize each feature globally:
         mean[i] = trainData.data[{ {}, i}]:mean()
-        std[i] = trainData.data[{ {},i }]:std()
         trainData.data[{ {},i }]:add(-mean[i])
         if std[i] ~= 0 then
             trainData.data[{ {},i }]:div(std[i])
@@ -159,6 +160,15 @@ elseif preprocessing_type == 'global-standardization' then
    -- test data standardization
    testData.data[{ {},{} }]:add(-mean_global)
    testData.data[{ {},{} }]:div(std_global)
+elseif preprocessing_type == 'whitening' then
+    print(type(trainData.data))
+    local temptensor = torch.Tensor(trainData.data:size())
+    print(trainData.data:size())
+    temptensor[{{},{}}] = trainData.data[{{},{}}]
+    trainData.data, means, P, invP = unsup.zca_whiten(temptensor)
+    local temptest = torch.Tensor(testData.data:size())
+    temptest[{{},{}}] = testData.data[{{},{}}]
+    testData.data = unsup.zca_whiten(temptest, means, P, invP)
 end
 
 end

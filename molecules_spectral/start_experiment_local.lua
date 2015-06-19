@@ -14,7 +14,7 @@ for ei = 1,1 do
     print(ei)
     --valid_accuracy = run_neural_net(job.nhiddens1, job.nhiddens2,  job.learning_rate, job.preprocessing_type, job.activation)
     --valid_accuracy = run_neural_net(219, 100,  1e-2, 'local-normalization', 'ReLU')
-    valid_accuracy = run_neural_net(219, 80,  1e-5, 'local-normalization', 'ReLU')
+    valid_accuracy = run_neural_net(100, 80,  1e-3*5, 'whitening', 'ReLU')
     print('valid accuracy')
     print(valid_accuracy)
 end

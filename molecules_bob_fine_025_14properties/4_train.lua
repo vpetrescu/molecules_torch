@@ -161,6 +161,8 @@ function train(epoch)
                        for i = 1,#inputs do
                           -- estimate f
                           local output = model:forward(inputs[i])
+                         -- print(targets[i])
+                         -- print(output)
                           local err = criterion:forward(output, targets[i])
                           f = f + err
                           -- estimate df/dW
