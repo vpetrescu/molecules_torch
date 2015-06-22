@@ -128,12 +128,7 @@ function train(epoch)
 
    -- shuffle at each epoch
    shuffle = torch.randperm(trsize)
-   --[[iiii,shuffleix = torch.sort(trainData.labels,1)
-   shuffle = shuffleix:type('torch.DoubleTensor')
-   ssize = torch.LongStorage(5732)
-   shuffle:set(shuffle, 5732, ssize)
    
-   print(shuffle)--]]
    -- do one epoch
    print('==> doing epoch on training data:')
    print("==> online epoch # " .. epoch .. ' [batchSize = ' .. opt.batchSize .. ']')

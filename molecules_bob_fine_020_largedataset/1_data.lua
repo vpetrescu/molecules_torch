@@ -5,7 +5,7 @@
 require 'torch'   -- torch
 require 'nn'      -- provides a normalization operator
 
-function load_molecules_data(base_filename, valid_bucket, test_bucket)
+function load_molecules_data(base_filename, valid_bucket, test_bucket, property_nbr)
 --[[
 -- @base_filename The name of the descriptor which is used as filename basepath
 -- All the data is split into 5 folds.
@@ -42,7 +42,7 @@ for fold_id, value in pairs(train_bucket_indices_set) do
     end--]]
    local lua_filename = '../../large-set/test_'..base_filename..'_fold_'..tonumber(fold_id)..'.luamat'
    local read_file = torch.DiskFile(lua_filename, 'r')
-   tmp_fold = read_file:readObject()
+   local tmp_fold = read_file:readObject()
    read_file:close()	
     print('==> loading dataset '..lua_filename)
     if #temp_data == 0 then
@@ -50,8 +50,10 @@ for fold_id, value in pairs(train_bucket_indices_set) do
         temp_labels = tmp_fold.testData.labels[{{}, property_nbr}]
     else
         temp_data = torch.cat(tmp_fold.testData.data, temp_data, 1)
-        temp_labels = torch.cat(tmp_fold.testData.labels[{{},property_nbr}], temp_labels, 1)
+        temp_labels = torch.cat(tmp_fold.testData.labels[{{}, property_nbr}], temp_labels, 1)
     end
+    print(tmp_fold.testData.labels[{{}, property_nbr}]:max())
+    print(temp_labels:max())
 end
 
 trsize = temp_labels:size(1)
@@ -60,6 +62,8 @@ trainData = {
    labels = temp_labels,
    size = function() return trsize end
 }
+print('max labels in train')
+print(trainData.labels:max())
 trainData.labels:resize(trsize, 1)
 print('Final training data size '..tonumber(trainData.labels:size(1)))
 
@@ -77,6 +81,8 @@ testData = {
    labels =  tmp_test.testData.labels[{{}, property_nbr}],
    size = function() return tesize end
 }
+print('max labels in test')
+print(testData.labels:max())
 testData.labels:resize(tesize, 1)
 print('Validation/Testing data size '..tonumber(testData.data:size(1)))
 print '==> preprocessing data'

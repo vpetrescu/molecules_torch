@@ -25,9 +25,9 @@ opt.threads = 1
 opt.save = 'results' -- 'subdirectory to save/log experiments in')
 opt.optimization = 'SGD' -- 'optimization method: SGD | ASGD | CG | LBFGS')
 opt.learningRate = learning_rate --'learning rate at t=0')1
-opt.batchSize = 1000-- 'mini-batch size (1 = pure stochastic)')
+opt.batchSize = 10-- 'mini-batch size (1 = pure stochastic)')
 opt.weightDecay = 0.05 -- 'weight decay (SGD only)')
-opt.learningRateDecay =  1e-6
+opt.learningRateDecay =  1e-7
 opt.momentum = 0.0 -- 'momentum (SGD only)')
 --cmd:option('-t0', 1, 'start averaging at t0 (ASGD only), in nb of epochs')
 --cmd:option('-maxIter', 2, 'maximum nb of iterations for CG and LBFGS')
@@ -48,36 +48,38 @@ end
 torch.setnumthreads(opt.threads)
 torch.manualSeed(opt.seed)
 
-----------------------------------------------------------------------
 print '==> executing all'
-
-
-----------------------------------------------------------------------
 print '==> training!'
-old_rmse = 1000
 
--- the bucket that will be left over
-test_bucket = 5
---data_filename = 'desc_BoB-20-fine05'
-data_filename = 'desc_BoB-20-fine020'
-avg_rmse = 0
-allrmse = torch.Tensor(5):fill(0)
-for fold_nbr=1,5 do
-    test_bucket = fold_nbr
-    property_nbr = 8
-    load_molecules_data(data_filename, 0, fold_nbr, property_nbr)
-    dofile '2_model.lua'
-    dofile '3_loss.lua'
-    dofile '4_train.lua'
-    dofile '5_test.lua'
-    for epoch_id = 1,300 do
-        train(epoch_id, fold_nbr)
-        test_rmse, train_rmse = test()
+local total_properties_count = 14
+local CV = 5
+local data_filename = 'desc_BoB-20-fine020'
+local train_error = {}
+train_error['rmse'] = torch.Tensor(total_properties_count, CV):fill(0)
+train_error['mae'] = torch.Tensor(total_properties_count, CV):fill(0)
+local test_error = {}
+test_error['rmse'] = torch.Tensor(total_properties_count, CV):fill(0)
+test_error['mae'] = torch.Tensor(total_properties_count, CV):fill(0)
+
+for property_nbr = 1,total_properties_count do
+    for fold_nbr=1,CV do
+        test_bucket = fold_nbr
+        print(property_nbr)
+        load_molecules_data(data_filename, 0, fold_nbr, property_nbr)
+        dofile '2_model.lua'
+        dofile '3_loss.lua'
+        dofile '4_train.lua'
+        dofile '5_test.lua'
+        for epoch_id = 1,100 do
+            train(epoch_id, fold_nbr)
+            train_rmse, train_mae, test_rmse, test_mae = test()
+        end
+        train_error['rmse'][property_nbr][fold_nbr] = train_rmse
+        train_error['mae'][property_nbr][fold_nbr] = train_mae
+        test_error['rmse'][property_nbr][fold_nbr] = test_rmse
+        test_error['mae'][property_nbr][fold_nbr] = test_mae
+        torch.save('train_error_14_properties', train_error)
+        torch.save('test_error_14_properties',test_error)
     end
-    allrmse[fold_nbr] = test_rmse
-    avg_rmse = avg_rmse + test_rmse
 end
-avg_rmse = avg_rmse/5
-print(allrmse)
-return 250 - avg_rmse
 end
