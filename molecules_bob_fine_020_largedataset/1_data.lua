@@ -2,12 +2,10 @@
 -- Modified tutorial by
 -- Clement Farabet
 ----------------------------------------------------------------------
-require 'matio'
 require 'torch'   -- torch
 require 'nn'      -- provides a normalization operator
-matio = require 'matio'
 
-function load_molecules_data(base_filename, valid_bucket, test_bucket, property_nbr)
+function load_molecules_data(base_filename, valid_bucket, test_bucket)
 --[[
 -- @base_filename The name of the descriptor which is used as filename basepath
 -- All the data is split into 5 folds.
@@ -32,7 +30,7 @@ local temp_labels = {}
 
 -- Iterate over all the folds in the train set and add them to trainData structure
 for fold_id, value in pairs(train_bucket_indices_set) do
-    local fullfilename = '../../large-set/test_'..base_filename..'_fold_'..tonumber(fold_id)..'.mat'
+   --[[ local fullfilename = '../../data/test_'..base_filename..'_fold_'..tonumber(fold_id)..'.mat'
     local tmp_fold = matio.load(fullfilename)
     print('==> loading dataset '..fullfilename)
     if #temp_data == 0 then
@@ -41,14 +39,25 @@ for fold_id, value in pairs(train_bucket_indices_set) do
     else
         temp_data = torch.cat(tmp_fold.testData.data, temp_data, 1)
         temp_labels = torch.cat(tmp_fold.testData.labels, temp_labels, 1)
+    end--]]
+   local lua_filename = '../../large-set/test_'..base_filename..'_fold_'..tonumber(fold_id)..'.luamat'
+   local read_file = torch.DiskFile(lua_filename, 'r')
+   tmp_fold = read_file:readObject()
+   read_file:close()	
+    print('==> loading dataset '..lua_filename)
+    if #temp_data == 0 then
+        temp_data = tmp_fold.testData.data
+        temp_labels = tmp_fold.testData.labels[{{}, property_nbr}]
+    else
+        temp_data = torch.cat(tmp_fold.testData.data, temp_data, 1)
+        temp_labels = torch.cat(tmp_fold.testData.labels[{{},property_nbr}], temp_labels, 1)
     end
 end
-local temp_labels2 = temp_labels:select(2, property_nbr)
-print('Final training data size '..tonumber(temp_labels2:size(1)))
+
 trsize = temp_labels:size(1)
 trainData = {
    data =  temp_data,
-   labels = temp_labels[{{},property_nbr}],
+   labels = temp_labels,
    size = function() return trsize end
 }
 trainData.labels:resize(trsize, 1)
@@ -59,15 +68,16 @@ local testid = test_bucket
 if valid_bucket ~= 0 then
     testid = valid_bucket
 end
-local tmp_test = matio.load('../../large-set/test_'..base_filename..'_fold_'..tonumber(testid)..'.mat')
+local luamat_file = torch.DiskFile('../../large-set/test_'..base_filename..'_fold_'..tonumber(testid)..'.luamat', 'r')
+local tmp_test = luamat_file:readObject()
+luamat_file:close()
 tesize = tmp_test.testData.data:size(1)
 testData = {
    data = tmp_test.testData.data,
    labels =  tmp_test.testData.labels[{{}, property_nbr}],
    size = function() return tesize end
 }
-testData.labels:resize(tesize,1)
-
+testData.labels:resize(tesize, 1)
 print('Validation/Testing data size '..tonumber(testData.data:size(1)))
 print '==> preprocessing data'
 
