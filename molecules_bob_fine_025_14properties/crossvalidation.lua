@@ -70,7 +70,7 @@ train_avg_mae = torch.Tensor(max_properties, max_fold):fill(0)
 
 allerrors = {}
 local property = property_nbr
-    for fold_nbr=1,max_fold do
+for fold_nbr=1,max_fold do
         print(string.format('processing property %d', property))
         test_bucket = fold_nbr
         load_molecules_data(data_filename, 0, fold_nbr, property)
@@ -97,7 +97,7 @@ local property = property_nbr
         allerrors['trainmae'] = train_avg_mae
         allerrors['trainrmse'] = train_avg_rmse
         torch.save('allerrors_'..property, allerrors)
-    end
+end
 
 
 print('mean %f', train_avg_rmse[{property, {}}]:mean())
