@@ -8,7 +8,7 @@ require 'gnuplot'
 require 'torch'   -- torch
 require 'xlua'    -- xlua provides useful tools, like progress bars
 require 'optim'   -- an optimization package, for online and batch methods
---require 'NNVizualizeStatistics'
+
 ----------------------------------------------------------------------
 print '==> defining test procedure'
 
@@ -34,7 +34,7 @@ function test()
    all_labels = torch.Tensor(testData:size())
    for t = 1,testData:size() do
       -- disp progress
-      xlua.progress(t, testData:size())
+      --xlua.progress(t, testData:size())
 
       -- get new sample
       local input = testData.data[t]
@@ -79,15 +79,17 @@ function test()
       all_labels[t] = trainData.labels[t]
       all_errors[t] = torch.abs(target - pred)
    end
-   error_rmse = torch.sqrt(error_rmse / trainData:size())
-   print('error rmse')
---   sorted_mae_errors, sorted_indices = torch.sort(all_errors)
---[[   tN = trainData:size()
+   error_rmse_train = torch.sqrt(error_rmse / trainData:size())
+   error_mae_train = error_mae / trainData:size()
+   print('error rmse train')
+   sorted_mae_errors, sorted_indices = torch.sort(all_errors)
+   tN = trainData:size()
    print(sorted_mae_errors[tN])
    print(sorted_indices[tN])
    print(sorted_mae_errors[tN-1])
-   print(sorted_indices[tN-1])--]]
---   gnuplot.plot(all_labels, all_errors, '+')
+   print(sorted_indices[tN-1])
+   gnuplot.figure()
+   gnuplot.plot(all_labels, all_errors, '+')
    print(error_rmse)
    -- timing
    time = sys.clock() - time
@@ -101,8 +103,5 @@ function test()
       parameters:copy(cachedparams)
    end
 
-   --vstats = NNVizualizeStatistics()
-   --vstats:plotAll(model)
-   local answer = io.read()
-   return error_rmse_test, error_rmse
+   return error_rmse_train, error_mae_train, error_rmse_test, error_mae_test
 end
