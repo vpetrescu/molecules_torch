@@ -69,7 +69,7 @@ test_avg_mae = torch.Tensor(max_properties, max_fold):fill(0)
 train_avg_mae = torch.Tensor(max_properties, max_fold):fill(0)
 
 allerrors = {}
-for property=6,max_properties do
+for property=1,max_properties do
     for fold_nbr=1,max_fold do
         print(string.format('processing property %d', property))
         test_bucket = fold_nbr

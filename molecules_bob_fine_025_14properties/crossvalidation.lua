@@ -13,21 +13,23 @@
 --
 -- Clement Farabet
 ----------------------------------------------------------------------
+require '4_train'
 require '1_data'
 require 'torch'
 require 'math'
-function run_neural_net(nhiddens1, nhiddens2, learning_rate, preprocessing_type, activation_type)
+function run_neural_net(nhiddens1, nhiddens2, learning_rate, preprocessing_type, activation_type, property_nbr)
 ----------------------------------------------------------------------
 print '==> processing options'
 opt = {}
 opt.seed = 1
-opt.threads = 2
+opt.threads = 1
 opt.save = 'results' -- 'subdirectory to save/log experiments in')
 opt.optimization = 'SGD' -- 'optimization method: SGD | ASGD | CG | LBFGS')
 opt.learningRate = learning_rate --'learning rate at t=0')
-opt.batchSize = 100 -- 'mini-batch size (1 = pure stochastic)')
-opt.weightDecay = 0.0000 -- 'weight decay (SGD only)')
+opt.batchSize = 1-- 'mini-batch size (1 = pure stochastic)')
+opt.weightDecay = 0.05 -- 'weight decay (SGD only)')
 opt.momentum = 0.0 -- 'momentum (SGD only)')
+opt.learningRateDecay = 1e-7
 --cmd:option('-t0', 1, 'start averaging at t0 (ASGD only), in nb of epochs')
 --cmd:option('-maxIter', 2, 'maximum nb of iterations for CG and LBFGS')
 opt.type = 'double' -- | float | cuda')
@@ -57,27 +59,51 @@ old_rmse = 1000
 
 -- the bucket that will be left over
 test_bucket = 1
+max_fold = 1
+max_properties = 14
 --data_filename = 'desc_BoB-20-fine05'
-data_filename = 'desc_BoB-20-fine025'
-avg_rmse = 0
-for fold_nbr=1,1 do
-    load_molecules_data(data_filename, 0, test_bucket)
-    dofile '2_model.lua'
-    dofile '3_loss.lua'
-    dofile '4_train.lua'
-    dofile '5_test.lua'
-    for epoch_id = 1,70 do
-        train(epoch_id, fold_nbr)
-        test_rmse, train_rmse = test()
-        if epoch_id > 20 and test_rmse:sum() > 20 then
-            return 250-test_rmse:sum()
+data_filename = 'desc_BoB-20-fine020'
+test_avg_rmse = torch.Tensor(max_properties, max_fold):fill(0)
+train_avg_rmse =  torch.Tensor(max_properties, max_fold):fill(0)
+test_avg_mae = torch.Tensor(max_properties, max_fold):fill(0)
+train_avg_mae = torch.Tensor(max_properties, max_fold):fill(0)
+
+allerrors = {}
+local property = property_nbr
+    for fold_nbr=1,max_fold do
+        print(string.format('processing property %d', property))
+        test_bucket = fold_nbr
+        load_molecules_data(data_filename, 0, fold_nbr, property)
+        dofile '2_model.lua'
+        dofile '3_loss.lua'
+        dofile '4_train.lua'
+        dofile '5_test.lua'
+        for epoch_id = 1,200 do
+            train(epoch_id, fold_nbr)
+            if epoch_id % 1 == 0 then
+                local train_rmse,train_mae,test_rmse,test_mae = test()
+                print(train_rmse)
+                print(train_mae)
+                print(test_rmse)
+                print(test_mae)
+                test_avg_rmse[{property, fold_nbr}] = test_rmse
+                test_avg_mae[{property, fold_nbr}] = test_mae[1]
+                train_avg_rmse[{property, fold_nbr}] = train_rmse
+                train_avg_mae[{property, fold_nbr}] = train_mae[1]
+            end
         end
-        if epoch_id > 200 and test_rmse:sum() > 50 then
-            return 250 - test_rmse:sum()
-        end
+        allerrors['testmae'] = test_avg_mae
+        allerrors['testrmse'] = test_avg_rmse
+        allerrors['trainmae'] = train_avg_mae
+        allerrors['trainrmse'] = train_avg_rmse
+        torch.save('allerrors_'..property, allerrors)
     end
-    avg_rmse = avg_rmse + test_rmse:sum()
-end
-avg_rmse = avg_rmse/1
-return 250 - avg_rmse
+
+
+print('mean %f', train_avg_rmse[{property, {}}]:mean())
+print('std %f', train_avg_rmse[{property, {}}]:std())
+    --test_avg_mae[{{}, property}]:mean()
+    --test_avg_mae[{{}, property}]:std()
+return 250 - test_avg_rmse
+
 end
