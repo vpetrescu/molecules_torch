@@ -675,35 +675,17 @@ pdfkeywords={EDIC, candidacy exam, EPFL}}%<^!CHANGE!
 
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
+\usepackage{color}
+
 
 
 \begin{document}
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Machine Learning techniques for predicintg molecular properties}
-%
-%
-% author names and IEEE memberships
-% note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
-% a structure at a ~ so this keeps an author's name from being broken across
-% two lines.
-% use \thanks{} to gain access to the first footnote area
-% a separate \thanks must be used for each paragraph as LaTeX2e's \thanks
-% was not built to handle multiple paragraphs
-%
-%
-%\IEEEcompsocitemizethanks is a special \thanks that produces the bulleted
-% lists the Computer Society journals use for "first footnote" author
-% affiliations. Use \IEEEcompsocthanksitem which works much like \item
-% for each affiliation group. When not in compsoc mode,
-% \IEEEcompsocitemizethanks becomes like \thanks and
-% \IEEEcompsocthanksitem becomes a line break with idention. This
-% facilitates dual compilation, although admittedly the differences in the
-% desired content of \author between the different types of papers makes a
-% one-size-fits-all approach a daunting prospect. For instance, compsoc 
-% journal papers have the author affiliations above the "Manuscript
-% received ..."  text while in non-compsoc journals this is reversed. Sigh.
+\title{Machine Learning techniques for predicting molecular properties}
+
+
 
 \author{Viviana Petrescu% <-this % stops a space
 \\ I\&C,  EPFL
@@ -757,40 +739,8 @@ pdfkeywords={EDIC, candidacy exam, EPFL}}%<^!CHANGE!
 % The paper headers
 \markboth{EDIC Research Proposal}%
 {Shell \MakeLowercase{\textit{et al.}}: EDIC Research Proposal}
-% The only time the second header will appear is for the odd numbered pages
-% after the title page when using the twoside option.
-% 
-% *** Note that you probably will NOT want to include the author's ***
-% *** name in the headers of peer review papers.                   ***
-% You can use \ifCLASSOPTIONpeerreview for conditional compilation here if
-% you desire.
 
-
-
-% The publisher's ID mark at the bottom of the page is less important with
-% Computer Society journal papers as those publications place the marks
-% outside of the main text columns and, therefore, unlike regular IEEE
-% journals, the available text space is not reduced by their presence.
-% If you want to put a publisher's ID mark on the page you can do it like
-% this:
-%\IEEEpubid{0000--0000/00\$00.00~\copyright~2007 IEEE}
-% or like this to get the Computer Society new two part style.
-%\IEEEpubid{\makebox[\columnwidth]{\hfill 0000--0000/00/\$00.00~\copyright~2007 IEEE}%
-%\hspace{\columnsep}\makebox[\columnwidth]{Published by the IEEE Computer Society\hfill}}
-% Remember, if you use this you must call \IEEEpubidadjcol in the second
-% column for its text to clear the IEEEpubid mark (Computer Society jorunal
-% papers don't need this extra clearance.)
-
-
-
-% use for special paper notices
-%\IEEEspecialpapernotice{(Invited Paper)}
-
-
-
-% for Computer Society papers, we must declare the abstract and index terms
-% PRIOR to the title within the \IEEEcompsoctitleabstractindextext IEEEtran
-% command as these need to go into the title area created by \maketitle.
+ \maketitle.
 \IEEEcompsoctitleabstractindextext{%
 \begin{abstract}
 %\boldmath
@@ -799,7 +749,7 @@ the use of less expensive machine learning methods for predicting molecular
 properties in chemical compound space. Finding good feature representations
 for molecules is hard, in part because of the graph-like structure geometry of
 the molecules that need to be represented as high dimensional vectors.
-
+\textcolor{blue}{Add what this paper is about}
 \end{abstract}
 
 % Note that keywords are not normally used for peerreview papers.
@@ -820,12 +770,12 @@ thesis proposal, candidacy exam write-up, EDIC, EPFL
 \section{Introduction}
 
 The discovery of new molecular materials in chemistry has the potential of solving many of the problems we face today.
-Having a system which predicts both accurately and at a small computational cost the properties of new materials is highly desirable and has applications ranging from novel drugs discovery, water purification to efficient materials for high energy transmission and storage \cite{cleanenergy}.
+Having a system which predicts both accurately and at a small computational cost the properties of new materials is highly desirable and has applications ranging from novel drugs discovery, water purification to efficient materials design for high energy transmission and storage \cite{cleanenergy}.
  
 \section{Background Work}
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
-This write-up serves two purposes. First, it forms the basis for
+\textcolor{blue}{This write-up serves two purposes. First, it forms the basis for
 your candidacy exam. As such you should summarize the three papers selected
 by your advisor and yourself, and analyze as well as discuss them critically.
 Second, the write-up 
@@ -834,9 +784,11 @@ be dedicated to your own preliminary work. A road-map of how you plan to
 advance the state of the art in your chosen area should also be given.
 For further details please consult the document ``PhD Candidacy Exam Overview.'' You can find the latest
 version at {\tt http://phd.epfl.ch/page57746-en.html}.
-
 Describe briefly the context, the problem, shortcomings in prior
 approaches, and your proposed approach and solution. Forecast results.
+Background --- Describe the three papers in detail, the problem they
+tackle, the solutions and results, and their shortcomings, and how they
+relate to your work.  This part builds the basis for the oral candidacy exam.}
 
 
 % An example of a floating figure using the graphicx package.
@@ -914,17 +866,38 @@ approaches, and your proposed approach and solution. Forecast results.
 %\end{tabular}
 %\end{table}
 
-Background --- Describe the three papers in detail, the problem they
-tackle, the solutions and results, and their shortcomings, and how they
-relate to your work.  This part builds the basis for the oral candidacy exam.
 
-\subsection{Learning Invarianet Representations of Molecules for Atomization Energy prediction}
+\subsection{Learning Invariant Representations of Molecules for Atomization Energy prediction}
 Representing Molecules
-Desired properties of molecules
-Soved using sorted or Random Coloumb
+
+While domain specific descriptors for molecules exist \cite{todeschini2000handbook}, recent work \cite{initialcoloumb} has proposed to predict properties of a molecule of size $N$ only from the 3D positions of the atoms $R_i$ $i\in{1..N}$ and their nuclear charge $Z_i$ $i\in{1..N}$ . This has prompted the introduction of the Coloumb Matrix descriptor, whose individual entries appear in the Schroedinger equation. It is defined by a $NxN$ matrix with entries given by:
+
+\begin{equation}
+M(i,j) = \left\{
+  \begin{array}{lr}
+    0.5*Z_i^{2.4} & if i = j\\
+    Z_i * Z_j / |R_i - R_j| & otherwise
+  \end{array}
+\right.
+\end{equation}
+where $Ri - Rj$ represents the distance between the atoms $i$ and $j$.
+
+The dimensionality of the Coloumb Matrix is given by the number of atoms in a molecule. Since that varies across molecules in a dataset, one common trick is to pad with 0's the matrices corresponding to small molecules until they reach the maximum molecule size in a dataset. This limits the size of the molecules that can be used, since the descriptor  has complexity $O(N^2)$, where $N$ is the number of atoms.
+
+Desired properties of descriptor
+Due to the graph-like structure of the molecules, finding a fixed size representation is difficult. The desired properties of a molecular descriptor are invariance to translation and rotation of the molecule and invariance to the indexing of the atoms.
+
+Solved using sorted or Random Coloumb
+While the Coloumb Matrix representations solves the rotation and translation invariance through the use of distances between atoms $R_i -R_j$, invariance in atom indexing still needs to be tackled since any permutation of atom indexes results in a valid Coloumb descriptor.
+Two variations of the descriptor are proposed in \cite{montavon2012learning}. The first one, called Sorted Coloumb, uses the permutation of the atoms given by the sorting of the row norms of a valid Coloumb matrix. Any molecule has a unique representation given by the Sorted Coloumb matrix. The second representations is based on the idea that the norms of the rows can have very similar values in practice and the sorting, therefor also the atom indexing, is subject to small noise. The new descriptor, Random Coloumb Matrices, extends the Sorted Coloumb matrix and samples multiple Sorted Coloumb matrices, were the set of  rows was sorted according to their norm at which a small Gaussian noise was added. 
+
 Reach state of the art result at the time. The current new value is 1.5 using Bag of Bonds.
 \subsection{Self-Taught Learning: Transfer Learning from Unlabeled Data}
-
+Present the different machine learning framewroks that exists, with picture.
+It is a two part optimization problem.
+	- First find bases
+	- Then find new activations for the old ones.
+Through experimental results - since they were tested on a range of problems from image, text and sound.
 \subsection{Information-Theoretic Regret Bounds for Gaussian Process Optimization in the Bandit Setting}
 Optimizing an unknown function is an important problem.
 Often done using Gaussian processes in a Bayesian setting. Many heuristic have been proposed for defining an acquisition function. Few is known for its conergence.
@@ -946,11 +919,10 @@ Here the input dimensionality is given by the nbr of the hyper parameters (learn
 The result presented in the previous subsection were obtained like that.
 Talk if we have time about bayesian neural nets, were simpler models outperform more easy models just be using hyper parameter optimization instead of grid search.
 
-
-Describe your own work and include a  summary and references. Write how you
+ \textcolor{blue}{Write how you
 propose to advance the state of the art given the background. What
 is new technically? How does it improve over prior work?
-Summarize, suggest an approximate timeline, and list references.
+Summarize, suggest an approximate timeline, and list references.}
 
 \vspace{1cm}
 

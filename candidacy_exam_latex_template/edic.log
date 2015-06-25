@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.5.29)  25 JUN 2015 10:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.5.29)  25 JUN 2015 13:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -90,72 +90,123 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <24> not available
 \@IEEEtmpitemindent=\dimen116
 \c@IEEEbiography=\count90
 \@IEEEtranrubishbin=\box26
-) (./edic.aux)
+) (/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2014/04/23 v1.1a Standard LaTeX Color (DPC)
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 137.
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count91
+))
+(./edic.aux)
 \openout1 = `edic.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 680.
-LaTeX Font Info:    ... okay on input line 680.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 680.
-LaTeX Font Info:    ... okay on input line 680.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 680.
-LaTeX Font Info:    ... okay on input line 680.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 680.
-LaTeX Font Info:    ... okay on input line 680.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 680.
-LaTeX Font Info:    ... okay on input line 680.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 680.
-LaTeX Font Info:    ... okay on input line 680.
-
-Underfull \hbox (badness 1661) in paragraph at lines 813--813
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 682.
+LaTeX Font Info:    ... okay on input line 682.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 682.
+LaTeX Font Info:    ... okay on input line 682.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 682.
+LaTeX Font Info:    ... okay on input line 682.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 682.
+LaTeX Font Info:    ... okay on input line 682.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 682.
+LaTeX Font Info:    ... okay on input line 682.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 682.
+LaTeX Font Info:    ... okay on input line 682.
+ (/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count92
+\scratchdimen=\dimen117
+\scratchbox=\box27
+\nofMPsegments=\count93
+\nofMParguments=\count94
+\everyMPshowfont=\toks15
+\MPscratchCnt=\count95
+\MPscratchDim=\dimen118
+\MPnumerator=\count96
+\makeMPintoPDFobject=\count97
+\everyMPtoPDFconversion=\toks16
+)
+Underfull \hbox (badness 1661) in paragraph at lines 763--763
 []\OT1/ptm/b/it/9 Index Terms\OT1/ptm/b/n/9 ---thesis pro-posal, can-di-dacy ex
 am write-up,
  []
 
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 836.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 791.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Missing character: There is no â in font ptmri7t!
-Missing character: There is no € in font ptmri7t!
-Missing character: There is no ¢ in font ptmri7t!
-Missing character: There is no â in font ptmri7t!
-Missing character: There is no € in font ptmri7t!
-Missing character: There is no ¢ in font ptmri7t!
- [1{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 873.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 873.
+
+Underfull \hbox (badness 1824) in paragraph at lines 890--893
+[]\OT1/ptm/m/n/10 Solved us-ing sorted or Ran-dom Coloumb While the
+ []
+
+[1{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
 Missing character: There is no â in font ptmri7t!
 Missing character: There is no € in font ptmri7t!
 Missing character: There is no ¢ in font ptmri7t!
- (./edic.bbl
-Missing character: There is no Ã in font ptmr7t!
-Missing character: There is no ¡ in font ptmr7t!
-Missing character: There is no Ã in font ptmr7t!
-Missing character: There is no ¡ in font ptmr7t!
-)
-[2
+Missing character: There is no â in font ptmri7t!
+Missing character: There is no € in font ptmri7t!
+Missing character: There is no ¢ in font ptmri7t!
+Missing character: There is no â in font ptmri7t!
+Missing character: There is no € in font ptmri7t!
+Missing character: There is no ¢ in font ptmri7t!
 
-] (./edic.aux) ) 
+(./edic.bbl
+Missing character: There is no Ã in font ptmr7t!
+Missing character: There is no ¡ in font ptmr7t!
+Missing character: There is no Ã in font ptmr7t!
+Missing character: There is no ¡ in font ptmr7t!
+
+Underfull \hbox (badness 2042) in paragraph at lines 13--20
+[]\OT1/ptm/m/n/8 Gr[]egoire Mon-tavon, Katja Hansen, Sia-mac Fa-zli, Matthias R
+upp,
+ []
+
+) [2] (./edic.aux) ) 
 Here is how much of TeX's memory you used:
- 935 strings out of 493117
- 16127 string characters out of 6135433
- 73241 words of memory out of 5000000
- 4457 multiletter control sequences out of 15000+600000
+ 1681 strings out of 493117
+ 26363 string characters out of 6135433
+ 90028 words of memory out of 5000000
+ 5180 multiletter control sequences out of 15000+600000
  37892 words of font info for 68 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
- 26i,5n,19p,317b,223s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r.enc
-}</usr/local/texlive/2014/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/l
-ocal/texlive/2014/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texli
-ve/2014/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2014/t
-exmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/
-fonts/type1/urw/times/utmri8a.pfb>
-Output written on edic.pdf (2 pages, 67261 bytes).
+ 26i,7n,19p,743b,229s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r
+.enc}</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.
+pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
+fb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb
+></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
+/usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></us
+r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr
+/local/texlive/2014/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/t
+exlive/2014/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/201
+4/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2014/texmf-d
+ist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/
+type1/urw/times/utmri8a.pfb>
+Output written on edic.pdf (2 pages, 120817 bytes).
 PDF statistics:
- 32 PDF objects out of 1000 (max. 8388607)
- 22 compressed objects within 1 object stream
+ 56 PDF objects out of 1000 (max. 8388607)
+ 40 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

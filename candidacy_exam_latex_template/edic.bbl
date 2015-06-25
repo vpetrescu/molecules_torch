@@ -9,4 +9,25 @@ Johannes Hachmann, Roberto Olivares-Amaya, Sule Atahan-Evrenk, Carlos
 \newblock {\em The Journal of Physical Chemistry Letters}, 2(17):2241--2251,
   2011.
 
+\bibitem{montavon2012learning}
+Gr{\'e}goire Montavon, Katja Hansen, Siamac Fazli, Matthias Rupp, Franziska
+  Biegler, Andreas Ziehe, Alexandre Tkatchenko, Anatole~V Lilienfeld, and
+  Klaus-Robert M{\"u}ller.
+\newblock Learning invariant representations of molecules for atomization
+  energy prediction.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  440--448, 2012.
+
+\bibitem{initialcoloumb}
+Matthias Rupp, Alexandre Tkatchenko, Klaus-Robert M\"uller, and O.~Anatole von
+  Lilienfeld.
+\newblock Fast and accurate modeling of molecular atomization energies with
+  machine learning.
+\newblock {\em Phys. Rev. Lett.}, 108:058301, Jan 2012.
+
+\bibitem{todeschini2000handbook}
+Roberto Todeschini and Viviana Consonni.
+\newblock {\em Handbook of molecular descriptors}, volume~11.
+\newblock Wiley-VCH, 2000.
+
 \end{thebibliography}
