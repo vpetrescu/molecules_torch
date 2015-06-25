@@ -605,6 +605,7 @@
 %       papers and their use requires extra complexity and work.
 % *** IF USING HYPERREF BE SURE AND CHANGE THE EXAMPLE PDF ***
 % *** TITLE/SUBJECT/AUTHOR/KEYWORDS INFO BELOW!!           ***
+
 \newcommand\MYhyperrefoptions{bookmarks=true,bookmarksnumbered=true,
 pdfpagemode={UseOutlines},plainpages=false,pdfpagelabels=true,
 colorlinks=true,linkcolor={black},citecolor={black},pagecolor={black},
@@ -956,15 +957,56 @@ where $H(y_A)$ and $H(y_A|f)$ represent the entropy or uncertainy in $y_A$ and
 the uncertainty in $y_A$ if we know f. In other words, information gain expresses the reduction in uncertainy about f given $y_A$.\textcolor{blue}{Shouldn t be the other way around?}
 
 Using the fact that for a Gaussian $H(N(u,\sigma)) = \frac{1}{2} log|I + \sigma^{-2} K_A|$ we can rewrite $I(y_A; f)  = 	I(y_A; f_A) = \frac{1}{2}log|2\pi e \Sigma| $
+Finding the subset $A$ in the domain $D$ with $|A| \leq |T|$ that maximizes $IG$ is NP-hard. In practice, greedy approximation solutions are used that find a near-optimal solution by choosing sequentially points in A with maximum variance:
+\begin{equation}
+	x_t = \arg\max_{x\in D}\sigma_{t-1}(x) \Longleftrightarrow x_t = \arg\max_{x\in D} F(A_{t-1}\cup {x})
+\end{equation}
+with $t\in{1...T}$
 
+The results from cite1 show that $F(A)$ is a submodular function and thus it holds that
+\begin{equation}
+	F(A_T) \geq (1-\frac{1}{e}) \max_{|A| \leq T}(F(A))
+\end{equation}
+From the above equation we see that our greedy choice of $A_T$ leads to a near optimal solution.
 
 \subsubsection{GP-UCB}
+\textcolor{blue}{maybe introduce some}
+For function optimization a good sampling sequence $x_t$ is one that makes a tradeoff between 
+exploration and exploitation. By choosing points with high variance (exploitation) we try to reduce the overall uncertainty.
+By choosing points with high mean(exploitation) we try to concetrate samples in a region were we are  more confident that is close to the optimal. This idea is expressed by choosing in every round t, a point $x_t = \arg\max u_{t-1} + \beta_{t}^{1/2}\sigma_{t-1}(x)$ with $\beta_{t}$ defined in []. The function that is being maximized is also called the acquistion function.
+
+To sum up, at every round, the GP-UCB algorithm selects a point according to the above equation, samples $y_t=f(x_t) + \epsilon$ and updates $u_t$ and $\sigma_t$ using Bayes rule.
+
+An important property of the acquistion function is that as defined by equation above is that it does not choose points x for which the upper confidence value is smaller than the maximum lower confidence value found so far. This can prune a large subareas of the search space.
 
 \subsubsection{Regret Bounds}
+The effectiveness of a sampling scheme in finding  $x*$ (may not be unique) s.t $x* = \arg\max_{x\in D}f(x)$ is evaluated using the \textit{instantaneous} and the 
+\textit{cumulative regret}.  The instantenous regret $r_t = f(x*) - f(x_t)$ is the error that we make at round t for choosing point $x_t$ instead of $x*$. The cumulative regret is the regret accumulated up to this round $R_T = \sum r_t$.
+
+This paper cite here provides convergence rates for the the cumulative regret $R_T$ in both the finite and infinite case. They show that $lim \frac{R_T}{T}= 0$ and that . For the most popular kernels, this is shown to be
+\begin{table}
+\begin{tabular}{|c||c|c|c|}
+\hline
+Kernel & Linear & RBF & Matern\\
+\hline
+Regret $R_T$ & $d\sqrt{T}$& $\sqrt{T(log(T)^{d+1})} $ &${v+d(d+1)/2v+d(d+1)}$\\
+\hline
+\end{tabular}
+
+\caption{Regret Bounds.}
+\end{table}
+
 
 \subsubsection{Bounding the regret using Information Gain}
+The first step of the proof is to bound $R_T$ by the maximum information gain $\gamma_T = \max_{A \subseteq D, |A| = T} I(y_A;f_A)$.
+In particular, in citep it is shown that with high probability
+\begin{itemize}
+\item $Pr(R_T \leq \sqrt{C_1T\beta\gamma}) \leq 1- \delta$ for finite D
+\item$Pr(R_T \leq \sqrt{C_2T\beta\gamma} + 2) \leq 1- \delta$ for  D compact and convex.
+\end{itemize}
+where $\delta \in (0,1)$, appropiate constants $C_1, C_2, \beta_t$ variable from teh acquistion function. The latter proof makes further assumptions that the function is smooth, which says that the probability of the partial derivatives of the function to have a large value is small.
 
-\subsubsection{Bounding the Information Gain using the spectral }
+\subsubsection{Bounding the Information Gain using the spectrum of the matrix}
 
 \subsubsection{Bounding the Information gain using the spectral }
 
