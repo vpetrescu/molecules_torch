@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.5.29)  25 JUN 2015 17:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.24)  25 JUN 2015 20:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -112,18 +112,18 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 (./edic.aux)
 \openout1 = `edic.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 682.
-LaTeX Font Info:    ... okay on input line 682.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 682.
-LaTeX Font Info:    ... okay on input line 682.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 682.
-LaTeX Font Info:    ... okay on input line 682.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 682.
-LaTeX Font Info:    ... okay on input line 682.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 682.
-LaTeX Font Info:    ... okay on input line 682.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 682.
-LaTeX Font Info:    ... okay on input line 682.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 681.
+LaTeX Font Info:    ... okay on input line 681.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 681.
+LaTeX Font Info:    ... okay on input line 681.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 681.
+LaTeX Font Info:    ... okay on input line 681.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 681.
+LaTeX Font Info:    ... okay on input line 681.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 681.
+LaTeX Font Info:    ... okay on input line 681.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 681.
+LaTeX Font Info:    ... okay on input line 681.
  (/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count92
@@ -138,22 +138,22 @@ LaTeX Font Info:    ... okay on input line 682.
 \makeMPintoPDFobject=\count97
 \everyMPtoPDFconversion=\toks16
 )
-Underfull \hbox (badness 1661) in paragraph at lines 763--763
+Underfull \hbox (badness 1661) in paragraph at lines 762--762
 []\OT1/ptm/b/it/9 Index Terms\OT1/ptm/b/n/9 ---thesis pro-posal, can-di-dacy ex
 am write-up,
  []
 
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 791.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 790.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 873.
+(Font)              <7> on input line 872.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 873.
+(Font)              <5> on input line 872.
 
-Underfull \hbox (badness 1824) in paragraph at lines 890--893
+Underfull \hbox (badness 1824) in paragraph at lines 889--892
 []\OT1/ptm/m/n/10 Solved us-ing sorted or Ran-dom Coloumb While the
  []
 
@@ -162,51 +162,6 @@ Underfull \hbox (badness 1824) in paragraph at lines 890--893
 
 ]
 [2]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.941 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Display math should end with $$.
-<to be read again> 
-                   \par 
-l.941 
-      
-The `$' that I just saw supposedly matches a previous `$$'.
-So I shall assume that you typed `$$' both times.
-
-! You can't use `\eqno' in vertical mode.
-\endequation ->\eqno 
-                     \hbox {\@eqnnum }$$\@ignoretrue 
-l.942 \end{equation}
-                    
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.942 \end{equation}
-                    
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-! Display math should end with $$.
-<to be read again> 
-                   \endgroup 
-l.942 \end{equation}
-                    
-The `$' that I just saw supposedly matches a previous `$$'.
-So I shall assume that you typed `$$' both times.
-
 Missing character: There is no â in font ptmri7t!
 Missing character: There is no € in font ptmri7t!
 Missing character: There is no ¢ in font ptmri7t!
@@ -216,7 +171,7 @@ Missing character: There is no ¢ in font ptmri7t!
 Missing character: There is no â in font ptmri7t!
 Missing character: There is no € in font ptmri7t!
 Missing character: There is no ¢ in font ptmri7t!
-(./edic.bbl
+ (./edic.bbl
 Missing character: There is no Ã in font ptmr7t!
 Missing character: There is no ¡ in font ptmr7t!
 Missing character: There is no Ã in font ptmr7t!
@@ -232,7 +187,7 @@ upp,
 ) [3] (./edic.aux) ) 
 Here is how much of TeX's memory you used:
  1682 strings out of 493117
- 26368 string characters out of 6135433
+ 26368 string characters out of 6135432
  90031 words of memory out of 5000000
  5181 multiletter control sequences out of 15000+600000
  37892 words of font info for 68 fonts, out of 8000000 for 9000
@@ -251,7 +206,7 @@ live/2014/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/
 texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2014/texmf-dis
 t/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/ty
 pe1/urw/times/utmri8a.pfb>
-Output written on edic.pdf (3 pages, 139362 bytes).
+Output written on edic.pdf (3 pages, 145759 bytes).
 PDF statistics:
  63 PDF objects out of 1000 (max. 8388607)
  45 compressed objects within 1 object stream

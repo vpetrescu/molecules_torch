@@ -200,7 +200,6 @@
 % http://www.tug.org/applications/pdftex
 
 
-
 %\usepackage{ps4pdf}
 % dvi->ps workflow is required to use such packages as psfrag.sty and
 % pstricks.sty. However, Rolf Niepraschk's ps4pdf.sty provides a way to
@@ -932,16 +931,32 @@ Sublinear converge rates are proven for GP-UCP.
 The bound is in two steps. First bound it on the information gain, then on the spectral of the kernel matrix which is further bound on the spectral operator.
 
 Since RKHS is not relevant to our current setup, it will be skiped from the previous explanation.
-\subsubsection{Gaussian Processes}
+\subsubsection{Gaussian Processes basics}
 A Gaussian Process (GP) defines a distribution over functions $f$, $f ~ GP(u(x), k(x,x'))$, in a similar way in which probability densities define distributions over random variables. It is fully specified by its mean and its covariance matrix. In a Bayesian setting, we assume our function $f$ is sampled from a Gaussian with prior $GP(0, k(x,x'))$, where $k$ is the kernel or covariance matrix. The most common kernel types are the linear, squared exponential and Matern kernel.
-For $T$ sampled points with noise, we have $y_t = f(x_t) + \epsilon$, where $\epsilon
-\in N(0,\sigma^2)$. The posterior over f, conditioned on the $y1..T-1$ and $x1..T$ in presence of noise is given by
-$P(f_(T)| y_{1:T-1},x_{1..T}) = N(u(T),)$, where 
+For $T$ sampled points with noise, we have $y_t = f(x_t) + \epsilon_t$, where $\epsilon_t \in N(0,\sigma^2)$. The posterior over f, conditioned on the $y_{1..T}$ and $x_{1..T}$ in the presence of noise is given by
+$P(f_T| y_{1:T},x_{1..T}) = N(u_T(x), \sigma_T^2(x))$, where: 
+\begin{itemize}
+	\item $K_T$ is positive definite with entries $k(x,x'), x,x' \in A_T$   
+	\item $k_T(x) = [k(x_1,x),...k(x_T,x)]^T$	
+	\item $k_{T}(x,x') = k(x,x') - k_T(x)^T(K_T+\sigma^2I)^-1k_T(x')$
+	\item $u_{T}(x) = k_{T}(x)^{T}(K_T + \sigma^2I)^{-1} y_{T}$
+	\item $\sigma^2(x) =  k_{T}(x,x)$
+\end{itemize}
+
+\subsubsection{Information Gain and Experimental Design}
+
+Unlike function optimization where the goal is to find the maximum of a function, in experimental design the goal is to find a good approximation of the function globally with few samples as possible. We note that the same algorithm can not be employed for both tasks, since in function optimization we might want to avoid sampling in certain regions where we are confident that the function has very small values.
+
+For a sampled set A, we define $y_A = f_A + \epsilon_A$, $f_A=[f(x)]_{x \in A}$ and the noise $\epsilon_A ~ N(0,sigma^2)$.
+ The information gain as
 \begin{equation}
-
+	I(y_A; f) = H(y_A) - H(y_A| f)
 \end{equation}
+where $H(y_A)$ and $H(y_A|f)$ represent the entropy or uncertainy in $y_A$ and 
+the uncertainty in $y_A$ if we know f. In other words, information gain expresses the reduction in uncertainy about f given $y_A$.\textcolor{blue}{Shouldn t be the other way around?}
 
-\subsubsection{Information Gain}
+Using the fact that for a Gaussian $H(N(u,\sigma)) = \frac{1}{2} log|I + \sigma^{-2} K_A|$ we can rewrite $I(y_A; f)  = 	I(y_A; f_A) = \frac{1}{2}log|2\pi e \Sigma| $
+
 
 \subsubsection{GP-UCB}
 
