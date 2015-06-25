@@ -889,9 +889,30 @@ Due to the graph-like structure of the molecules, finding a fixed size represent
 
 Solved using sorted or Random Coloumb
 While the Coloumb Matrix representations solves the rotation and translation invariance through the use of distances between atoms $R_i -R_j$, invariance in atom indexing still needs to be tackled since any permutation of atom indexes results in a valid Coloumb descriptor.
-Two variations of the descriptor are proposed in \cite{montavon2012learning}. The first one, called Sorted Coloumb, uses the permutation of the atoms given by the sorting of the row norms of a valid Coloumb matrix. Any molecule has a unique representation given by the Sorted Coloumb matrix. The second representations is based on the idea that the norms of the rows can have very similar values in practice and the sorting, therefor also the atom indexing, is subject to small noise. The new descriptor, Random Coloumb Matrices, extends the Sorted Coloumb matrix and samples multiple Sorted Coloumb matrices, were the set of  rows was sorted according to their norm at which a small Gaussian noise was added. 
+Two variations of the descriptor are proposed in \cite{montavon2012learning}. The first one, called Sorted Coloumb, uses the permutation of the atoms given by the sorting of the row norms of a valid Coloumb matrix. Any molecule has a unique representation given by the Sorted Coloumb matrix. The second representations is based on the idea that the norms of the rows can have very similar values in practice and the sorting, therefore also the atom indexing, is subject to small noise. The new descriptor, Random Coloumb Matrices is a collection of Sorted Coloumb matrices. For every molecule, approximatively 10 Randomly Sorted Coloumb matrices are drawn. One Random Sorted Coloumb Marix is obtained by sorting the set of  rows was sorted according to their norm at which a small Gaussian noise was added. New predictions can be made by averging the prediction results.
 
 Reach state of the art result at the time. The current new value is 1.5 using Bag of Bonds.
+The performane of the descriptors was evaluated on predicting the atomization energy on a dataset of 7165 molecules with at most 23 atoms per atom. The predicted values range from -800 to -2000 kcal/mol. The splitting of the data into 5 folds for cross validation is done using stratified sampling. The molecules were clustered into 5 sets with similar atomization energy levels and the folds were created by randomly selecting one molecule from each bucket.
+
+While this is a good strategy for obtaining good generalization performance, in normal machine learning practice we should not touch the test dataset. If we test the performance on a new molecule whose atomization energy is not within the bounds present in the training dataset, it is likely that the prediction will not be very accurate. Moreover, if we have a molecule with more atoms than present in the dataset, we would need to retrain our model with a  descriptor of diferent size. The same problem appears across chemical compound space if we try to predict the atomization energy of a molecule with the same number of atoms but with different atom types composition. In general, we do not have guarantees that the a molecule with similar atom composition and similar atom type have target prediction in the same range as our training set.
+
+For experimental evaluation of the performance of descriptors, both kernel ridge regression and multy layer feed forwards networks were tried. The best test performance of 3.1 kcal/mol MAE was obtained using a neural network with
+ Randomly Sorted Coloumb matrix. The improvement was three fold with respect to the previous state of the art, which gave a MAE of 9kcal/mol. A performance level is ~1kcal/mol to reach chemical accuracy.
+ \textcolor{blue}{Maybe put this as footnote}
+Later work \cite{bob}, improved upon this result by reducing the current state-of-the-art to only 1.5kcal/mol using a bag of bonds descriptor with Laplacian kernel.
+
+Difficulty of training a neural network, maybe cite tricks of the trade
+While recently Neural Nets (especially deep networks) have achieved state-of-the-art in many fields ranging from computer vision, natural language processing and speech recogition, one of the main challenges they pose is the difficulty in training for people without a lot of experiences with nnets in particular. 
+
+Cite here Neural nets tricks fo the trade
+In order to obtain the competitive performance of 3.1kcal/mol using neural nets, multiple tricks have been used, inspired from cite here NN. First of all, taking the real entries of the Coloumb matrix as input to the neural net proved to perform poorly.
+For this, a binarization step was performed which added an extra dimensionality to the dataset. Specifically, if $x \in R^{D}$ represents a flatten Coloumb matrix, it is mapped to a new binarized descriptor $y \in R^{DxM}$ such that $y_i \in R^{1xM}$ is computed by taking shifted versions of $x_i$ entry that are passed through a sigmoidal function
+\begin{equation}
+	y_i = [..., tanh(\frac{x_i - \theta}{\theta}, tanh(\frac{x_i}{\theta}), tanh(\frac{x_i + \theta}{\theta})]
+\end{equation}
+Depending on the range of every  $x_i$, the size of $y_i$ can vary acrosss dimensions if we ignore saturated values.
+Other parameters that are selected using cross validation are the number of hidden units per layer, the number of layers, the learning rate.
+
 \subsection{Self-Taught Learning: Transfer Learning from Unlabeled Data}
 Present the different machine learning framewroks that exists, with picture.
 It is a two part optimization problem.
@@ -900,9 +921,39 @@ It is a two part optimization problem.
 Through experimental results - since they were tested on a range of problems from image, text and sound.
 \subsection{Information-Theoretic Regret Bounds for Gaussian Process Optimization in the Bandit Setting}
 Optimizing an unknown function is an important problem.
+
+Optimization of a black box function that is expensive to evaluate is a common problem with applications ranging from active user modelling, hierarchical reinforcement learning and more recently, hyper parameter optimization of machine learning models. This problem can be posed as a multi-armed bandit problem where the function to be estimated is either drawn from a Gaussian Process or has low norm in reproducing Kernel Hilbert space.
+
 Often done using Gaussian processes in a Bayesian setting. Many heuristic have been proposed for defining an acquisition function. Few is known for its conergence.
+
+Among the common used acquistion functions we note the probabilty of improvement, maximum expected improvement or upper confidence bound acquistion, with the latter two experimentally shown to perform better in practice. Besides their practical success, few is known in practice about their convergence properties for finite and infinte input dimensional space.
+
 Sublinear converge rates are proven for GP-UCP. 
 The bound is in two steps. First bound it on the information gain, then on the spectral of the kernel matrix which is further bound on the spectral operator.
+
+Since RKHS is not relevant to our current setup, it will be skiped from the previous explanation.
+\subsubsection{Gaussian Processes}
+A Gaussian Process (GP) defines a distribution over functions $f$, $f ~ GP(u(x), k(x,x'))$, in a similar way in which probability densities define distributions over random variables. It is fully specified by its mean and its covariance matrix. In a Bayesian setting, we assume our function $f$ is sampled from a Gaussian with prior $GP(0, k(x,x'))$, where $k$ is the kernel or covariance matrix. The most common kernel types are the linear, squared exponential and Matern kernel.
+For $T$ sampled points with noise, we have $y_t = f(x_t) + \epsilon$, where $\epsilon
+\in N(0,\sigma^2)$. The posterior over f, conditioned on the $y1..T-1$ and $x1..T$ in presence of noise is given by
+$P(f_(T)| y_{1:T-1},x_{1..T}) = N(u(T),)$, where 
+\begin{equation}
+
+\end{equation}
+
+\subsubsection{Information Gain}
+
+\subsubsection{GP-UCB}
+
+\subsubsection{Regret Bounds}
+
+\subsubsection{Bounding the regret using Information Gain}
+
+\subsubsection{Bounding the Information Gain using the spectral }
+
+\subsubsection{Bounding the Information gain using the spectral }
+
+Although convergence rates are proven for infinite input dimensional spaces, the complexity of the GP step that incorporates the inversion of the covariance matrix makes it cubic in the number of samples T, which makes it often inpractical for high dimensional input.
 
 \section{Research Proposal}
 \subsection{•}

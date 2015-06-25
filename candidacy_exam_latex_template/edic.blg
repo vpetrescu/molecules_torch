@@ -3,44 +3,53 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: edic.aux
 The style file: plain.bst
 Database file #1: references.bib
-You've used 4 entries,
+Name 1 in "K. Hansen, F. Biegler, O.A. von Lilienfeld, K.-R. Müller, and A. Tkatchenko" has a comma at the end for entry bob
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "K. Hansen, F. Biegler, O.A. von Lilienfeld, K.-R. Müller, and A. Tkatchenko" for entry bob
+while executing---line 1049 of file plain.bst
+Name 1 in "K. Hansen, F. Biegler, O.A. von Lilienfeld, K.-R. Müller, and A. Tkatchenko" has a comma at the end for entry bob
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "K. Hansen, F. Biegler, O.A. von Lilienfeld, K.-R. Müller, and A. Tkatchenko" for entry bob
+while executing---line 1090 of file plain.bst
+You've used 5 entries,
             2118 wiz_defined-function locations,
-            524 strings with 5124 characters,
-and the built_in function-call counts, 1880 in all, are:
-= -- 166
-> -- 132
+            529 strings with 5321 characters,
+and the built_in function-call counts, 2131 in all, are:
+= -- 188
+> -- 145
 < -- 2
-+ -- 53
-- -- 48
-* -- 158
-:= -- 320
-add.period$ -- 12
-call.type$ -- 4
-change.case$ -- 35
++ -- 58
+- -- 52
+* -- 170
+:= -- 364
+add.period$ -- 15
+call.type$ -- 5
+change.case$ -- 39
 chr.to.int$ -- 0
-cite$ -- 4
-duplicate$ -- 57
-empty$ -- 118
-format.name$ -- 48
-if$ -- 377
+cite$ -- 5
+duplicate$ -- 69
+empty$ -- 140
+format.name$ -- 52
+if$ -- 430
 int.to.chr$ -- 0
-int.to.str$ -- 4
-missing$ -- 5
-newline$ -- 23
-num.names$ -- 8
-pop$ -- 38
+int.to.str$ -- 5
+missing$ -- 7
+newline$ -- 28
+num.names$ -- 10
+pop$ -- 47
 preamble$ -- 1
-purify$ -- 32
+purify$ -- 36
 quote$ -- 0
-skip$ -- 42
+skip$ -- 49
 stack$ -- 0
-substring$ -- 98
-swap$ -- 15
+substring$ -- 103
+swap$ -- 16
 text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 14
+type$ -- 16
 warning$ -- 0
-while$ -- 13
-width$ -- 5
-write$ -- 46
+while$ -- 15
+width$ -- 6
+write$ -- 56
+(There were 4 error messages)
