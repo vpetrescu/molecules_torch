@@ -2,10 +2,10 @@
 -- Modified tutorial by
 -- Clement Farabet
 ----------------------------------------------------------------------
-require 'matio'
+--require 'matio'
 require 'torch'   -- torch
 require 'nn'      -- provides a normalization operator
-matio = require 'matio'
+--matio = require 'matio'
 
 function load_molecules_data(base_filename, valid_bucket, test_bucket, property_nbr)
 --[[
@@ -22,7 +22,10 @@ function load_molecules_data(base_filename, valid_bucket, test_bucket, property_
 -- Initially the train set contains all the folds
 -- Iterate over all the folds in the train set and add them to trainData structure
 
-local tmp_train = matio.load('../../data14properties/train_'..base_filename..'_fold_'..tonumber(test_bucket)..'.mat')
+--local tmp_train = matio.load('../../data14properties/train_'..base_filename..'_fold_'..tonumber(test_bucket)..'.mat')
+local file = torch.DiskFile('../../data14properties/train_'..base_filename..'_fold_'..tonumber(test_bucket)..'.luamat')
+local tmp_train = file:readObject()
+file:close()
 trsize = tmp_train.trainData.data:size(1)
 trainData = {
    data =  tmp_train.trainData.data,
@@ -34,9 +37,12 @@ print('Final training data size '..tonumber(trainData.labels:size(1)))
 
 -- Load testing or validation data
 -- local tmp_test = matio.load('../../data14properties/test_'..base_filename..'_fold_'..tonumber(testid)..'.mat')
-testfilename = '../../data14properties/test_'..base_filename..'_fold_'..tonumber(test_bucket)..'.mat'
+testfilename = '../../data14properties/test_'..base_filename..'_fold_'..tonumber(test_bucket)..'.luamat'
 print(testfilename)
-local tmp_test = matio.load(testfilename)
+--local tmp_test = matio.load(testfilename)
+local file = torch.DiskFile(testfilename)
+local tmp_test = file:readObject()
+file:close()
 tesize = tmp_test.testData.data:size(1)
 testData = {
    data = tmp_test.testData.data,
