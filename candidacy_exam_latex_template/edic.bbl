@@ -1,5 +1,11 @@
 \begin{thebibliography}{1}
 
+\bibitem{BPtutorial}
+Eric Brochu, Vlad~M. Cora, and O~De Freitas.
+\newblock A tutorial on bayesian optimization of expensive cost functions,
+  withapplicationtoactiveusermodeling andhierarchical reinforcement learning.
+\newblock 2009.
+
 \bibitem{cleanenergy}
 Johannes Hachmann, Roberto Olivares-Amaya, Sule Atahan-Evrenk, Carlos
   Amador-Bedolla, Roel~S. Sánchez-Carrera, Aryeh Gold-Parker, Leslie Vogt,
