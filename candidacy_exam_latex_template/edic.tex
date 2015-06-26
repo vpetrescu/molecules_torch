@@ -1006,9 +1006,33 @@ In particular, in citep it is shown that with high probability
 \end{itemize}
 where $\delta \in (0,1)$, appropiate constants $C_1, C_2, \beta_t$ variable from teh acquistion function. The latter proof makes further assumptions that the function is smooth, which says that the probability of the partial derivatives of the function to have a large value is small.
 
-\subsubsection{Bounding the Information Gain using the spectrum of the matrix}
+\subsubsection{Bounding the Information Gain using the empiricial spectrum}
+The case of  infinite input dimensionionality are treated similarly with the finite case by assuming the existence of a discretized set $D_T \subset D, T \in N $ with nearest neighbor distance O(1), ense in the limit. The value of $\gamma_T^{\sim}= \max_A\subset D_T, |A|=T I(y_A; f_A)$ can be bounded by the greedy maximization value since it is a submodular function. By using another relaxation procedure, this value is further bounded by an expression depending on the eigenvalues $\lambda_t$ of the kernel matrix $K_{D_T} = k(x,x') x,x' \in D_T$ as follows
+\begin{equation}
+	\gamma_T^{\sim} \leq \frac{0.5}{1-e^{-1}} \max_{m_1,m_2,...,m_T} \sum log(1 + \sigma^-2m_t\lambda_T^{\sim})
+\end{equation}
+where $m_t\in N$, $\sum_t m_t = T$ and $\lambda_1 \geq \lambda_2 \geq \lambda_3 \geq ..$. Here we have considered a worst case scenario of assigning eingevectors of $K_T$
 
-\subsubsection{Bounding the Information gain using the spectral }
+In the next step, the information gain is bounded using the tail spectrum of $K_{D_T}$, which is 
+$B(T_{*}) = \sum\lambda_t^{\sim}$ and $n_T = \sum \lambda_t^{\sim}$ for any $T_{*}=1..T$
+\begin{equation}
+\lambda_{T} \leq O(\sigma[B(T_{*}T + T_{*}logn_T T)])
+\end{equation}
+
+From equation above, we conclude that if the tail spectrum$B(T_{*})$ is small , or in others words, the eingenspetrum of $K_{D_T}$ decays fast, the bound on $\gamma_T$ is more tight.
+\subsubsection{Bound the empirical spectrum by the operator spectrum}
+For a kernel k with $k(x,x)u(x)=1$ where u(x) is uniformly distributed on $D$, Mercer's theorem the existence of a discrete eigenspectrum {($\lambda_s(x), \phi_s(x)$)}
+with $k(x,x') = \sum \lambda_s\phi_s(x) \phi_s(x')$
+
+The contribution bounds the empirical tails spectrum $B(T_{*})$ by the kernel operator tails eigenspectrum $B_k(T_{*})$ .
+Analytical expression bounds on $B_k(T_{*})$ for the most common kernels are given by Seeger.
+
+
+\subsubsection{Conclusions}
+The makor contribution of the paper is making a connection between experimental design and GP optimization which leads to sublibear regret bounds for GP-UCB. 
+The bound is derived in two steps. First the cumulative regret is bounded by the maximum information gain. In a second step, the max information gain is bounded by the tails of the eigenspectrum which in turn is bound by the tails of the kernel operator spectrum.
+The bound is tighter, the more rapidly the kernel spectrum decays. Its major importance is also
+
 
 Although convergence rates are proven for infinite input dimensional spaces, the complexity of the GP step that incorporates the inversion of the covariance matrix makes it cubic in the number of samples T, which makes it often inpractical for high dimensional input.
 
