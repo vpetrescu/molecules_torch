@@ -75,7 +75,7 @@
 % both paper sizes by the user's LaTeX system.
 %
 % Also note that the "draftcls" or "draftclsnofoot", not "draft", option
-% should be used if it is desired that the figures are to be displayed in
+% should be used if it is desired that the s are to be displayed in
 % draft mode.
 %
 \documentclass[10pt,journal,a4paper]{IEEEtran}
@@ -256,7 +256,7 @@
 % pstricks, etc. must be called within the PSforPDF command. This applies
 % even when *loading* via \usepackage psfrag.sty, etc.
 
-
+\usepackage{graphicx}
 %\PSforPDF{\usepackage{psfrag}}
 % psfrag.sty was written by Craig Barratt, Michael C. Grant, and
 % David Carlisle. It allows you to substitute LaTeX commands for text in
@@ -914,16 +914,61 @@ Depending on the range of every  $x_i$, the size of $y_i$ can vary acrosss dimen
 Other parameters that are selected using cross validation are the number of hidden units per layer, the number of layers, the learning rate.
 
 \subsection{Self-Taught Learning: Transfer Learning from Unlabeled Data}
-Present the different machine learning framewroks that exists, with picture.
-It is a two part optimization problem.
-	- First find bases
-	- Then find new activations for the old ones.
-Through experimental results - since they were tested on a range of problems from image, text and sound.
+Some introduction
+
+One challenge in supervised learning tasks is to obtained labeled data. The higher the dimensionality of the input representations, the more desired labels. Since it can require tedious manual labor work, often solved using Amazon Mechanical turk. This paper introduces another machine learning framework called \textcolor{blue}{self-thaught learning}, which bases its idea on the fact that unlabeled dataset ismuch easier to obtain. Therefore, in the new setup, both labeled and unlabeled data is used for training a classifier. In Self-Thaught learning, labeled data is transformed in a high level representation learned through the use of a large number of unlabeled data. The new representation  is used for training a classifier on the labeled data. The setup is envisioned to have a bigger advantage when the available labeled data is scarce. 
+The more available labeled data, the use of the unlabeled data becomes less important.
+
+\subsubsection{Machine Learning framewroks that exists, with picture.}
+According to the type of data available (labeled and/or unlabeled) there are a number of frameworks in machine learning
+\begin{itemize}
+\item Supervised Classification - training labels are provided
+\item Semi-Supervised Classification - training labels are not provided, but test data comes from the same distribution as the training data
+\item Transfer Learning - training labels are provided but the data is assumed to be from a different distribution
+\item Self-Thaught Learning - training data does not have labels and it is also not assumed to come from the same distribution as the test data
+\end{itemize}
+An intuitive example is shown in Fig., where the orange bounded boxes represent labeled data.
+\begin{figure}[!t]
+\centering
+\includegraphics[width=2.5in]{selftaught.png}
+Morre bla
+\caption{Simulation Results}
+\label{fig_sim}
+\end{figure}
+
+
+\subsubsection{Problem formulation}
+Self thaught learning can be expressed as a two part optimization problem.
+
+In the first step, the unlabeled data $x^{(i)}_u \in R^n, i=1..k$ is used to find a set of $s$ \textit{bases} $b_i \in R^n, i=1..s$ and a set of \textit{sparse activations} $a_{(i)}^j$ with $a^{(i)}\in R^s$ such that $x_i$ can
+be reconstructed from the s bases vectors b and its corresponding activation weights $a^{(i)} \in R^s$ given by the formula:
+\begin{equation}
+\begin{array}{c }
+	\min_{a,b} \sum_{i=1}^k ||x_u^{(i)} - \sum_j a_j^{(i)} b_j||_2^2 + \beta||a^{(i)}||_1    \\
+	 s.t. ||b_j||_2 \leq 1, j=1..s
+	\end{array}
+\end{equation}
+The equation above can be easily optimized using the algorithm from citehere by alternating the optimizating a and b, e.g. fix one variable and optimize the other one at every step.
+The problem is equivalent with a least square L1 regularized problem in variable $a$ and a least square constrained problem in  variable $b$. The L1 regularization enforces sparse representations, which were experimentally shown to perform better across different datasets. We note that PCA can also be used for finding a new representation of the input, but it leads to different solutions were the activations are linear combination of the input. Moreover,  PCA can not be used for generating more bases than the input dimension.
+
+
+In the second step, the bases $b$ learned in the previous step are used for finding a higher level representation for labeled input data $x_l^{(i)}, i=1..m$ with corresponding target values $y_l^{(i)}, i=1..m$. The new representation is the set of activation vectors $a^{l}(x_l^{(i)}), i=1..m$ obtained by solving another L1- regularized optimization problem
+\begin{equation}
+a^{l}(x_l^{(i)}) = \arg\min_{a^{(i)}}|| x_l^{(i)} - \sum_j a_j^{(i)}b_j||_2^2 + \beta||a^{(i)}||_1.
+\end{equation}
+As a last step a classifier is trained on the pairs ${a(x_l^{(i)}), y^{(i)}} i=1..m$ and compared with a classifier (same type e.g. SVM) trained on the initial pairs ${x_l^{(i)}, y^{(i)}} i=1..m$.
+
+
+\subsubsection{Experimental Results}
+The 
+
+\subsubsection{Conclusions}
+
 \subsection{Information-Theoretic Regret Bounds for Gaussian Process Optimization in the Bandit Setting}
 \textcolor{blue}{Optimizing an unknown function is an important problem. 
 Often done using Gaussian processes in a Bayesian setting. Many heuristic have been proposed for defining an acquisition function. Few is known for its conergence.
 }
-
+ PUT ALSO PICTURE WITH EIGENSPECTRUM DECAY
 Optimizing a black box function $f: D->R$ that is expensive to evaluate is a common problem with applications ranging from active user modelling, hierarchical reinforcement learning\cite{BPtutorial} and more recently, hyper parameter optimization of machine learning models \cite{hyperparameter}. This problem can be posed as a multi-armed bandit problem where the function to be estimated is either sampled from a Gaussian Process or has low norm in reproducing Kernel Hilbert space.
 
 The optimization is done in a sequential manner, where at round $t$ a point $x_t$ in the domain is chosen according to an \textit{acquisition function} and the value $f(x_t)$ is evaluated. The goal is to maximize f with as few samples as possible. Among the common used acquistion functions we note the probabilty of improvement, maximum expected improvement or upper confidence bound functions, with the latter two experimentally shown to perform better in practice. 
