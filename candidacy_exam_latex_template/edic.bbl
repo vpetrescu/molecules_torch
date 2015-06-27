@@ -37,6 +37,17 @@ Matthias Rupp, Alexandre Tkatchenko, Klaus-Robert M\"uller, and O.~Anatole von
   machine learning.
 \newblock {\em Phys. Rev. Lett.}, 108:058301, Jan 2012.
 
+\bibitem{NonGP}
+MW. Seeger, SM. Kakade, and DP. Foster.
+\newblock Information consistency of nonparametric gaussian process methods.
+\newblock {\em IEEE Transactions on Information Theory}, 54(5):2376--2382, May
+  2008.
+
+\bibitem{hyperparameter}
+Jasper Snoek, Hugo Larochelle, and Ryan~P Adams.
+\newblock Practical bayesian optimization of machine learning algorithms.
+\newblock pages 2951--2959, 2012.
+
 \bibitem{todeschini2000handbook}
 Roberto Todeschini and Viviana Consonni.
 \newblock {\em Handbook of molecular descriptors}, volume~11.

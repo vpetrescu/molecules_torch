@@ -978,19 +978,18 @@ $A_T$ is obtained using our greedy aproach from above, it holds that
 Thus, a greedy set creation of $A_T$ leads to a near optimal solution.
 
 \subsubsection{GP-UCB}
-\textcolor{blue}{maybe introduce some}
-For function optimization a good sampling sequence $x_t$ is one that makes a tradeoff between 
+For the function optimization problem, a good sampling sequence $x_t$ is one that makes a tradeoff between 
 exploration and exploitation. By choosing points with high variance (exploitation) we try to reduce the overall uncertainty.
-By choosing points with high mean(exploitation) we try to concetrate samples in a region were we are  more confident that is close to the optimal. This idea is expressed by choosing in every round t, a point $x_t = \arg\max u_{t-1} + \beta_{t}^{1/2}\sigma_{t-1}(x)$ with $\beta_{t}$ defined in []. The function that is being maximized is also called the acquistion function.
+By choosing points with high mean (exploitation) we try to concentrate samples in a region were we are more confident that is close to the optimal. This idea is expressed by choosing in every round t, a point $x_t$  according to an acquistion function 
+$x_t = \arg\max_{x\in D} u_{t-1} + \beta_{t}^{1/2}\sigma_{t-1}(x)$ with $\beta_{t}$ defined in cite. The function that is being maximized is also called the acquistion function or utility function and corresponds to Upper Confidence Bound criterion.
 
-To sum up, at every round, the GP-UCB algorithm selects a point according to the above equation, samples $y_t=f(x_t) + \epsilon$ and updates $u_t$ and $\sigma_t$ using Bayes rule.
+To sum up, at every round, the GP-UCB algorithm selects a point according to the above equation, evaluates $y_t=f(x_t) + \epsilon$ and updates $u_t$ and $\sigma_t$ using Bayes rule from equation 1.
 
-An important property of the acquistion function is that as defined by equation above is that it does not choose points x for which the upper confidence value is smaller than the maximum lower confidence value found so far. This can prune a large subareas of the search space.
+An important property of the UCB defined as above is that it does not choose points x for which the upper confidence value is smaller than the maximum lower confidence value found so far. This can prune large subareas of the search space.
 
 \subsubsection{Regret Bounds}
 
-
-This paper cite here provides convergence rates for the the cumulative regret $R_T$ in both the finite and infinite case. They show that $lim \frac{R_T}{T}= 0$ and that . For the most popular kernels, this is shown to be
+This paper is the first to prove sublinear convergence rates for the cumulative regret $R_T$ with both finite and infinite input domain $D$ with smoothness assumptions on the kernel. They show that in the limit GP-UCB has no regret $lim \frac{R_T}{T}= 0$ and the convergence results for the most popular kernels can be found in table \ref{bounds}, up to polylog factors. We notice that the dependance on the dimensionality $d$ of the input is weak. namely, for the linear kernel the dependency is linear and for the squared exponential kernel $d$ appears only as a power of $log(T)$.
 \begin{table}
 \begin{tabular}{|c||c|c|c|}
 \hline
@@ -999,25 +998,43 @@ Kernel & Linear & RBF & Matern\\
 Regret $R_T$ & $d\sqrt{T}$& $\sqrt{T(log(T)^{d+1})} $ &${v+d(d+1)/2v+d(d+1)}$\\
 \hline
 \end{tabular}
-
+\label{bounds}
 \caption{Regret Bounds.}
 \end{table}
 
 
-\subsubsection{Bounding the regret using Information Gain}
-The first step of the proof is to bound $R_T$ by the maximum information gain $\gamma_T = \max_{A \subseteq D, |A| = T} I(y_A;f_A)$.
-In particular, in citep it is shown that with high probability
+\subsubsection{Bounding the Regret using Information Gain}
+The first step of the proof is to bound $R_T$ by the maximum information gain $\gamma_T = \max_{A \subseteq D, |A| = T} I(y_A;f_A)$ after $T$ rounds.
+In particular, it is shown that with high probability
 \begin{itemize}
-\item $Pr(R_T \leq \sqrt{C_1T\beta\gamma}) \leq 1- \delta$ for finite D
-\item$Pr(R_T \leq \sqrt{C_2T\beta\gamma} + 2) \leq 1- \delta$ for  D compact and convex.
+\item $Pr(R_T \leq \sqrt{C_1T\beta_T\gamma_T}) \leq 1- \delta$ for finite D
+\item$Pr(R_T \leq \sqrt{C_2T\beta_T\gamma_T} + 2) \leq 1- \delta$ for  D compact and convex 
 \end{itemize}
-where $\delta \in (0,1)$, appropiate constants $C_1, C_2, \beta_t$ variable from teh acquistion function. The latter proof makes further assumptions that the function is smooth, which says that the probability of the partial derivatives of the function to have a large value is small.
+where $\delta \in (0,1)$ and appropiate constants $C_1, C_2, \beta_t$ . The second inequality holds by making further assumptions that the function is smooth, by enforcing that the probability of the partial derivatives of the function to have a large value is small.
 
-\subsubsection{Bounding the Information Gain using the spectrum of the matrix}
+\subsubsection{Bounding the Information Gain using the empiricial spectrum}
+The case of  infinite input dimensionionality are treated similarly with the finite case by assuming the existence of a discretized set $D_T \subset D, T \in N $ with nearest neighbor distance O(1), dense in the limit. As stated previously, the value of $\gamma_T= \max_{A\subset D_T, |A|=T} I(y_A; f_A)$ can be bounded by the greedy maximization value $ \gamma_T \leq \frac{1}{1-e^(-1)} F(A_T)$ since it is a submodular function. Selecting a $x_t$ is equivalent with selecting a vector $v_t\in R^|D|$ with values 0's except the entry at position $t$, thus $f~ N(v_tf,\sigma^2)$. By using another relaxation procedure, we let $||v_t|| = 1$, it is shown that the $v_t's$ are selected among the eigenvectors of the kernel matrix $K_{D_T} = k(x,x') x,x' \in D_T$. The maximum information gain is further bounded by an expression involving the eigenvalues $\lambda_t^{\sim}$ of $K_{D_T}$ as follows:		
+\begin{equation}		
+	\gamma_T \leq \frac{0.5}{1-e^{-1}} \max_{m_1,m_2,...,m_D} \sum_{t=1}^{|D|} log(1 + \sigma^{-2}m_t\lambda^{\sim}_t)		
+\end{equation}		
+where $m_t\in N$, $\sum_t m_t = T$ and $\lambda_1^{\sim} \geq \lambda_2^{\sim} \geq \lambda_3^{\sim} \geq ..$. Here we have considered a worst case scenario of assigning eingevectors of $K_T$ to $v_t$.			
+In the next step, the information gain is bounded using the tail spectrum of $K_{D_T}$, $B(T_{*}) = \sum_{t=1}^{T_*}\lambda_t^{\sim}$ and $n_T = \sum_{t=1}^{T_*} \lambda_t^{\sim}$ for any $T_{*}=1..T$:		
+\begin{equation}		
+\gamma_{T} \leq O(\sigma^{-2}[B(T_{*}T + T_{*}logn_T T)])		
+\end{equation}		
+		
+From equation above, we conclude that if the tail spectrum $B(T_{*})$ is small, or in others words, the eingenspetrum of $K_{D_T}$ decays fast, the bound on $\gamma_T$ is more tight.		
+\subsubsection{Bound the empirical spectrum by the operator spectrum}		
+For a kernel k with $k(x,x)u(x)=1$ where u(x) is uniformly distributed on $D$, Mercer's theorem shows the existence of a discrete kernel eigenspectrum {$\lambda_s(x), \phi_s(x)$}		
+with $k(x,x') = \sum \lambda_s\phi_s(x) \phi_s(x')$		
+		
+Another challenge of this paper is to bound the empirical tails spectrum $B(T_{*})$ by the kernel operator tails eigenspectrum $B_k(T_{*}) == \sum_{t=1}^{T_*}\lambda_t $. Analytical expression bounds on $B_k(T_{*})$ for the most common kernels are given by Seeger \cite{NonGP}.		
+		
+\subsubsection{Conclusions}		
+The contribution of the paper are two fold. First, a novel connection is being made between experimental design and GP optimization, by bounding the cumulative regret by the maximum information gain. Secondly, for the first time sublinear regret bounds for GP-UCB optimization are shown with weak dependence on the dimensionality of the input. 		
+ The bound is derived in two steps. First the cumulative regret is bounded by the maximum information gain. In a second step, the max information gain is bounded by the tails of the empirical eigenspectrum which in turn is bound by the tails of the kernel operator spectrum.	The bound is tighter, the more rapidly the kernel spectrum decays. 
 
-\subsubsection{Bounding the Information gain using the spectral }
-
-Although convergence rates are proven for infinite input dimensional spaces, the complexity of the GP step that incorporates the inversion of the covariance matrix makes it cubic in the number of samples T, which makes it often inpractical for high dimensional input.
+Although convergence rates are proven for infinite input dimensional spaces as well, the complexity of the GP step that incorporates the inversion of the covariance matrix makesthe complexity of the algorithm cubic in the number of samples T, which makes it often inpractical for high dimensional input.
 
 \section{Research Proposal}
 \subsection{•}
