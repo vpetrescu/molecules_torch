@@ -613,7 +613,6 @@ urlcolor={black},
 pdftitle={edic},%<!CHANGE!
 pdfsubject={Typesetting},%<!CHANGE!
 pdfauthor={EDIC},%<!CHANGE!
-pdfkeywords={EDIC, candidacy exam, EPFL}}%<^!CHANGE!
 %\ifCLASSINFOpdf
 %\usepackage[\MYhyperrefoptions,pdftex]{hyperref}
 %\else
@@ -748,14 +747,9 @@ The high computational cost of quantum chemistry calculations have prompted
 the use of less expensive machine learning methods for predicting molecular
 properties in chemical compound space. Finding good feature representations
 for molecules is hard, in part because of the graph-like structure geometry of
-the molecules that need to be represented as high dimensional vectors.
-\textcolor{blue}{Add what this paper is about}
-\end{abstract}
+the molecules that need to be represented as high dimensional vectors. Another difficulty in applying machine learning to molecular data is choosing and training the right models across a large dataset of labeled data. This write-up proposes suggestions to overcome some of the above issues.
 
-% Note that keywords are not normally used for peerreview papers.
-\begin{IEEEkeywords}
-thesis proposal, candidacy exam write-up, EDIC, EPFL
-\end{IEEEkeywords}}
+\end{abstract}
 
 
 % make the title area
@@ -775,14 +769,12 @@ Having a system which predicts both accurately and at a small computational cost
 \section{Background Work}
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
-\textcolor{blue}{This write-up serves two purposes. First, it forms the basis for
-your candidacy exam. As such you should summarize the three papers selected
-by your advisor and yourself, and analyze as well as discuss them critically.
+\textcolor{blue}{
 Second, the write-up 
 is also your thesis proposal.  Therefore, the last one or two pages should
 be dedicated to your own preliminary work. A road-map of how you plan to
 advance the state of the art in your chosen area should also be given.
-For further details please consult the document ``PhD Candidacy Exam Overview.'' You can find the latest
+ please consult the document ``PhD Candidacy Exam Overview.'' You can find the latest
 version at {\tt http://phd.epfl.ch/page57746-en.html}.
 Describe briefly the context, the problem, shortcomings in prior
 approaches, and your proposed approach and solution. Forecast results.
@@ -868,19 +860,18 @@ relate to your work.  This part builds the basis for the oral candidacy exam.}
 
 
 \subsection{Learning Invariant Representations of Molecules for Atomization Energy prediction}
-Representing Molecules
 
-While domain specific descriptors for molecules exist \cite{todeschini2000handbook}, recent work \cite{initialcoloumb} has proposed to predict properties of a molecule of size $N$ only from the 3D positions of the atoms $R_i$ $i\in{1..N}$ and their nuclear charge $Z_i$ $i\in{1..N}$ . This has prompted the introduction of the Coloumb Matrix descriptor, whose individual entries appear in the Schroedinger equation. It is defined by a $NxN$ matrix with entries given by:
+While domain specific descriptors for molecules exist \cite{todeschini2000handbook}, recent work \cite{initialcoloumb} has proposed to predict properties of a molecule of size $N$ only from the 3D positions of the atoms $R_i$ $i\in{1..N}$ and their nuclear charge $Z_i$ $i\in{1..N}$ . This has prompted the introduction of the Coloumb Matrix descriptor, whose individual entries appear in the Schroedinger equation. It is defined by a $N$x$N$ matrix with entries given by:
 
 \begin{equation}
 M(i,j) = \left\{
   \begin{array}{lr}
     0.5*Z_i^{2.4} & if i = j\\
-    Z_i * Z_j / |R_i - R_j| & otherwise
+    Z_i * Z_j / ||R_i - R_j|| & otherwise
   \end{array}
 \right.
 \end{equation}
-where $Ri - Rj$ represents the distance between the atoms $i$ and $j$.
+where $||Ri - Rj||$ represents the distance between the atoms $i$ and $j$.
 
 The dimensionality of the Coloumb Matrix is given by the number of atoms in a molecule. Since that varies across molecules in a dataset, one common trick is to pad with 0's the matrices corresponding to small molecules until they reach the maximum molecule size in a dataset. This limits the size of the molecules that can be used, since the descriptor  has complexity $O(N^2)$, where $N$ is the number of atoms.
 
@@ -888,18 +879,16 @@ Desired properties of descriptor
 Due to the graph-like structure of the molecules, finding a fixed size representation is difficult. The desired properties of a molecular descriptor are invariance to translation and rotation of the molecule and invariance to the indexing of the atoms.
 
 Solved using sorted or Random Coloumb
-While the Coloumb Matrix representations solves the rotation and translation invariance through the use of distances between atoms $R_i -R_j$, invariance in atom indexing still needs to be tackled since any permutation of atom indexes results in a valid Coloumb descriptor.
-Two variations of the descriptor are proposed in \cite{montavon2012learning}. The first one, called Sorted Coloumb, uses the permutation of the atoms given by the sorting of the row norms of a valid Coloumb matrix. Any molecule has a unique representation given by the Sorted Coloumb matrix. The second representations is based on the idea that the norms of the rows can have very similar values in practice and the sorting, therefore also the atom indexing, is subject to small noise. The new descriptor, Random Coloumb Matrices is a collection of Sorted Coloumb matrices. For every molecule, approximatively 10 Randomly Sorted Coloumb matrices are drawn. One Random Sorted Coloumb Marix is obtained by sorting the set of  rows was sorted according to their norm at which a small Gaussian noise was added. New predictions can be made by averging the prediction results.
+While the Coloumb Matrix representations solves the rotation and translation invariance through the use of distances between atoms $||R_i -R_j||$, invariance in atom indexing still needs to be tackled since any permutation of atom indexes results in a valid Coloumb descriptor.
+Two variations of the descriptor are proposed in \cite{montavon2012learning}. The first one, called Sorted Coloumb, uses the permutation of the atoms given by the sorting of the row norms of a valid Coloumb matrix. Any molecule has a unique representation given by the Sorted Coloumb matrix. The second representations is based on the idea that the norms of the rows can have very similar values in practice and the sorting, therefore also the atom indexing, is subject to small noise. The new descriptor, Random Coloumb Matrices is a collection of Sorted Coloumb matrices. For every molecule, approximatively 10 Randomly Sorted Coloumb matrices are drawn. One Random Sorted Coloumb Marix is obtained by sorting the set of  rows according to their norm at which a small Gaussian noise was added. New predictions can be made by averging the prediction results for 10 such instantations.
 
-Reach state of the art result at the time. The current new value is 1.5 using Bag of Bonds.
 The performane of the descriptors was evaluated on predicting the atomization energy on a dataset of 7165 molecules with at most 23 atoms per atom. The predicted values range from -800 to -2000 kcal/mol. The splitting of the data into 5 folds for cross validation is done using stratified sampling. The molecules were clustered into 5 sets with similar atomization energy levels and the folds were created by randomly selecting one molecule from each bucket.
 
-While this is a good strategy for obtaining good generalization performance, in normal machine learning practice we should not touch the test dataset. If we test the performance on a new molecule whose atomization energy is not within the bounds present in the training dataset, it is likely that the prediction will not be very accurate. Moreover, if we have a molecule with more atoms than present in the dataset, we would need to retrain our model with a  descriptor of diferent size. The same problem appears across chemical compound space if we try to predict the atomization energy of a molecule with the same number of atoms but with different atom types composition. In general, we do not have guarantees that the a molecule with similar atom composition and similar atom type have target prediction in the same range as our training set.
+While this is a good strategy for obtaining good generalization performance, in practice we should not expect to know the range of the test data. If we test the performance on a new molecule whose atomization energy is not within the bounds present in the training dataset, it is likely that the prediction will not be very accurate. Moreover, if we have a molecule with more atoms than any molecule present in the dataset, we would need to retrain our model with a  descriptor of different size. The same problem appears across chemical compound space if we try to predict the atomization energy of a molecule with the same number of atoms but with different atom types in its composition. In general, we do not have guarantees that a molecule with similar atom composition and similar atom type have target prediction in the same range as our training set.
 
 For experimental evaluation of the performance of descriptors, both kernel ridge regression and multy layer feed forwards networks were tried. The best test performance of 3.1 kcal/mol MAE was obtained using a neural network with
- Randomly Sorted Coloumb matrix. The improvement was three fold with respect to the previous state of the art, which gave a MAE of 9kcal/mol. A performance level is ~1kcal/mol to reach chemical accuracy.
- \textcolor{blue}{Maybe put this as footnote}
-Later work \cite{bob}, improved upon this result by reducing the current state-of-the-art to only 1.5kcal/mol using a bag of bonds descriptor with Laplacian kernel.
+ Randomly Sorted Coloumb matrix. The improvement was three fold with respect to the previous state of the art, which gave a MAE of 9kcal/mol, while a performance level of ~1kcal/mol is desired to reach chemical accuracy level.
+Later work \cite{bob} improved upon this result by reducing the current state-of-the-art to only 1.5kcal/mol using a bag of bonds descriptor with Laplacian kernel.
 
 Difficulty of training a neural network, maybe cite tricks of the trade
 While recently Neural Nets (especially deep networks) have achieved state-of-the-art in many fields ranging from computer vision, natural language processing and speech recogition, one of the main challenges they pose is the difficulty in training for people without a lot of experiences with nnets in particular. 
@@ -915,12 +904,14 @@ Other parameters that are selected using cross validation are the number of hidd
 
 \subsection{Self-Taught Learning: Transfer Learning from Unlabeled Data}
 Some introduction
-
-One challenge in supervised learning tasks is to obtained labeled data. The higher the dimensionality of the input representations, the more desired labels. Since it can require tedious manual labor work, often solved using Amazon Mechanical turk. This paper introduces another machine learning framework called \textcolor{blue}{self-thaught learning}, which bases its idea on the fact that unlabeled dataset ismuch easier to obtain. Therefore, in the new setup, both labeled and unlabeled data is used for training a classifier. In Self-Thaught learning, labeled data is transformed in a high level representation learned through the use of a large number of unlabeled data. The new representation  is used for training a classifier on the labeled data. The setup is envisioned to have a bigger advantage when the available labeled data is scarce. 
-The more available labeled data, the use of the unlabeled data becomes less important.
+ We note that 7000 is the desired, although other datasets exists
+ with 140000 dataset, which can take more time to obtain and can not be done using Amazon mechanical turk.
+ 
+One challenge in supervised learning tasks is to obtained labeled data. Usually, the higher the dimensionality of the input representations, the more labeled data is required for good generalization performance. Since obtaining large amounts of labeled data can require tedious manual labor work, people often employ Amazon Mechanical turk for labeling data. To overcome this, this paper introduces another machine learning framework called \textit{self-thaught learning}, which bases its idea on the fact that unlabeled dataset ismuch easier to obtain. Therefore, in the new setup, both labeled and unlabeled data is used for training a classifier. In Self-Taught learning, labeled data is transformed into a higher level representation learned through the use of a large number of unlabeled data. The new representation  is used for training a classifier on the labeled data. This setup is envisioned to have a bigger advantage when the available labeled data is scarce. 
+MOVE thIS The more available labeled data, the use of the unlabeled data becomes less important.
 
 \subsubsection{Machine Learning framewroks that exists, with picture.}
-According to the type of data available (labeled and/or unlabeled) there are a number of frameworks in machine learning
+According to the type of data available (labeled and/or unlabeled) there are a number of frameworks currently used:
 \begin{itemize}
 \item Supervised Classification - training labels are provided
 \item Semi-Supervised Classification - training labels are not provided, but test data comes from the same distribution as the training data
@@ -938,31 +929,32 @@ Morre bla
 
 
 \subsubsection{Problem formulation}
-Self thaught learning can be expressed as a two part optimization problem.
+Self thaught learning can be expressed as a two step optimization problem.
 
 In the first step, the unlabeled data $x^{(i)}_u \in R^n, i=1..k$ is used to find a set of $s$ \textit{bases} $b_i \in R^n, i=1..s$ and a set of \textit{sparse activations} $a_{(i)}^j$ with $a^{(i)}\in R^s$ such that $x_i$ can
-be reconstructed from the s bases vectors b and its corresponding activation weights $a^{(i)} \in R^s$ given by the formula:
+be reconstructed from the $s$ bases vectors $b$ and its corresponding activation weights $a^{(i)} \in R^s$ given by the formula:
 \begin{equation}
 \begin{array}{c }
 	\min_{a,b} \sum_{i=1}^k ||x_u^{(i)} - \sum_j a_j^{(i)} b_j||_2^2 + \beta||a^{(i)}||_1    \\
 	 s.t. ||b_j||_2 \leq 1, j=1..s
 	\end{array}
 \end{equation}
-The equation above can be easily optimized using the algorithm from citehere by alternating the optimizating a and b, e.g. fix one variable and optimize the other one at every step.
-The problem is equivalent with a least square L1 regularized problem in variable $a$ and a least square constrained problem in  variable $b$. The L1 regularization enforces sparse representations, which were experimentally shown to perform better across different datasets. We note that PCA can also be used for finding a new representation of the input, but it leads to different solutions were the activations are linear combination of the input. Moreover,  PCA can not be used for generating more bases than the input dimension.
+The equation above can be easily optimized using the algorithm from citehere by alternating the optimization in $a$ and $b$, e.g. fix one variable and optimize the other one at every step.
+The problem is equivalent with a least square L1 regularized problem in variable $a$ and a least square constrained problem in  variable $b$. The L1 regularization enforces sparse representations, which was chosen because experimentally appeared to perform better across different datasets. We note that PCA can also be used for finding a new representation of the input, but it leads to different solutions were the activations are linear combination of the input. Moreover,  PCA can not be used for generating more bases than the input dimension.
 
 
 In the second step, the bases $b$ learned in the previous step are used for finding a higher level representation for labeled input data $x_l^{(i)}, i=1..m$ with corresponding target values $y_l^{(i)}, i=1..m$. The new representation is the set of activation vectors $a^{l}(x_l^{(i)}), i=1..m$ obtained by solving another L1- regularized optimization problem
 \begin{equation}
 a^{l}(x_l^{(i)}) = \arg\min_{a^{(i)}}|| x_l^{(i)} - \sum_j a_j^{(i)}b_j||_2^2 + \beta||a^{(i)}||_1.
 \end{equation}
-As a last step a classifier is trained on the pairs ${a(x_l^{(i)}), y^{(i)}} i=1..m$ and compared with a classifier (same type e.g. SVM) trained on the initial pairs ${x_l^{(i)}, y^{(i)}} i=1..m$.
+As a last step ,a classifier is trained on the pairs $\{a(x_l^{(i)}), y^{(i)}\} , i=1..m$ and compared with a classifier (same type e.g. SVM) trained on the initial pairs $\{x_l^{(i)}, y^{(i)}\} i=1..m$.
 
 
 \subsubsection{Experimental Results}
-The 
+Self taught learning was extensively tested across a range of different applications such as computer vision with raw pixel intensities, natural language processing with bag of words and speech recognition with frequency histograms. Using an SVM as the classifier with the high level sparse activation features as input instead of the initial raw features successfully performed better almost for all tasks. This suggests that such a problem setup can be employed to datasets belonging to different domains besides the one presented here.
 
 \subsubsection{Conclusions}
+T
 
 \subsection{Information-Theoretic Regret Bounds for Gaussian Process Optimization in the Bandit Setting}
 \textcolor{blue}{Optimizing an unknown function is an important problem. 
@@ -971,12 +963,12 @@ Often done using Gaussian processes in a Bayesian setting. Many heuristic have b
  PUT ALSO PICTURE WITH EIGENSPECTRUM DECAY
 Optimizing a black box function $f: D->R$ that is expensive to evaluate is a common problem with applications ranging from active user modelling, hierarchical reinforcement learning\cite{BPtutorial} and more recently, hyper parameter optimization of machine learning models \cite{hyperparameter}. This problem can be posed as a multi-armed bandit problem where the function to be estimated is either sampled from a Gaussian Process or has low norm in reproducing Kernel Hilbert space.
 
-The optimization is done in a sequential manner, where at round $t$ a point $x_t$ in the domain is chosen according to an \textit{acquisition function} and the value $f(x_t)$ is evaluated. The goal is to maximize f with as few samples as possible. Among the common used acquistion functions we note the probabilty of improvement, maximum expected improvement or upper confidence bound functions, with the latter two experimentally shown to perform better in practice. 
+The optimization is done in a sequential manner, where at round $t$ a point $x_t$ in the domain is chosen according to an \textit{acquisition function} and the value $f(x_t)$ is evaluated. The goal is to maximize f with as few samples as possible. Among the common used acquistion functions we note the probabilty of improvement, maximum expected improvement or upper confidence bound (called GP-UCB, the focus of this paper), with the latter two experimentally shown to perform better in practice. 
 
-The effectiveness of a sampling scheme in finding  $x*$ (may not be unique) s.t $x* = \arg\max_{x\in D}f(x)$ is evaluated using the \textit{instantaneous} and the 
-\textit{cumulative regret}.  The instantenous regret $r_t = f(x*) - f(x_t)$ is the error that we make at round t for choosing point $x_t$ instead of $x*$. The cumulative regret is the error accumulated up to thie current round $R_T = \sum_{t=1..T} r_t$.
+The effectiveness of a sampling scheme in finding the optimal $x*$ (may not be unique) s.t $x* = \arg\max_{x\in D}f(x)$ is evaluated using the \textit{instantaneous} and the 
+\textit{cumulative regret}.  The instantenous regret $r_t = f(x*) - f(x_t)$ is the error that we make at round t for choosing point $x_t$ instead of $x*$. The cumulative regret is the error accumulated up to the current round $R_T = \sum_{t=1..T} r_t$.
 
-Besides their practical success, few was known in practice about their convergence properties for finite and infinte input dimensional space. The main contribution of the paper is to show sublinear convergence rates in $T$ for GP-UCB, the number of rounds of the cumulative regret. In other words, as T goes to infinity, we expect the cumulative regret to be 0 $lim \frac{R_T}{T} = 0$.
+Besides the practical success of GP optimization, few was known in practice about their convergence properties for finite and infinte input dimensional space. The main contribution of the paper is to show sublinear convergence rates in $T$ for GP-UCB, the number of rounds of the cumulative regret. In other words, as T goes to infinity, we expect the cumulative regret to be 0 $lim \frac{R_T}{T} = 0$.
 
 The bound on the cumulative regret $R_T$ is done in two steps. First  bound $R_T$ on the information gain, then bound the information gain using the empirical spectrum operator For the inifinite domain case, this is done by further bounding on the kernel operator spectrum.
 
