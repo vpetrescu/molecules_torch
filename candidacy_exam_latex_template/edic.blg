@@ -13,45 +13,45 @@ while executing---line 1090 of file plain.bst
 Too many commas in name 1 of "K. Hansen, F. Biegler, O.A. von Lilienfeld, K.-R. Müller, and A. Tkatchenko" for entry bob
 while executing---line 1090 of file plain.bst
 Warning--empty journal in hyperparameter
-You've used 8 entries,
+You've used 9 entries,
             2118 wiz_defined-function locations,
-            551 strings with 6000 characters,
-and the built_in function-call counts, 3269 in all, are:
-= -- 301
-> -- 199
-< -- 3
-+ -- 80
-- -- 70
-* -- 251
-:= -- 545
-add.period$ -- 24
-call.type$ -- 8
-change.case$ -- 57
+            558 strings with 6226 characters,
+and the built_in function-call counts, 3574 in all, are:
+= -- 326
+> -- 218
+< -- 4
++ -- 87
+- -- 76
+* -- 276
+:= -- 597
+add.period$ -- 27
+call.type$ -- 9
+change.case$ -- 62
 chr.to.int$ -- 0
-cite$ -- 10
-duplicate$ -- 112
-empty$ -- 221
-format.name$ -- 70
-if$ -- 670
+cite$ -- 11
+duplicate$ -- 126
+empty$ -- 245
+format.name$ -- 76
+if$ -- 732
 int.to.chr$ -- 0
-int.to.str$ -- 8
-missing$ -- 10
-newline$ -- 43
-num.names$ -- 16
-pop$ -- 67
+int.to.str$ -- 9
+missing$ -- 11
+newline$ -- 48
+num.names$ -- 19
+pop$ -- 75
 preamble$ -- 1
-purify$ -- 51
+purify$ -- 56
 quote$ -- 0
-skip$ -- 85
+skip$ -- 91
 stack$ -- 0
-substring$ -- 186
-swap$ -- 28
-text.length$ -- 3
+substring$ -- 191
+swap$ -- 31
+text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 28
+type$ -- 30
 warning$ -- 2
-while$ -- 25
-width$ -- 9
-write$ -- 86
+while$ -- 27
+width$ -- 10
+write$ -- 97
 (There were 4 error messages)

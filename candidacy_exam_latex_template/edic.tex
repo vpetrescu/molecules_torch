@@ -612,7 +612,8 @@ colorlinks=true,linkcolor={black},citecolor={black},pagecolor={black},
 urlcolor={black},
 pdftitle={edic},%<!CHANGE!
 pdfsubject={Typesetting},%<!CHANGE!
-pdfauthor={EDIC},%<!CHANGE!
+pdfauthor={EDIC},
+pdfkeywords={EDIC, candidacy exam, EPFL}}%<!CHANGE!
 %\ifCLASSINFOpdf
 %\usepackage[\MYhyperrefoptions,pdftex]{hyperref}
 %\else
@@ -751,7 +752,9 @@ the molecules that need to be represented as high dimensional vectors. Another d
 
 \end{abstract}
 
-
+\begin{IEEEkeywords}		
+molecules descriptors, GP-UCB, unlabeled data	
+\end{IEEEkeywords}}
 % make the title area
 \maketitle
 \IEEEdisplaynotcompsoctitleabstractindextext
@@ -770,9 +773,7 @@ Having a system which predicts both accurately and at a small computational cost
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
 \textcolor{blue}{
-Second, the write-up 
-is also your thesis proposal.  Therefore, the last one or two pages should
-be dedicated to your own preliminary work. A road-map of how you plan to
+. A road-map of how you plan to
 advance the state of the art in your chosen area should also be given.
  please consult the document ``PhD Candidacy Exam Overview.'' You can find the latest
 version at {\tt http://phd.epfl.ch/page57746-en.html}.
@@ -780,7 +781,7 @@ Describe briefly the context, the problem, shortcomings in prior
 approaches, and your proposed approach and solution. Forecast results.
 Background --- Describe the three papers in detail, the problem they
 tackle, the solutions and results, and their shortcomings, and how they
-relate to your work.  This part builds the basis for the oral candidacy exam.}
+relate to your work..}
 
 
 % An example of a floating figure using the graphicx package.
@@ -890,33 +891,27 @@ For experimental evaluation of the performance of descriptors, both kernel ridge
  Randomly Sorted Coloumb matrix. The improvement was three fold with respect to the previous state of the art, which gave a MAE of 9kcal/mol, while a performance level of ~1kcal/mol is desired to reach chemical accuracy level.
 Later work \cite{bob} improved upon this result by reducing the current state-of-the-art to only 1.5kcal/mol using a bag of bonds descriptor with Laplacian kernel.
 
-Difficulty of training a neural network, maybe cite tricks of the trade
-While recently Neural Nets (especially deep networks) have achieved state-of-the-art in many fields ranging from computer vision, natural language processing and speech recogition, one of the main challenges they pose is the difficulty in training for people without a lot of experiences with nnets in particular. 
 
-Cite here Neural nets tricks fo the trade
-In order to obtain the competitive performance of 3.1kcal/mol using neural nets, multiple tricks have been used, inspired from cite here NN. First of all, taking the real entries of the Coloumb matrix as input to the neural net proved to perform poorly.
-For this, a binarization step was performed which added an extra dimensionality to the dataset. Specifically, if $x \in R^{D}$ represents a flatten Coloumb matrix, it is mapped to a new binarized descriptor $y \in R^{DxM}$ such that $y_i \in R^{1xM}$ is computed by taking shifted versions of $x_i$ entry that are passed through a sigmoidal function
+While recently Neural Networks (especially deep networks) have achieved state-of-the-art in many fields ranging from computer vision, natural language processing and speech recogition, one of the main challenges they pose is the difficulty in training for people without domain expertise. 
+In order to obtain the competitive performance of 3.1kcal/mol using multi layer feed forward neural networks, multiple tricks have been used, inspired from \cite{tricks}. First of all, taking the real entries of the Coloumb matrix as input to the neural net proved to perform poorly.
+To overcome this, a binarization step was performed which added an extra dimensionality to the dataset. Specifically, every $x \in R^{D}$ representing a flatten Coloumb matrix is mapped to a new binarized descriptor $y \in R^{DxM}$ such that $y_i \in R^{1xM}$ is computed by taking shifted versions of $x_i$ entry that are passed through a sigmoidal function
 \begin{equation}
-	y_i = [..., tanh(\frac{x_i - \theta}{\theta}, tanh(\frac{x_i}{\theta}), tanh(\frac{x_i + \theta}{\theta})]
+	y_i = [..., tanh(\frac{x_i - \theta}{\theta}), tanh(\frac{x_i}{\theta}), tanh(\frac{x_i + \theta}{\theta}),..]
 \end{equation}
-Depending on the range of every  $x_i$, the size of $y_i$ can vary acrosss dimensions if we ignore saturated values.
-Other parameters that are selected using cross validation are the number of hidden units per layer, the number of layers, the learning rate.
+Depending on the range of $x_i$, the size of $y_i$ can vary acrosss dimensions if we ignore the saturated values.
+The other parameters that are selected using cross validation are the number of hidden units per layer, the number of layers, the learning rate.
 
 \subsection{Self-Taught Learning: Transfer Learning from Unlabeled Data}
-Some introduction
- We note that 7000 is the desired, although other datasets exists
- with 140000 dataset, which can take more time to obtain and can not be done using Amazon mechanical turk.
  
-One challenge in supervised learning tasks is to obtained labeled data. Usually, the higher the dimensionality of the input representations, the more labeled data is required for good generalization performance. Since obtaining large amounts of labeled data can require tedious manual labor work, people often employ Amazon Mechanical turk for labeling data. To overcome this, this paper introduces another machine learning framework called \textit{self-thaught learning}, which bases its idea on the fact that unlabeled dataset ismuch easier to obtain. Therefore, in the new setup, both labeled and unlabeled data is used for training a classifier. In Self-Taught learning, labeled data is transformed into a higher level representation learned through the use of a large number of unlabeled data. The new representation  is used for training a classifier on the labeled data. This setup is envisioned to have a bigger advantage when the available labeled data is scarce. 
-MOVE thIS The more available labeled data, the use of the unlabeled data becomes less important.
+One challenge in general supervised learning tasks is to obtained labeled data. Usually, the higher the dimensionality of the input representations, the more labeled data is required for good generalization performance. Since obtaining large amounts of labeled data can require tedious manual labor work, people often employ Amazon Mechanical Turk for obtaining labeled data. To overcome this, this paper introduces another machine learning framework called \textit{self-taught learning}, which has as core idea the fact that unlabeled dataset is much easier to obtain. Therefore, in the new setup, both labeled and unlabeled data is used for training a classifier. In Self-Taught learning, labeled data is transformed into a higher level representation learned through the use of a large number of unlabeled data. The new representation  is used for training a classifier on the labeled data. This setup is envisioned to have a bigger advantage when the available labeled data is scarce. 
 
-\subsubsection{Machine Learning framewroks that exists, with picture.}
-According to the type of data available (labeled and/or unlabeled) there are a number of frameworks currently used:
+
+According to the type of data available (labeled and/or unlabeled) there are a number of training/testing setups currently used:
 \begin{itemize}
 \item Supervised Classification - training labels are provided
-\item Semi-Supervised Classification - training labels are not provided, but test data comes from the same distribution as the training data
-\item Transfer Learning - training labels are provided but the data is assumed to be from a different distribution
-\item Self-Thaught Learning - training data does not have labels and it is also not assumed to come from the same distribution as the test data
+\item Semi-Supervised Classification - training labels are not provided, but test data comes from the same class distribution as the training data
+\item Transfer Learning - training labels are provided but the test data is assumed to be from a different distribution
+\item Self-Taught Learning - training data does not have labels and it is also not assumed to come from the same distribution as the test data
 \end{itemize}
 An intuitive example is shown in Fig., where the orange bounded boxes represent labeled data.
 \begin{figure}[!t]
@@ -1075,11 +1070,18 @@ Although convergence rates are proven for infinite input dimensional spaces as w
 
 \section{Research Proposal}
 \subsection{•}
+We have a regression task, not a classificaion task
 Proposing a new descriptor which is invariant to permutations of the atom. 2.6+/ or 2.1 with noise. (still gives comparable accuracy to same DFT models)
 \subsection{•}
 Propose of augumententing the data sets more easily and make the cross validation
 less sensitive to splitting -at the moment : take non H atoms, then sort then do CV.
 
+MOVE thIS The more available labeled data, the use of the unlabeled data becomes less important.
+
+Some introduction
+ We note that 7000 is the desired, although other datasets exists
+ with 140000 dataset, which can take more time to obtain and can not be done using Amazon mechanical turk.
+ 
 Pose the problem as one of the semi supervised, self tought learning etc problems and try to make it generalize across compound space, or learn new embeddings of the atoms.
 \subsection*{•}
 Although the use of Gaussian processes in material design is not new, it s major drawback is the computational bottleneck. In our scenario, this can be used for
