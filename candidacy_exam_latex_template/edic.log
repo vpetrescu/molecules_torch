@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.24)  28 JUN 2015 20:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.24)  28 JUN 2015 20:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -130,7 +130,11 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 137.
 )
-(./edic.aux)
+(./edic.aux
+
+LaTeX Warning: Label `fig_sim' multiply defined.
+
+)
 \openout1 = `edic.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 682.
@@ -248,19 +252,19 @@ Underfull \hbox (badness 1824) in paragraph at lines 882--885
 File: selftaught.png Graphic file (type png)
  <use selftaught.png>
 Package pdftex.def Info: selftaught.png used on input line 919.
-(pdftex.def)             Requested size: 180.67499pt x 190.98943pt.
+(pdftex.def)             Requested size: 202.35622pt x 213.90752pt.
  [2]
-Underfull \hbox (badness 4366) in paragraph at lines 944--946
-\OT1/ptm/m/n/10 As a last step ,a clas-si-fier is trained on the pairs
+Underfull \hbox (badness 4366) in paragraph at lines 943--945
+\OT1/ptm/m/n/10 As a last step, a clas-si-fier is trained on the pairs
  []
 
 [3 <./selftaught.png>]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 1026.
+(Font)              <8> on input line 1023.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 1026.
+(Font)              <6> on input line 1023.
 
-Overfull \hbox (13.45966pt too wide) in paragraph at lines 1026--1034
+Overfull \hbox (13.45966pt too wide) in paragraph at lines 1023--1031
 [][]
  []
 
@@ -282,42 +286,50 @@ Missing character: There is no ¡ in font ptmr7t!
 Missing character: There is no Ã in font ptmr7t!
 Missing character: There is no ¼ in font ptmr7t!
 
-Underfull \hbox (badness 2042) in paragraph at lines 25--32
-[]\OT1/ptm/m/n/8 Gr[]egoire Mon-tavon, Katja Hansen, Sia-mac Fa-zli, Matthias R
-upp,
+Underfull \hbox (badness 4859) in paragraph at lines 19--23
+[]\OT1/ptm/m/n/8 O.A. von Lilien-feld K.-R. Mller K. Hansen, F. Biegler and
  []
 
-) [5] (./edic.aux) ) 
+
+Underfull \hbox (badness 1701) in paragraph at lines 47--52
+[]\OT1/ptm/m/n/8 Matthias Rupp, Alexan-dre Tkatchenko, Klaus-Robert M[]uller, a
+nd
+ []
+
+) [5] (./edic.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 2272 strings out of 493117
- 36170 string characters out of 6135432
- 106526 words of memory out of 5000000
- 5716 multiletter control sequences out of 15000+600000
+ 2273 strings out of 493117
+ 36186 string characters out of 6135432
+ 107569 words of memory out of 5000000
+ 5717 multiletter control sequences out of 15000+600000
  41439 words of font info for 76 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
- 38i,12n,23p,1015b,246s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r
-.enc}</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.
-pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
-fb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb
-></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><
-/usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></u
-sr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr
-/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/l
-ocal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/loca
-l/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/t
-exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texl
-ive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive
-/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/
-2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/20
-14/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2014
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2014/t
-exmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2014/texmf-dis
-t/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/ty
-pe1/urw/times/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/t
-imes/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmri
-8a.pfb>
-Output written on edic.pdf (5 pages, 453335 bytes).
+ 38i,12n,23p,1015b,242s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
+xlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
+live/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texli
+ve/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive
+/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2
+014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/201
+4/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2014/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2014/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2014/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2014/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2014/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2014/texmf-dist/font
+s/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2014/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2014/texmf-dist/fonts/ty
+pe1/urw/courier/ucrr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/
+times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmb
+i8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
+usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on edic.pdf (5 pages, 453531 bytes).
 PDF statistics:
  104 PDF objects out of 1000 (max. 8388607)
  74 compressed objects within 1 object stream

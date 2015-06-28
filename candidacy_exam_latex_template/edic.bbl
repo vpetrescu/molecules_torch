@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{BPtutorial}
 Eric Brochu, Vlad~M. Cora, and O~De Freitas.
@@ -20,6 +20,12 @@ O.A. von Lilienfeld K.-R.~Müller K.~Hansen, F.~Biegler and A.~Tkatchenko.
 \newblock {\em Interaction Potentials in Molecules and Non-Local Information in
   Chemical Space.}
 \newblock Phys. Rev. Lett. (March 10, 2014)., 2014.
+
+\bibitem{sparsetraining}
+Honglak Lee, Alexis Battle, Rajat Raina, and Andrew~Y. Ng.
+\newblock Efficient sparse coding algorithms.
+\newblock In {\em Advances in Neural Information Processing Systems 19}, pages
+  801--808. 2007.
 
 \bibitem{montavon2012learning}
 Gr{\'e}goire Montavon, Katja Hansen, Siamac Fazli, Matthias Rupp, Franziska

@@ -913,20 +913,19 @@ According to the type of data available (labeled and/or unlabeled) there are a n
 \item Transfer Learning - training labels are provided but the test data is assumed to be from a different distribution
 \item Self-Taught Learning - training data does not have labels and it is also not assumed to come from the same distribution as the test data
 \end{itemize}
-An intuitive example is shown in Fig., where the orange bounded boxes represent labeled data.
+An intuitive example is shown in Fig \label{fig_sim}, where the orange bounded boxes represent labeled data.
 \begin{figure}[!t]
 \centering
-\includegraphics[width=2.5in]{selftaught.png}
-Morre bla
-\caption{Simulation Results}
+\includegraphics[width=2.8in]{selftaught.png}
+\caption{Different learning setups}
 \label{fig_sim}
 \end{figure}
 
 
 \subsubsection{Problem formulation}
-Self thaught learning can be expressed as a two step optimization problem.
+Self taught learning can be expressed as a two step optimization problem.
 
-In the first step, the unlabeled data $x^{(i)}_u \in R^n, i=1..k$ is used to find a set of $s$ \textit{bases} $b_i \in R^n, i=1..s$ and a set of \textit{sparse activations} $a_{(i)}^j$ with $a^{(i)}\in R^s$ such that $x_i$ can
+In the first step, the unlabeled data $x^{(i)}_u \in R^n, i=1..k$ is used to find a set of \textit{bases} $b_i \in R^n, i=1..s$ and a set of \textit{sparse activations} $a_j^{(i)}$ with $a^{(i)}\in R^s$ such that $x^{(i)}$ can
 be reconstructed from the $s$ bases vectors $b$ and its corresponding activation weights $a^{(i)} \in R^s$ given by the formula:
 \begin{equation}
 \begin{array}{c }
@@ -934,33 +933,31 @@ be reconstructed from the $s$ bases vectors $b$ and its corresponding activation
 	 s.t. ||b_j||_2 \leq 1, j=1..s
 	\end{array}
 \end{equation}
-The equation above can be easily optimized using the algorithm from citehere by alternating the optimization in $a$ and $b$, e.g. fix one variable and optimize the other one at every step.
-The problem is equivalent with a least square L1 regularized problem in variable $a$ and a least square constrained problem in  variable $b$. The L1 regularization enforces sparse representations, which was chosen because experimentally appeared to perform better across different datasets. We note that PCA can also be used for finding a new representation of the input, but it leads to different solutions were the activations are linear combination of the input. Moreover,  PCA can not be used for generating more bases than the input dimension.
+The equation above can be easily optimized using the algorithm from \cite{sparsetraining} by alternating the optimization in $a$ and $b$, e.g. fix one variable and optimize the other one at every step.
+The problem is equivalent with a least square L1-regularized problem in variable $a$ and a least square constrained problem in  variable $b$. The L1-regularization enforces sparse representations and it was prefered to other forms of regulatization because experimentally appeared to perform better across different datasets. We note that PCA can also be used for finding a new representation of the input, but it leads to different solutions for which the activations are linear combination of the input. Moreover,  PCA can not be used for generating more bases than the input dimension.
 
 
-In the second step, the bases $b$ learned in the previous step are used for finding a higher level representation for labeled input data $x_l^{(i)}, i=1..m$ with corresponding target values $y_l^{(i)}, i=1..m$. The new representation is the set of activation vectors $a^{l}(x_l^{(i)}), i=1..m$ obtained by solving another L1- regularized optimization problem
+In the second step, the bases $b$ learned in the previous step are used for finding a higher level representation for labeled input data $x_l^{(i)}, i=1..m$ with corresponding target values $y_l^{(i)}, i=1..m$. The new representation given by the set of activation vectors $\hat{a}(x_l^{(i)}), i=1..m$ is obtained by solving another L1- regularized optimization problem:
 \begin{equation}
-a^{l}(x_l^{(i)}) = \arg\min_{a^{(i)}}|| x_l^{(i)} - \sum_j a_j^{(i)}b_j||_2^2 + \beta||a^{(i)}||_1.
+\hat{a}(x_l^{(i)}) = \arg\min_{a^{(i)}}|| x_l^{(i)} - \sum_j a_j^{(i)}b_j||_2^2 + \beta||a^{(i)}||_1.
 \end{equation}
-As a last step ,a classifier is trained on the pairs $\{a(x_l^{(i)}), y^{(i)}\} , i=1..m$ and compared with a classifier (same type e.g. SVM) trained on the initial pairs $\{x_l^{(i)}, y^{(i)}\} i=1..m$.
+As a last step, a classifier is trained on the pairs $\{\hat{a}(x_l^{(i)}), y^{(i)}\} , i=1..m$ and compared with a classifier (same type e.g. SVM) trained on the initial pairs $\{x_l^{(i)}, y^{(i)}\} i=1..m$.
 
 
 \subsubsection{Experimental Results}
-Self taught learning was extensively tested across a range of different applications such as computer vision with raw pixel intensities, natural language processing with bag of words and speech recognition with frequency histograms. Using an SVM as the classifier with the high level sparse activation features as input instead of the initial raw features successfully performed better almost for all tasks. This suggests that such a problem setup can be employed to datasets belonging to different domains besides the one presented here.
+Self taught learning was extensively tested across a range of different applications such as computer vision with raw pixel intensities as features, natural language processing with bag of words features and speech recognition with frequency histograms. Using an SVM as the classifier with sparse activation features as input instead of the initial raw features performed better in almost all tasks. This suggests that such a problem setup can be employed to datasets belonging to different domains besides the ones presented here.
 
 \subsubsection{Conclusions}
-T
 
 \subsection{Information-Theoretic Regret Bounds for Gaussian Process Optimization in the Bandit Setting}
-\textcolor{blue}{Optimizing an unknown function is an important problem. 
-Often done using Gaussian processes in a Bayesian setting. Many heuristic have been proposed for defining an acquisition function. Few is known for its conergence.
+\textcolor{blue}{ PUT ALSO PICTURE WITH EIGENSPECTRUM DECAY
 }
- PUT ALSO PICTURE WITH EIGENSPECTRUM DECAY
+
 Optimizing a black box function $f: D->R$ that is expensive to evaluate is a common problem with applications ranging from active user modelling, hierarchical reinforcement learning\cite{BPtutorial} and more recently, hyper parameter optimization of machine learning models \cite{hyperparameter}. This problem can be posed as a multi-armed bandit problem where the function to be estimated is either sampled from a Gaussian Process or has low norm in reproducing Kernel Hilbert space.
 
-The optimization is done in a sequential manner, where at round $t$ a point $x_t$ in the domain is chosen according to an \textit{acquisition function} and the value $f(x_t)$ is evaluated. The goal is to maximize f with as few samples as possible. Among the common used acquistion functions we note the probabilty of improvement, maximum expected improvement or upper confidence bound (called GP-UCB, the focus of this paper), with the latter two experimentally shown to perform better in practice. 
+The optimization is done in a sequential manner, where at round $t$ a point $x_t$ in the domain is chosen according to an \textit{acquisition function} and the value $f(x_t)$ is evaluated. The goal is to maximize f with as few samples as possible. Among the common used acquistion functions we note the Probabilty of Improvement, Maximum Expected Improvement or Upper Confidence Bound (called GP-UCB, the focus of this paper), with the latter two experimentally shown to perform better in practice. 
 
-The effectiveness of a sampling scheme in finding the optimal $x*$ (may not be unique) s.t $x* = \arg\max_{x\in D}f(x)$ is evaluated using the \textit{instantaneous} and the 
+The effectiveness of a sampling scheme in finding the optimal $x* = \arg\max_{x\in D}f(x)$ ($x*$  may not be unique) is evaluated using the \textit{instantaneous} and the 
 \textit{cumulative regret}.  The instantenous regret $r_t = f(x*) - f(x_t)$ is the error that we make at round t for choosing point $x_t$ instead of $x*$. The cumulative regret is the error accumulated up to the current round $R_T = \sum_{t=1..T} r_t$.
 
 Besides the practical success of GP optimization, few was known in practice about their convergence properties for finite and infinte input dimensional space. The main contribution of the paper is to show sublinear convergence rates in $T$ for GP-UCB, the number of rounds of the cumulative regret. In other words, as T goes to infinity, we expect the cumulative regret to be 0 $lim \frac{R_T}{T} = 0$.
