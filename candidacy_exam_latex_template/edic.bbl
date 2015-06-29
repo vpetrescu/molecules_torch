@@ -79,6 +79,13 @@ Jasper Snoek, Oren Rippel, Kevin Swersky, Ryan Kiros, Nadathur Satish,
 \newblock {Scalable Bayesian Optimization Using Deep Neural Networks}, February
   2015.
 
+\bibitem{srinivas12information}
+Niranjan Srinivas, Andreas Krause, Sham Kakade, and Matthias Seeger.
+\newblock Information-theoretic regret bounds for gaussian process optimization
+  in the bandit setting.
+\newblock {\em IEEE Transactions on Information Theory}, 58(5):3250--3265, May
+  2012.
+
 \bibitem{todeschini2000handbook}
 Roberto Todeschini and Viviana Consonni.
 \newblock {\em Handbook of molecular descriptors}, volume~11.
