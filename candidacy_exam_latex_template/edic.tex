@@ -688,7 +688,7 @@ pdfkeywords={EDIC, candidacy exam, EPFL}}%<!CHANGE!
 
 
 \author{Viviana Petrescu 
-\\vpetresc@epfl.ch
+\\viviana.petrescu@epfl.ch
 \\ School of Computer and Communication Systems,  EPFL
 \thanks{\normalsize Proposal submitted to committee: June 29th, 2015; Candidacy exam date: July 6th, 2015; Candidacy exam committee: Exam president, thesis director, co-examiner.}%
 \IEEEcompsocitemizethanks{\IEEEcompsocthanksitem }
@@ -770,14 +770,14 @@ molecular descriptors, GP-UCB, unlabeled data
 The discovery of new molecular materials in chemistry has the potential of solving many of the problems we face today.
 Having a system which predicts both accurately and at a small computational cost the properties of new materials is highly desirable and has applications such as novel drugs discovery, water purification and efficient materials design for high energy transmission and storage \cite{cleanenergy}. 
  
-In the next section I will summarize three papers. The first one\cite{montavon2012learning} addresses directly the idea of using machine learning for predicting molecular properties. , Although the last two focus on different domains (computer vision, natural language processing, temperature data), their ideas could be easily extended to our domain.
+In the next section I will summarize three papers. The first one\cite{montavon2012learning} addresses directly the idea of using machine learning for predicting molecular properties. Although the last two focus on different domains (computer vision, natural language processing, temperature data), their ideas could be easily extended to our domain.
 
 First, in \cite{montavon2012learning}
-the authors propose a new molecular descriptor which gave a three-fold accuracy improvement over the previous used approaches. 
+the authors propose a new molecular descriptor which gave a three-fold accuracy improvement over the previously used approaches. 
 
 The next paper \cite{selftaughtl} introduces the idea of using unsupervised sparse coding techniques for training models when the labeled data is scarce. Obtaining labeled molecular data is a time consuming process and making use of large unlabeled datasets has the potential to increase the current prediction accuracy across different domains. 
 
-A large dataset usually implies a complex model and with it comes the difficulty in tuning its parameters. Instead of using a grid-search approach, the parameter selection can be done using Bayesian Optimization for black-box function optimization, where the function to be optimized is the validation accuracy. One such possibility is to use Gaussian Processes in the bandit setting. In \cite{srinivas12information} the authors prove sublinear converge rates for Gaussian Processes Upper Confidence Bound (GP-UCB). Their experimental results show the ability of GP-UCB to efficienyly optimize a black-box function with as few evaluations as possible.
+A large dataset usually implies a complex model and with it comes the difficulty of tuning its parameters. Instead of using a grid-search approach, the parameter selection can be done using Bayesian Optimization for black-box function optimization, where the function to be optimized is the validation accuracy. One such possibility is to use Gaussian Processes in the bandit setting. In \cite{srinivas12information} the authors prove sublinear converge rates for Gaussian Processes Upper Confidence Bound (GP-UCB). Their experimental results show the ability of GP-UCB to efficienyly optimize a black-box function with as few evaluations as possible.
 
 The last section outlines the directions for future work based on the presented papers.
 
@@ -896,7 +896,7 @@ Two variations of the descriptor are proposed in \cite{montavon2012learning}. Th
 
 The performane of the descriptors was evaluated on predicting the atomization energy on a dataset of 7,165 molecules with at most 23 atoms per molecule. The predicted values range from -800 to -2000 kcal/mol. The splitting of the data into 5 folds for cross validation is done using stratified sampling. The molecules were clustered into 5 sets with similar atomization energy levels and the folds were created by randomly selecting one molecule from each bucket.
 
-For experimental evaluation of the performance of descriptors, both kernel ridge regression and multy layer feed-forward networks were tried. The best test performance of 3.1 kcal/mol MAE was obtained using a neural network with
+For experimental evaluation of the performance of descriptors, both kernel ridge regression and multilayer feed-forward networks were tried. The best test performance of 3.1 kcal/mol Mean Absolute Error (MAE) was obtained using a neural network with
  Randomly Sorted Coloumb matrix. The improvement was three fold with respect to the previous state of the art, which gave a MAE of 9kcal/mol, while a performance level of ~1kcal/mol is desired to reach chemical accuracy level.
 Later work \cite{bob} improved upon this result by reducing the current state-of-the-art to only 1.5kcal/mol using a bag-of-bonds descriptor with Laplacian kernel.
 
@@ -912,7 +912,7 @@ The other parameters that are selected using cross validation are the number of 
 
 \subsection{Self-Taught Learning: Transfer Learning from Unlabeled Data}
  
-One of the challenges in general supervised learning tasks is to obtained labeled data. Usually, the higher the dimensionality of the input representations, the more labeled data is required for good generalization performance. Since obtaining large amounts of labeled data often requires tedious manual work, people often employ Amazon Mechanical Turk for obtaining labeled data. To overcome this, the authors introduce another machine learning framework called \textit{self-taught learning}, which has as core idea the fact that unlabeled datasets are much easier to obtain. Therefore, in the new setup, both labeled and unlabeled data is used for training a classifier. In Self-Taught learning, labeled data is transformed into a higher level representation learned through the use of a large number of unlabeled data. The new representation  is used for training a classifier on the labeled data. This setup is envisioned to have a bigger advantage when the available labeled data is scarce. 
+One of the challenges in general supervised learning tasks is to obtained labeled data. Usually, the higher the dimensionality of the input representations, the more labeled data is required for good generalization performance. Since obtaining large amounts of labeled data often requires tedious manual work, people often employ Amazon Mechanical Turk for obtaining labeled data. To overcome the labeling effort, the authors introduce another machine learning framework called \textit{self-taught learning}, which has as core idea the fact that unlabeled datasets are much easier to obtain. Therefore, in the new setup, both labeled and unlabeled data is used for training a classifier. In Self-Taught learning, labeled data is transformed into a higher level representation learned through the use of a large number of unlabeled data. The new representation  is used for training a classifier on the labeled data. This setup is envisioned to have a bigger advantage when the available labeled data is scarce. 
 
 
 According to the type of data available (labeled and/or unlabeled) there are a number of training/testing setups currently used:
@@ -957,10 +957,8 @@ As a last step, a classifier is trained on the pairs $\{\hat{a}(x_l^{(i)}), y^{(
 Self-taught learning was extensively tested across a range of different applications such as computer vision with raw pixel intensities as features, natural language processing with bag of words features and speech recognition with frequency histograms. Using an SVM as the classifier with sparse activation features as input instead of the initial raw features performed better in all except one tasks. This suggests that such a problem setup can be employed to datasets belonging to different domains besides the ones presented here.
 
 \subsection{Information-Theoretic Regret Bounds for Gaussian Process Optimization in the Bandit Setting}
-\textcolor{blue}{ PUT ALSO PICTURE WITH EIGENSPECTRUM DECAY
-}
 
-Optimizing a black box function $f: D->R$ that is expensive to evaluate is a common problem with applications such as: active user modelling, hierarchical reinforcement learning\cite{BPtutorial} and more recently, hyper parameter optimization of machine learning models \cite{hyperparameter}. This problem can be posed as a multi-armed bandit problem where the function to be estimated is sampled from a Gaussian Process.
+Many applications require the optimizion of a black box function $f: D\to R$ that is expensive to evaluate. Among them we mention: active user modelling, hierarchical reinforcement learning\cite{BPtutorial} and more recently, hyper parameter optimization of machine learning models \cite{hyperparameter}. This problem can be posed as a multi-armed bandit problem where the function to be estimated is sampled from a Gaussian Process.
 
 The optimization is done in a sequential manner, where at round $t$ a point $x_t$ in the domain is chosen according to an \textit{acquisition function} and the value $f(x_t)$ is evaluated. The goal is to maximize f with as few samples as possible. Among the common used acquistion functions we note the Probabilty of Improvement, Maximum Expected Improvement or Upper Confidence Bound (called GP-UCB, the focus of this paper), with the latter two experimentally shown to perform better in practice. 
 
@@ -1061,14 +1059,14 @@ In the next step, the information gain is bounded using the tail spectrum of $K_
 		
 From the equation above, we conclude that if the tail spectrum $B(T_{*})$ is small, or in others words, the eingenspetrum of $K_{D_T}$ decays fast, the bound on $\gamma_T$ is tighter.		
 \subsubsection{Bounding the empirical spectrum by the operator spectrum}		
-For a kernel k with $k(x,x)u(x)=1$ where u(x) is uniformly distributed on $D$, Mercer's theorem assures the existence of a discrete kernel eigenspectrum {$\lambda_s(x), \phi_s(x)$}		
+For a kernel k with $\int k(x,x)u(x)=1$ where u(x) is uniformly distributed on $D$, Mercer's theorem assures the existence of a discrete kernel eigenspectrum $\{\lambda_s(x), \phi_s(x) \}$		
 with $k(x,x') = \sum \lambda_s\phi_s(x) \phi_s(x')$		
 		
 Another contribution(?) of this paper is to bound the empirical tails spectrum $B(T_{*})$ by the kernel operator tails eigenspectrum $B_k(T_{*}) = \sum_{t=1}^{T_*}\lambda_t $. Analytical expression bounds on $B_k(T_{*})$ for the most common kernels are given by Seeger \cite{NonGP}.		
 		
 \subsubsection{Conclusions}		
-The contribution of the paper is two fold. First, a novel connection was made between experimental design and GP optimization, by bounding the cumulative regret by the maximum information gain. Secondly, for the first time, sublinear regret bounds for GP-UCB optimization are shown with weak dependence on the dimensionality of the input. 		
- The bound is derived in two steps. First, the cumulative regret is bounded by the maximum information gain which in turn is bounded by the tails of the empirical eigenspectrum which in turn is bound by the tails of the kernel operator spectrum. The thighter the bound is, the more rapidly the kernel spectrum decays. 
+The contribution of the paper is two fold. First, a novel connection was made between experimental design and GP optimization, by bounding the cumulative regret by the maximum information gain. Secondly, sublinear regret bounds for GP-UCB optimization are shown with weak dependence on the dimensionality of the input for the first time. 		
+ The bound is derived in two steps. First, the cumulative regret is bounded by the maximum information gain which in turn is bounded by the tails of the empirical eigenspectrum and the kernel operator spectrum. The thighter the bound is, the more rapidly the kernel spectrum decays. 
 
 Although convergence rates are proven for infinite input dimensional spaces as well, the complexity of the GP step that incorporates the inversion of the covariance matrix makes the complexity of the algorithm cubic in the number of samples T, which makes it often impractical for high dimensional input.
 
@@ -1079,9 +1077,9 @@ I propose a new descriptor that is more robust to atom indexing, called Bag of B
 Thus, for a given molecule, the BoBH descriptor will encode:
 \begin{itemize}
 \item 
-for every different atom type present in the dataset, encode how many times it appears in the molecule
+for every different atom type present in the dataset, how many times it appears in the molecule
 \item  
-for every pair of atoms of certain type, count how many times the distance between them is in a given quantization interval 
+for every pair of atoms of certain type, how many times the distance between them is in a given quantization interval 
 \end{itemize}
 
 An example is given in Fig \ref{fig:BoBH} for a molecule $C_{4}H_{2}O$ with a quantization level of $q=1$. In this example, first the bags containing H were concatenated, then the ones containing C and in the end the ones containing O, resulting in a descriptor of size 21. In general, the size of the descriptor is given by $NA + \sum_i \frac{N_A*(N_A+1)}{2} *\frac{D_{max}}{q} $, where $N_A$ is the number of atom types and $D_{max}$ is the maximum distance between a pair of atoms. 
@@ -1106,7 +1104,7 @@ The same problem appears across chemical compound space if we try to predict the
 
 The labeled datasets\footnote{All datasets can be downloaded from \textit{www.quantum-mechanics.org}} currently used  are in the order of 7k or 140k samples and are of relatively small size compared with datasets sizes in other domains. Specifically, they contain at most 6 atom types and at most 29 atoms per molecule. In chemoinformatics, the datasets can not be easily augumented by using external annotation tools since it requires domain knowledge and the labeling effort implies time intensive computations.
 
-One proposed solution to the above issues is to use large amouts of unlabaled data as in \cite{selftaughtl}.
+One proposed solution to the above issues is to use large amounts of unlabeled data as in \cite{selftaughtl}.
 Although the self-taught learning problem in \cite{selftaughtl} was tested only for classification tasks and predicting properties of molecules is a regression task, employing large amounts of unlabeled molecular data for obtaining higher level representations of the molecules has the potential of increasing performance results across datasets by avoiding the labeling effort.
 
 
@@ -1115,9 +1113,10 @@ Although the self-taught learning problem in \cite{selftaughtl} was tested only 
 %
 %MOVE thIS The more available labeled data, the use of the unlabeled data becomes less important.
 
-In other words, our problem can be formulated as a semi-supervised, transfer-learning or self-taught learning problem by making it generalize across chemical compound space and learn new embeddings of the molecules. As an example, we could try to learn sparse bases features from one dataset containing $\{H, C, O, S, N\}$ and use this representation for a new set containg $\{H, C, O, S, Cl\}$.
+In other words, our problem can be formulated as a semi-supervised, transfer-learning or self-taught learning problem by making it generalize across chemical compound space and learn new embeddings of the molecules. As an example, we could try to learn a set of bases features from one dataset containing $\{H, C, O, S, N\}$ and use this representation for a new set containg $\{H, C, O, S, Cl\}$.\\[0.05in]
 
-\subsection*{•}
+
+
 Another problem we would like to investigate is the difficulty in training neural networks. The authors of \cite{montavon2012learning} make use of various tricks \cite{tricks} to obtain state-of-the-art performance on the molecular datasets. A grid search approach for choosing the hyper parameters of a model leads to exponential time complexity in the number of parameters.
 Recent work \cite{hyperparameter}, \cite{citeulike} suggests the use of Bayesian optimization techniques (such as GP-UCB or Bayesian neural networks) for hyper-parameters tuning. In this setup, the function to be maximized is the accuracy on the validation set while the input represents the concatentation of the hyper parameters (learning rate, type of activation function, number of units per hidden layer etc.). The speedup in training time can be quite significant, since techniques such as GP-UCB employ an exploration - exploitation trade-off scheme that prunes large areas of the search space.
 In \cite{citeulike} they experimentally demonstrate on a NLP task, that by using a simple model tuned in a Bayesian optimizatin setting can outperform the use of a more complex model (such as Recurrent Neural Networks).
