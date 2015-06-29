@@ -43,6 +43,18 @@ Gr{\'{e}}goire Montavon, Genevieve~B. Orr, and Klaus{-}Robert M{\"{u}}ller,
   7700 of {\em Lecture Notes in Computer Science}.
 \newblock Springer, 2012.
 
+\bibitem{nemhauser1978analysis}
+G.L. Nemhauser, L.A. Wolsey, and M.L. Fisher.
+\newblock An analysis of approximations for maximizing submodular set
+  functions--i.
+\newblock {\em Mathematical Programming}, 14(1):265--294, 1978.
+
+\bibitem{selftaughtl}
+Rajat Raina, Alexis Battle, Honglak Lee, Benjamin Packer, and Andrew~Y. Ng.
+\newblock Self-taught learning: Transfer learning from unlabeled data.
+\newblock In {\em Proceedings of the 24th International Conference on Machine
+  Learning}, ICML '07, pages 759--766, New York, NY, USA, 2007. ACM.
+
 \bibitem{initialcoloumb}
 Matthias Rupp, Alexandre Tkatchenko, Klaus-Robert M\"uller, and O.~Anatole von
   Lilienfeld.

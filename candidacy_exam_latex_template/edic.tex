@@ -1066,9 +1066,9 @@ Although convergence rates are proven for infinite input dimensional spaces as w
 \section{Research Proposal}
 \subsection{•}
 We propose a new descriptor, Bag of Bonds Histogram (BoBH),
-that is more robust to atom indexing by avoiding the sorting step. Its size is not dependent on the number of atoms in the molecules but on the number of different atom types. In BoBH every bag is a histogram of quantized distances which encodes information for all  pairs of a certain type. The size of the histogram bag is given by the maximum distance between two pairs of atoms (pertaining to that bag type). The quantization level of the distances varies between bag types and we experimentally found that a quantization level of 0.2 or 0.25 perform well in practice, but this can vary for different datasets.
+that is more robust to atom indexing by avoiding the sorting step. Its size is not dependent on the number of atoms in the molecules but on the number of different atom types. Every bag in a BoBH descriptor is a histogram of quantized distances which encodes information for all  pairs of a certain type. The size of the histogram bag is given by the maximum distance between two pairs of atoms (pertaining to that bag type). The quantization level of the distances varies between bag types and we experimentally found that a quantization level of 0.2 or 0.25 perform well in practice, but this can vary for different datasets.
 
-Thus, for a given molecule, the BoBH descriptor will encode
+Thus, for a given molecule, the BoBH descriptor will encode:
 \begin{itemize}
 \item 
 for every different atom type present in the dataset, count how many times it appears in the molecule
@@ -1092,13 +1092,13 @@ To sum up, all descriptors achieve translation and rotation invariance through t
 distances between atoms instead of the actual 3D positions. Sorted Coloumb and Randomly Sorted Coloumb achieve invariance to index permutation by sorting the rows of the matrix according to their norm. Bag of Bonds Histogram puts atom pairs with the same composition in the same bag and quantizes the distances into bins to bypass the sorting step present in other descriptors. Preliminary results on the same dataset as in \cite{montavon2012learning}  show promising results, obtaining a MAE of 2.6 kcal/MAE.
 
 \subsection{•}
-Currently, training a model on molecular data requires domain specific knowledge. As an example, splitting the folds for cross validation using stratified sampling is a good strategy for obtaining good generalization performance. In practice, we should not expect to know the range of the test data. If we test the performance on a new molecule whose atomization energy is not within the bounds present in the training dataset, it is likely that the prediction will not be very accurate. Moreover, if we have a molecule with more atoms than any molecule present in the dataset, we would need to retrain our model with a  descriptor of different size. 
+Currently, preprocessing the molecular data to be used in a machine learning setting requires extensive domain specific knowledge. As an example, splitting the folds for cross validation using stratified sampling is a good strategy for obtaining good generalization performance but in practice, we should not expect to know the range of the test data. If we test the performance on a new molecule whose atomization energy is not within the bounds present in the training dataset, it is likely that the prediction will not be very accurate. Moreover, if we have a molecule with more atoms than any molecule present in the dataset, we would need to retrain our model with a  descriptor of different size. 
 
 The same problem appears across chemical compound space if we try to predict the atomization energy of a molecule with the same number of atoms but with different atom types in its composition. In general, we do not have guarantees that a molecule with similar atom composition and similar atom type have target prediction in the same range as our training set.
 
-The labeled datasets currently used (from \textit{www.quantum-mechanics.org}) are in the order of 7k or 140k and  are relatively small compared with datasets in other domains. Basically they contain at most 6 atom types and at most 29 atoms per molecule. Moreover, in chemoinformatics the datasets can not be easily augumented by using external annotation tools since it requires domain knowledge and the labeling effort implies time intensive computations.
+The labeled datasets currently used (from \textit{www.quantum-mechanics.org}) are in the order of 7k or 140k and are of relatively small size compared with datasets in other domains. Basically, they contain at most 6 atom types and at most 29 atoms per molecule. Moreover, in chemoinformatics the datasets can not be easily augumented by using external annotation tools since it requires domain knowledge and the labeling effort implies time intensive computations.
 
-Although the self-taught learning problem was tested only for classification tasks and molecular predictions is a regression task, employing large amounts of unlabeled molecular data for obtaining higher level representations of the molecules could give a boost in performance.
+Although the self-taught learning problem in \cite{selftaughtl} was tested only for classification tasks and predicting properties of molecules is a regression task, employing large amounts of unlabeled molecular data for obtaining higher level representations of the molecules could lead to increased prediction performance.
 
 
 %Propose of augumententing the data sets more easily and make the cross validation
@@ -1106,7 +1106,7 @@ Although the self-taught learning problem was tested only for classification tas
 %
 %MOVE thIS The more available labeled data, the use of the unlabeled data becomes less important.
 
-In other words, our problem can be formulated as a semi-supervised, transfer-learning or self-taugh learning problem by making it generalize across compound space and learn new embeddings of the atoms. As an example, learn the higher level features from one dataset containing $\{H,O, C, S, N\}$ and use this for a new set containg $\{H, C, O, S, N, Cl\}$.
+In other words, our problem can be formulated as a semi-supervised, transfer-learning or self-taugh learning problem by making it generalize across compound space and learn new embeddings of the atoms. As an example, learn the higher level features from one dataset containing $\{H, C, O, S, N\}$ and use this for a new set containg $\{H, C, O, S, Cl\}$.
 
 \subsection*{•}
 Although the use of Gaussian processes in material design is not new, it s major drawback is the computational bottleneck. In our scenario, this can be used for
