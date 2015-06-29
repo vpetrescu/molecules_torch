@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.24)  29 JUN 2015 11:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.24)  29 JUN 2015 12:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -259,19 +259,14 @@ File: HistogramOfDistances.png Graphic file (type png)
 
 <use HistogramOfDistances.png>
 Package pdftex.def Info: HistogramOfDistances.png used on input line 1083.
-(pdftex.def)             Requested size: 289.08223pt x 216.81166pt.
-
-Overfull \hbox (37.08223pt too wide) in paragraph at lines 1083--1086
-[][] 
- []
-
+(pdftex.def)             Requested size: 240.89941pt x 180.67455pt.
 Missing character: There is no â in font ptmri7t!
 Missing character: There is no € in font ptmri7t!
 Missing character: There is no ¢ in font ptmri7t!
 Missing character: There is no â in font ptmri7t!
 Missing character: There is no € in font ptmri7t!
 Missing character: There is no ¢ in font ptmri7t!
-[5 <./HistogramOfDistances.png>] (./edic.bbl
+ [5 <./HistogramOfDistances.png>] (./edic.bbl
 Missing character: There is no Ã in font ptmr7t!
 Missing character: There is no ¡ in font ptmr7t!
 Missing character: There is no Ã in font ptmr7t!
@@ -293,10 +288,10 @@ nd
 
 ] (./edic.aux) ) 
 Here is how much of TeX's memory you used:
- 2246 strings out of 493117
- 35862 string characters out of 6135432
- 105546 words of memory out of 5000000
- 5694 multiletter control sequences out of 15000+600000
+ 2247 strings out of 493117
+ 35873 string characters out of 6135432
+ 105550 words of memory out of 5000000
+ 5695 multiletter control sequences out of 15000+600000
  40924 words of font info for 74 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
  38i,12n,23p,1015b,246s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -320,7 +315,7 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2014/texmf
 s/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/u
 rw/times/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/u
 tmri8a.pfb>
-Output written on edic.pdf (6 pages, 480344 bytes).
+Output written on edic.pdf (6 pages, 481145 bytes).
 PDF statistics:
  105 PDF objects out of 1000 (max. 8388607)
  73 compressed objects within 1 object stream

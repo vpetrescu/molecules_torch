@@ -1064,7 +1064,7 @@ The contribution of the paper is two fold. First, a novel connection is being ma
 Although convergence rates are proven for infinite input dimensional spaces as well, the complexity of the GP step that incorporates the inversion of the covariance matrix makesthe complexity of the algorithm cubic in the number of samples T, which makes it often inpractical for high dimensional input.
 
 \section{Research Proposal}
-\subsection{•}
+\subsection*{•}
 We propose a new descriptor, Bag of Bonds Histogram (BoBH),
 that is more robust to atom indexing by avoiding the sorting step. Its size is not dependent on the number of atoms in the molecules but on the number of different atom types. Every bag in a BoBH descriptor is a histogram of quantized distances which encodes information for all  pairs of a certain type. The size of the histogram bag is given by the maximum distance between two pairs of atoms (pertaining to that bag type). The quantization level of the distances varies between bag types and we experimentally found that a quantization level of 0.2 or 0.25 perform well in practice, but this can vary for different datasets.
 
@@ -1080,7 +1080,7 @@ An example is given in Fig \ref{fig:BoBH} for a molecule $C_{4}H_{2}O$ with a qu
 
 \begin{figure}[h!]
 
-\includegraphics[scale=0.30]{HistogramOfDistances.png}
+\includegraphics[scale=0.25]{HistogramOfDistances.png}
 \caption{Bag of Quantised Bonds.
 Sample computation of Bag of Bonds Histogram for $C_2H_4O$ for a dataset which contains only atoms of type O, C and H. If the maximum distance between any two atoms in our dataset is 3, the size of the BoBH descriptor with quantization level  1 is 21, as shown above. The first entry encodes the number of H atoms, 4. The following 3 elements encode the number of (H,H) distances that fall in the interval [0,1), [1,2) and [2,3).
 }
@@ -1089,9 +1089,9 @@ Sample computation of Bag of Bonds Histogram for $C_2H_4O$ for a dataset which c
 
 
 To sum up, all descriptors achieve translation and rotation invariance through the use of
-distances between atoms instead of the actual 3D positions. Sorted Coloumb and Randomly Sorted Coloumb achieve invariance to index permutation by sorting the rows of the matrix according to their norm. Bag of Bonds Histogram puts atom pairs with the same composition in the same bag and quantizes the distances into bins to bypass the sorting step present in other descriptors. Preliminary results on the same dataset as in \cite{montavon2012learning}  show promising results, obtaining a MAE of 2.6 kcal/MAE.
+distances between atoms instead of the actual 3D positions. Sorted Coloumb and Randomly Sorted Coloumb achieve invariance to index permutation by sorting the rows of the matrix according to their norm. Bag of Bonds Histogram puts atom pairs with the same composition in the same bag and quantizes the distances into bins to bypass the sorting step present in other descriptors. Preliminary results on the same dataset as in \cite{montavon2012learning}  show promising results, obtaining a MAE of 2.6 kcal/mol.
 
-\subsection{•}
+\subsection*{•}
 Currently, preprocessing the molecular data to be used in a machine learning setting requires extensive domain specific knowledge. As an example, splitting the folds for cross validation using stratified sampling is a good strategy for obtaining good generalization performance but in practice, we should not expect to know the range of the test data. If we test the performance on a new molecule whose atomization energy is not within the bounds present in the training dataset, it is likely that the prediction will not be very accurate. Moreover, if we have a molecule with more atoms than any molecule present in the dataset, we would need to retrain our model with a  descriptor of different size. 
 
 The same problem appears across chemical compound space if we try to predict the atomization energy of a molecule with the same number of atoms but with different atom types in its composition. In general, we do not have guarantees that a molecule with similar atom composition and similar atom type have target prediction in the same range as our training set.
@@ -1106,20 +1106,28 @@ Although the self-taught learning problem in \cite{selftaughtl} was tested only 
 %
 %MOVE thIS The more available labeled data, the use of the unlabeled data becomes less important.
 
-In other words, our problem can be formulated as a semi-supervised, transfer-learning or self-taugh learning problem by making it generalize across compound space and learn new embeddings of the atoms. As an example, learn the higher level features from one dataset containing $\{H, C, O, S, N\}$ and use this for a new set containg $\{H, C, O, S, Cl\}$.
+In other words, our problem can be formulated as a semi-supervised, transfer-learning or self-taught learning problem by making it generalize across compound space and learn new embeddings of the atoms. As an example, learn the higher level features from one dataset containing $\{H, C, O, S, N\}$ and use this for a new set containg $\{H, C, O, S, Cl\}$.
 
 \subsection*{•}
-Although the use of Gaussian processes in material design is not new, it s major drawback is the computational bottleneck. In our scenario, this can be used for
-tuning the hyper-parameters of the model trained.
-Here the input dimensionality is given by the nbr of the hyper parameters (learning rate, activation fct, nbr hidden layers) used and the fct to be minimized is the cross validation error.
-The result presented in the previous subsection were obtained like that.
-Talk if we have time about bayesian neural nets, were simpler models outperform more easy models just be using hyper parameter optimization instead of grid search.
+As previously mentioned, a drawback of using neural networks is the difficulty in training. The authors of \cite{montavon2012learning} make use of various tricks \cite{tricks} to obtain state-of-the-art performance on the molecular datasets. A grid search approach for choosing the hyper parameters of a model leads to exponential time complexity in the number of parameters.
+Recent work \cite{hyperparameter}, \cite{citeulike} suggests the use of Bayesian optimization techniques (such as GP-UCB or Bayesian neural networks) for hyper-parameters tuning. In this setup, the function to be maximized is the accuracy on the validation set while the input represents the concatentation of the hyper parameters (learning rate, type of activation function, number of units per hidden layer etc.). The speedup in training time can be quite significant, since techniques such as GP-UCB employ an exploration - exploitation trade-off scheme that prunes large areas of the search space.
+In \cite{citeulike} they experimentally demonstrate on a NLP task, that by using a simple model tuned in a Bayesian optimizatin setting can outperform the use of a more complex model (such as Recurrent Neural Networks).
+Such techniques which were sucessfully applied to NLP and vision tasks and can be employed to molecular datasets as well.
+One further direction is to compare the current existent models and descriptors tuned in a Bayesian optimization setting, and can search over a larger space of models to have a more robust overview of which model/descriptor performs better.
+
+
+
+%Talk if we have time about bayesian neural nets, were simpler models outperform more easy models just be using hyper parameter optimization instead of grid search.
 
 % \textcolor{blue}{Write how you
 %propose to advance the state of the art given the background. What
 %is new technically? How does it improve over prior work?
 %Summarize, suggest an approximate timeline, and list references.}
-
+% In our scenario, this can be used for
+%tuning the hyper-parameters of the model trained.
+%Here the input dimensionality is given by the nbr of the hyper parameters (learning rate, activation fct, nbr hidden layers) used and the fct to be minimized is the cross validation error.
+%Although the use of Gaussian processes in material design is not new, it s major drawback is the computational bottleneck.
+%The result presented in the previous subsection were obtained like that.
 \vspace{1cm}
 
 
