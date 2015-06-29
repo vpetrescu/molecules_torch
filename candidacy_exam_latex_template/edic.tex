@@ -753,7 +753,7 @@ the molecules that need to be represented as high dimensional vectors. Another d
 \end{abstract}
 
 \begin{IEEEkeywords}		
-molecules descriptors, GP-UCB, unlabeled data	
+molecular descriptors, GP-UCB, unlabeled data	
 \end{IEEEkeywords}}
 % make the title area
 \maketitle
@@ -1113,9 +1113,8 @@ Another problem we would like to investigate is the difficulty in training neura
 Recent work \cite{hyperparameter}, \cite{citeulike} suggests the use of Bayesian optimization techniques (such as GP-UCB or Bayesian neural networks) for hyper-parameters tuning. In this setup, the function to be maximized is the accuracy on the validation set while the input represents the concatentation of the hyper parameters (learning rate, type of activation function, number of units per hidden layer etc.). The speedup in training time can be quite significant, since techniques such as GP-UCB employ an exploration - exploitation trade-off scheme that prunes large areas of the search space.
 In \cite{citeulike} they experimentally demonstrate on a NLP task, that by using a simple model tuned in a Bayesian optimizatin setting can outperform the use of a more complex model (such as Recurrent Neural Networks).
 Such techniques which were sucessfully applied for fine tuning NLP and vision models can be employed to molecular models as well.
-One further direction is to compare the current existent models and descriptors tuned in a Bayesian optimization setting, and can search over a larger space of models to have a more robust overview of which model/descriptor performs better or is it a matter of careful hand-crafted tuning.
-
-
+One further direction that can be followed is to try to reach the desired chemical accuracy level of prediction of $\sim 1kcal/mol$ MAE for atomization energy by fine-tuning existing models using Bayesian optimization techniques. 
+Since this will allow us to search over a larger space of models with a reduced computational search compared to grid search, we would like to investigate the potential of reaching state-of-the-art performance combining existing setups and descriptors.
 
 %Talk if we have time about bayesian neural nets, were simpler models outperform more easy models just be using hyper parameter optimization instead of grid search.
 
