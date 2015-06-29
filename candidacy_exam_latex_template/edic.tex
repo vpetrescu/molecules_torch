@@ -687,8 +687,9 @@ pdfkeywords={EDIC, candidacy exam, EPFL}}%<!CHANGE!
 
 
 
-\author{Viviana Petrescu% <-this % stops a space
-\\ I\&C,  EPFL
+\author{Viviana Petrescu 
+\\vpetresc@epfl.ch
+\\ School of Computer and Communication Systems,  EPFL
 \thanks{\normalsize Proposal submitted to committee: June 29th, 2015; Candidacy exam date: July 6th, 2015; Candidacy exam committee: Exam president, thesis director, co-examiner.}%
 \IEEEcompsocitemizethanks{\IEEEcompsocthanksitem }
 \thanks{\large This research plan has been approved:}%
@@ -767,9 +768,15 @@ molecular descriptors, GP-UCB, unlabeled data
 \section{Introduction}
 
 The discovery of new molecular materials in chemistry has the potential of solving many of the problems we face today.
-Having a system which predicts both accurately and at a small computational cost the properties of new materials is highly desirable and has applications ranging from novel drugs discovery, water purification to efficient materials design for high energy transmission and storage \cite{cleanenergy}.
+Having a system which predicts both accurately and at a small computational cost the properties of new materials is highly desirable and has applications such as novel drugs discovery, water purification and efficient materials design for high energy transmission and storage \cite{cleanenergy}. 
  
+In the next section I will summarize three papers which have potential applications in this area. First, in \cite{montavon2012learning}
+they propose a new molecular descriptor which gave a three -fold  atomization energy improvement over the previous used approaches. The next paper \cite{selftaughtl} introduces the idea of using unsupervised sparse coding techniques for training models when the labeled data is scarce. Obtaining labeled molecular data is a time consuming process and making use of large unlabeled datasets has the potential to increase the current prediction accuracy across different domains. The more complex the trained models, the more important the choice of the hyper-parameters becomes. Instead of using a grid-search approach, their selection can be done using Bayesian Optimization techniques such as Gaussian Processes, where the function to be optimized is the validation error. In \cite{} they show sublinear converge rates for Gaussian Processes Upper Confidence Bound.
+
+The last section outlines the directions of future work.
+
 \section{Background Work}
+
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
 %\textcolor{blue}{
@@ -874,34 +881,32 @@ M(i,j) = \left\{
 \end{equation}
 where $||Ri - Rj||$ represents the distance between the atoms $i$ and $j$.
 
-The dimensionality of the Coloumb Matrix is given by the number of atoms in a molecule. Since that varies across molecules in a dataset, one common trick is to pad with 0's the matrices corresponding to small molecules until they reach the maximum molecule size in a dataset. This limits the size of the molecules that can be used, since the descriptor  has complexity $O(N^2)$, where $N$ is the number of atoms.
+The dimensionality of the Coloumb Matrix is determined by the number of atoms in a molecule. Since that varies across molecules in a dataset, one common trick is to pad the matrices corresponding to small molecules with 0's until they reach the maximum molecule size in a dataset. This limits the size of the molecules that can be used, since the descriptor scales with $O(N^2)$, where $N$ is the number of atoms.
 
-Desired properties of descriptor
 Due to the graph-like structure of the molecules, finding a fixed size representation is difficult. The desired properties of a molecular descriptor are invariance to translation and rotation of the molecule and invariance to the indexing of the atoms.
 
-Solved using sorted or Random Coloumb
 While the Coloumb Matrix representations solves the rotation and translation invariance through the use of distances between atoms $||R_i -R_j||$, invariance in atom indexing still needs to be tackled since any permutation of atom indexes results in a valid Coloumb descriptor.
-Two variations of the descriptor are proposed in \cite{montavon2012learning}. The first one, called Sorted Coloumb, uses the permutation of the atoms given by the sorting of the row norms of a valid Coloumb matrix. Any molecule has a unique representation given by the Sorted Coloumb matrix. The second representations is based on the idea that the norms of the rows can have very similar values in practice and the sorting, therefore also the atom indexing, is subject to small noise. The new descriptor, Random Coloumb Matrices is a collection of Sorted Coloumb matrices. For every molecule, approximatively 10 Randomly Sorted Coloumb matrices are drawn. One Random Sorted Coloumb Marix is obtained by sorting the set of  rows according to their norm at which a small Gaussian noise was added. New predictions can be made by averging the prediction results for 10 such instantations.
+Two variations of the descriptor are proposed in \cite{montavon2012learning}. The first one, called Sorted Coloumb, uses the permutation of the atoms given by the sorting of the row norms of a valid Coloumb matrix. Any molecule has a unique representation given by the Sorted Coloumb matrix. The second representations is based on the idea that the norms of the rows can have very similar values in practice and the sorting, therefore also the atom indexing, is subject to small noise. The new descriptor, Random Coloumb Matrices is a collection of Sorted Coloumb matrices. For every molecule, approximatively 10 Randomly Sorted Coloumb matrices are drawn. One Random Sorted Coloumb Matrix is obtained by sorting the set of  rows according to their norm at which small Gaussian noise was added. New predictions can be made by averging the prediction results for 10 such instantations.
 
-The performane of the descriptors was evaluated on predicting the atomization energy on a dataset of 7165 molecules with at most 23 atoms per atom. The predicted values range from -800 to -2000 kcal/mol. The splitting of the data into 5 folds for cross validation is done using stratified sampling. The molecules were clustered into 5 sets with similar atomization energy levels and the folds were created by randomly selecting one molecule from each bucket.
+The performane of the descriptors was evaluated on predicting the atomization energy on a dataset of 7,165 molecules with at most 23 atoms per molecule. The predicted values range from -800 to -2000 kcal/mol. The splitting of the data into 5 folds for cross validation is done using stratified sampling. The molecules were clustered into 5 sets with similar atomization energy levels and the folds were created by randomly selecting one molecule from each bucket.
 
-For experimental evaluation of the performance of descriptors, both kernel ridge regression and multy layer feed forwards networks were tried. The best test performance of 3.1 kcal/mol MAE was obtained using a neural network with
+For experimental evaluation of the performance of descriptors, both kernel ridge regression and multy layer feed-forward networks were tried. The best test performance of 3.1 kcal/mol MAE was obtained using a neural network with
  Randomly Sorted Coloumb matrix. The improvement was three fold with respect to the previous state of the art, which gave a MAE of 9kcal/mol, while a performance level of ~1kcal/mol is desired to reach chemical accuracy level.
 Later work \cite{bob} improved upon this result by reducing the current state-of-the-art to only 1.5kcal/mol using a bag of bonds descriptor with Laplacian kernel.
 
 
 While recently Neural Networks (especially deep networks) have achieved state-of-the-art in many fields ranging from computer vision, natural language processing and speech recogition, one of the main challenges they pose is the difficulty in training for people without domain expertise. 
 In order to obtain the competitive performance of 3.1kcal/mol using multi layer feed forward neural networks, multiple tricks have been used, inspired from \cite{tricks}. First of all, taking the real entries of the Coloumb matrix as input to the neural net proved to perform poorly.
-To overcome this, a binarization step was performed which added an extra dimensionality to the dataset. Specifically, every $x \in R^{D}$ representing a flatten Coloumb matrix is mapped to a new binarized descriptor $y \in R^{DxM}$ such that $y_i \in R^{1xM}$ is computed by taking shifted versions of $x_i$ entry that are passed through a sigmoidal function
+To overcome this, a binarization step was performed which added an extra dimension to the dataset. Specifically, every $x \in R^{D}$ representing a flatten Coloumb matrix is mapped to a new binarized descriptor $y \in R^{DxM}$ such that $y_i \in R^{1xM}$ is computed by taking shifted versions of $x_i$ entry that are passed through a sigmoidal function
 \begin{equation}
 	y_i = [..., tanh(\frac{x_i - \theta}{\theta}), tanh(\frac{x_i}{\theta}), tanh(\frac{x_i + \theta}{\theta}),..]
 \end{equation}
 Depending on the range of $x_i$, the size of $y_i$ can vary acrosss dimensions if we ignore the saturated values.
-The other parameters that are selected using cross validation are the number of hidden units per layer, the number of layers, the learning rate.
+The other parameters that are selected using cross validation are the number of hidden units per layer, the number of layers and the learning rate.
 
 \subsection{Self-Taught Learning: Transfer Learning from Unlabeled Data}
  
-One challenge in general supervised learning tasks is to obtained labeled data. Usually, the higher the dimensionality of the input representations, the more labeled data is required for good generalization performance. Since obtaining large amounts of labeled data can require tedious manual labor work, people often employ Amazon Mechanical Turk for obtaining labeled data. To overcome this, this paper introduces another machine learning framework called \textit{self-taught learning}, which has as core idea the fact that unlabeled dataset is much easier to obtain. Therefore, in the new setup, both labeled and unlabeled data is used for training a classifier. In Self-Taught learning, labeled data is transformed into a higher level representation learned through the use of a large number of unlabeled data. The new representation  is used for training a classifier on the labeled data. This setup is envisioned to have a bigger advantage when the available labeled data is scarce. 
+One of the challenges in general supervised learning tasks is to obtained labeled data. Usually, the higher the dimensionality of the input representations, the more labeled data is required for good generalization performance. Since obtaining large amounts of labeled data often requires tedious manual work, people often employ Amazon Mechanical Turk for obtaining labeled data. To overcome this, the authors introduce another machine learning framework called \textit{self-taught learning}, which has as core idea the fact that unlabeled datasets are much easier to obtain. Therefore, in the new setup, both labeled and unlabeled data is used for training a classifier. In Self-Taught learning, labeled data is transformed into a higher level representation learned through the use of a large number of unlabeled data. The new representation  is used for training a classifier on the labeled data. This setup is envisioned to have a bigger advantage when the available labeled data is scarce. 
 
 
 According to the type of data available (labeled and/or unlabeled) there are a number of training/testing setups currently used:
@@ -932,7 +937,7 @@ be reconstructed from the $s$ bases vectors $b$ and its corresponding activation
 	\end{array}
 \end{equation}
 The equation above can be easily optimized using the algorithm from \cite{sparsetraining} by alternating the optimization in $a$ and $b$, e.g. fix one variable and optimize the other one at every step.
-The problem is equivalent with a least square L1-regularized problem in variable $a$ and a least square constrained problem in  variable $b$. The L1-regularization enforces sparse representations and it was prefered to other forms of regulatization because experimentally appeared to perform better across different datasets. We note that PCA can also be used for finding a new representation of the input, but it leads to different solutions for which the activations are linear combination of the input. Moreover,  PCA can not be used for generating more bases than the input dimension.
+The problem is equivalent with a least square L1-regularized problem in variable $a$ and a least square constrained problem in  variable $b$. The L1-regularization enforces sparse representations and it was prefered to other forms of regulatization because experimentally it appeared to perform better across different datasets. We note that PCA can also be used for finding a new representation of the input, but it leads to different solutions for which the activations are linear combination of the input. Moreover,  PCA can not be used for generating more bases than the input dimension.
 
 
 In the second step, the bases $b$ learned in the previous step are used for finding a higher level representation for labeled input data $x_l^{(i)}, i=1..m$ with corresponding target values $y_l^{(i)}, i=1..m$. The new representation given by the set of activation vectors $\hat{a}(x_l^{(i)}), i=1..m$ is obtained by solving another L1- regularized optimization problem:
@@ -949,18 +954,16 @@ Self taught learning was extensively tested across a range of different applicat
 \textcolor{blue}{ PUT ALSO PICTURE WITH EIGENSPECTRUM DECAY
 }
 
-Optimizing a black box function $f: D->R$ that is expensive to evaluate is a common problem with applications ranging from active user modelling, hierarchical reinforcement learning\cite{BPtutorial} and more recently, hyper parameter optimization of machine learning models \cite{hyperparameter}. This problem can be posed as a multi-armed bandit problem where the function to be estimated is either sampled from a Gaussian Process or has low norm in reproducing Kernel Hilbert space.
+Optimizing a black box function $f: D->R$ that is expensive to evaluate is a common problem with applications such as: active user modelling, hierarchical reinforcement learning\cite{BPtutorial} and more recently, hyper parameter optimization of machine learning models \cite{hyperparameter}. This problem can be posed as a multi-armed bandit problem where the function to be estimated is either sampled from a Gaussian Process or has low norm in reproducing Kernel Hilbert space.
 
 The optimization is done in a sequential manner, where at round $t$ a point $x_t$ in the domain is chosen according to an \textit{acquisition function} and the value $f(x_t)$ is evaluated. The goal is to maximize f with as few samples as possible. Among the common used acquistion functions we note the Probabilty of Improvement, Maximum Expected Improvement or Upper Confidence Bound (called GP-UCB, the focus of this paper), with the latter two experimentally shown to perform better in practice. 
 
 The effectiveness of a sampling scheme in finding the optimal $x* = \arg\max_{x\in D}f(x)$ ($x*$  may not be unique) is evaluated using the \textit{instantaneous} and the 
 \textit{cumulative regret}.  The instantenous regret $r_t = f(x*) - f(x_t)$ is the error that we make at round t for choosing point $x_t$ instead of $x*$. The cumulative regret is the error accumulated up to the current round $R_T = \sum_{t=1..T} r_t$.
 
-Besides the practical success of GP optimization, few was known in practice about their convergence properties for finite and infinte input dimensional space. The main contribution of the paper is to show sublinear convergence rates of the cumulative regret for GP-UCB in $T$, the number of rounds. In other words, as $T$ goes to infinity, we expect the cumulative regret to be 0 $lim \frac{R_T}{T} = 0$.
+Besides the practical success of GP optimization, little was known in practice about its convergence properties for finite or infinte input dimensional space. The main contribution of the paper is to show sublinear convergence rates of the cumulative regret for GP-UCB in $T$, the number of rounds. In other words, as $T$ goes to infinity, we expect the cumulative regret to be 0: $lim \frac{R_T}{T} = 0$.
 
 The bound on the cumulative regret $R_T$ is obtained in two steps. First bound $R_T$ using the information gain, then the information gain is bound using the empirical spectrum operator and the kernel operator spectrum.
-
-For simplicity and since RKHS is only relevent in a non-Bayesian setting, its details will be skipped here.
 
 \subsubsection{Gaussian Processes basics}
 A Gaussian Process (GP) defines a distribution over functions $f$, $f \sim GP(u(x), k(x,x'))$, in a similar way in which probability densities define distributions over random variables. It is fully specified by its mean $u(x)$ and its covariance matrix $K$. In a Bayesian setting, we assume our function $f$ is sampled from a Gaussian with prior $GP(0, k(x,x'))$, where $k$ is the kernel or covariance matrix. The most common kernel types are the linear, squared exponential and Matern kernels.
@@ -1005,10 +1008,10 @@ Thus, a greedy set creation of $A_T$ leads to a solution close to the optimal.
 \subsubsection{GP-UCB}
 For the function optimization problem, a good sampling sequence $x_t$ is one that makes a tradeoff between 
 exploration and exploitation of the search space. By choosing points with high variance (exploitation) we try to reduce the overall uncertainty.
-By choosing points with high mean (exploitation) we try to concentrate samples in a region were we are more confident that is close to the optimal. This idea is expressed by choosing in every round t, a point $x_t$  according to an acquistion function 
+By choosing points with high mean (exploration) we try to concentrate samples in a region were we are more confident that is close to the optimal. This idea is expressed by choosing in every round t, a point $x_t$  according to an acquistion function 
 $x_t = \arg\max_{x\in D} u_{t-1} + \beta_{t}^{1/2}\sigma_{t-1}(x)$ with $\beta_{t}$ depending on the kernel type. The function that is being maximized is also called the acquistion function or utility function and corresponds to Upper Confidence Bound criterion.
 
-To sum up, at every round, the GP-UCB algorithm selects a point according to the above equation, evaluates $y_t=f(x_t) + \epsilon$ and updates $u_t$ and $\sigma_t$ using Bayes rule from equation 1.
+To sum up, at every round, the GP-UCB algorithm selects a point according to the above equation, evaluates $y_t=f(x_t) + \epsilon$ and updates $u_t$ and $\sigma_t$ using Bayes rule.
 
 An important property of the UCB defined as above is that it does not choose points x for which the upper confidence value is smaller than the maximum lower confidence value found so far. This can prune large subareas of the search space.
 
@@ -1050,22 +1053,22 @@ In the next step, the information gain is bounded using the tail spectrum of $K_
 \gamma_{T} \leq O(\sigma^{-2}[B(T_{*})T + T_{*}logn_T T)])		
 \end{equation}		
 		
-From the equation above, we conclude that if the tail spectrum $B(T_{*})$ is small, or in others words, the eingenspetrum of $K_{D_T}$ decays fast, the bound on $\gamma_T$ is more tight.		
-\subsubsection{Bound the empirical spectrum by the operator spectrum}		
+From the equation above, we conclude that if the tail spectrum $B(T_{*})$ is small, or in others words, the eingenspetrum of $K_{D_T}$ decays fast, the bound on $\gamma_T$ is tighter.		
+\subsubsection{Bounding the empirical spectrum by the operator spectrum}		
 For a kernel k with $k(x,x)u(x)=1$ where u(x) is uniformly distributed on $D$, Mercer's theorem assures the existence of a discrete kernel eigenspectrum {$\lambda_s(x), \phi_s(x)$}		
 with $k(x,x') = \sum \lambda_s\phi_s(x) \phi_s(x')$		
 		
 Another contribution(?) of this paper is to bound the empirical tails spectrum $B(T_{*})$ by the kernel operator tails eigenspectrum $B_k(T_{*}) = \sum_{t=1}^{T_*}\lambda_t $. Analytical expression bounds on $B_k(T_{*})$ for the most common kernels are given by Seeger \cite{NonGP}.		
 		
 \subsubsection{Conclusions}		
-The contribution of the paper is two fold. First, a novel connection is being made between experimental design and GP optimization, by bounding the cumulative regret by the maximum information gain. Secondly, for the first time sublinear regret bounds for GP-UCB optimization are shown with weak dependence on the dimensionality of the input. 		
- The bound is derived in two steps. First, the cumulative regret is bounded by the maximum information gain which in turn is bounded by the tails of the empirical eigenspectrum which in turn is bound by the tails of the kernel operator spectrum.	The bound is tighter, the more rapidly the kernel spectrum decays. 
+The contribution of the paper is two fold. First, a novel connection was made between experimental design and GP optimization, by bounding the cumulative regret by the maximum information gain. Secondly, for the first time, sublinear regret bounds for GP-UCB optimization are shown with weak dependence on the dimensionality of the input. 		
+ The bound is derived in two steps. First, the cumulative regret is bounded by the maximum information gain which in turn is bounded by the tails of the empirical eigenspectrum which in turn is bound by the tails of the kernel operator spectrum. The thighter the bound is, the more rapidly the kernel spectrum decays. 
 
-Although convergence rates are proven for infinite input dimensional spaces as well, the complexity of the GP step that incorporates the inversion of the covariance matrix makesthe complexity of the algorithm cubic in the number of samples T, which makes it often inpractical for high dimensional input.
+Although convergence rates are proven for infinite input dimensional spaces as well, the complexity of the GP step that incorporates the inversion of the covariance matrix makes the complexity of the algorithm cubic in the number of samples T, which makes it often impractical for high dimensional input.
 
 \section{Research Proposal}
 \subsection*{•}
-We propose a new descriptor that is more robust to atom indexing, called Bag of Bonds Histogram (BoBH). Its size is not dependent on the number of atoms in the molecules but on the number of different atom types. Every bag in a BoBH descriptor is a histogram of quantized distances which encodes information for all pairs of atoms of same composition. The size of the histogram bag is given by the maximum distance between two pairs of atoms (pertaining to that bag type). The quantization level of the distances varies between bag types and we experimentally found that a quantization level of 0.2 or 0.25 perform well in practice, but this can vary for different datasets.
+I propose a new descriptor that is more robust to atom indexing, called Bag of Bonds Histogram (BoBH). Its size is not dependent on the number of atoms in a molecule but on the number of different atom types. Every bag in a BoBH descriptor is a histogram of quantized distances which encodes information for all pairs of atoms of same composition. The size of the histogram bag is given by the maximum distance between two pairs of atoms (pertaining to that bag type). The quantization level of the distances varies between bag types and we experimentally found that a quantization level of 0.2 or 0.25 perform well in practice, but this can vary for different datasets.
 
 Thus, for a given molecule, the BoBH descriptor will encode:
 \begin{itemize}
@@ -1095,7 +1098,7 @@ Another issue that we would like to address is the fact the preprocessing the mo
 
 The same problem appears across chemical compound space if we try to predict the atomization energy of a molecule with the same number of atoms but with different atom types in its composition. In general, we do not have guarantees that a molecule with similar atom composition and similar atom type have target prediction in the same range as our training set.
 
-The labeled datasets currently used (from \textit{www.quantum-mechanics.org}) are in the order of 7k or 140k and are of relatively small size compared with datasets sizes in other domains. Basically, they contain at most 6 atom types and at most 29 atoms per molecule. In chemoinformatics, the datasets can not be easily augumented by using external annotation tools since it requires domain knowledge and the labeling effort implies time intensive computations.
+The labeled datasets\footnote{All datasets can be downloaded from \textit{www.quantum-mechanics.org}} currently used  are in the order of 7k or 140k samples and are of relatively small size compared with datasets sizes in other domains. Specifically, they contain at most 6 atom types and at most 29 atoms per molecule. In chemoinformatics, the datasets can not be easily augumented by using external annotation tools since it requires domain knowledge and the labeling effort implies time intensive computations.
 
 One proposed solution to the above issues is to use large amouts of unlabaled data as in \cite{selftaughtl}.
 Although the self-taught learning problem in \cite{selftaughtl} was tested only for classification tasks and predicting properties of molecules is a regression task, employing large amounts of unlabeled molecular data for obtaining higher level representations of the molecules has the potential of increasing performance results across datasets by avoiding the labeling effort.
