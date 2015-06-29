@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.24)  28 JUN 2015 20:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.24)  29 JUN 2015 11:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -130,11 +130,7 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 137.
 )
-(./edic.aux
-
-LaTeX Warning: Label `fig_sim' multiply defined.
-
-)
+(./edic.aux)
 \openout1 = `edic.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 682.
@@ -210,31 +206,6 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 784.
-
-
-(/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-Underfull \hbox (badness 5847) in paragraph at lines 784--785
-[][]\OT1/ptm/m/n/10 . A road-map of how you plan to ad-vance the
- []
-
-
-Underfull \hbox (badness 7814) in paragraph at lines 784--785
-\OT1/ptm/m/n/10 state of the art in your cho-sen area should also
- []
-
-
-Underfull \hbox (badness 5022) in paragraph at lines 784--785
-\OT1/ptm/m/n/10 be given. please con-sult the doc-u-ment ``PhD Can-di-
- []
-
-
-Underfull \hbox (badness 1430) in paragraph at lines 784--785
-\OT1/ptm/m/n/10 dacy Exam Overview.'' You can find the lat-est ver-sion
- []
-
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 865.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -248,37 +219,63 @@ Underfull \hbox (badness 1824) in paragraph at lines 882--885
 
 
 ]
-<selftaught.png, id=17, 334.24875pt x 353.32pt>
+<selftaught.png, id=16, 334.24875pt x 353.32pt>
 File: selftaught.png Graphic file (type png)
  <use selftaught.png>
-Package pdftex.def Info: selftaught.png used on input line 919.
+Package pdftex.def Info: selftaught.png used on input line 917.
 (pdftex.def)             Requested size: 202.35622pt x 213.90752pt.
- [2]
-Underfull \hbox (badness 4366) in paragraph at lines 943--945
+ [2 <./selftaught.png>]
+Underfull \hbox (badness 4366) in paragraph at lines 941--943
 \OT1/ptm/m/n/10 As a last step, a clas-si-fier is trained on the pairs
  []
 
-[3 <./selftaught.png>]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 1023.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 1023.
 
-Overfull \hbox (13.45966pt too wide) in paragraph at lines 1023--1031
+Underfull \hbox (badness 6032) in paragraph at lines 966--967
+ \OT1/ptm/m/it/10 1) Gaus-sian Pro-cesses ba-sics: [][] \OT1/ptm/m/n/10 A Gaus-
+sian Pro-cess
+ []
+
+
+Underfull \hbox (badness 5231) in paragraph at lines 966--967
+\OT1/ptm/m/n/10 (GP) de-fines a dis-tri-bu-tion over func-tions $\OML/cmm/m/it/
+10 f$\OT1/ptm/m/n/10 , $\OML/cmm/m/it/10 f \OMS/cmsy/m/n/10 ^^X
+ []
+
+[3]
+
+LaTeX Warning: Citation `nemhauser1978analysis' on page 4 undefined on input li
+ne 998.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 1019.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 1019.
+
+Overfull \hbox (13.45966pt too wide) in paragraph at lines 1019--1027
 [][]
  []
 
-[4]
+Missing character: There is no â in font ptmri7t!
+Missing character: There is no € in font ptmri7t!
+Missing character: There is no ¢ in font ptmri7t!
+[4] <HistogramOfDistances.png, id=37, 963.6pt x 722.7pt>
+File: HistogramOfDistances.png Graphic file (type png)
+
+<use HistogramOfDistances.png>
+Package pdftex.def Info: HistogramOfDistances.png used on input line 1083.
+(pdftex.def)             Requested size: 289.08223pt x 216.81166pt.
+
+Overfull \hbox (37.08223pt too wide) in paragraph at lines 1083--1086
+[][] 
+ []
+
 Missing character: There is no â in font ptmri7t!
 Missing character: There is no € in font ptmri7t!
 Missing character: There is no ¢ in font ptmri7t!
 Missing character: There is no â in font ptmri7t!
 Missing character: There is no € in font ptmri7t!
 Missing character: There is no ¢ in font ptmri7t!
-Missing character: There is no â in font ptmri7t!
-Missing character: There is no € in font ptmri7t!
-Missing character: There is no ¢ in font ptmri7t!
- (./edic.bbl
+[5 <./HistogramOfDistances.png>] (./edic.bbl
 Missing character: There is no Ã in font ptmr7t!
 Missing character: There is no ¡ in font ptmr7t!
 Missing character: There is no Ã in font ptmr7t!
@@ -296,19 +293,21 @@ Underfull \hbox (badness 1701) in paragraph at lines 47--52
 nd
  []
 
-) [5] (./edic.aux)
+) [6
 
-LaTeX Warning: There were multiply-defined labels.
+] (./edic.aux)
+
+LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 2273 strings out of 493117
- 36186 string characters out of 6135432
- 107569 words of memory out of 5000000
- 5717 multiletter control sequences out of 15000+600000
- 41439 words of font info for 76 fonts, out of 8000000 for 9000
+ 2246 strings out of 493117
+ 35855 string characters out of 6135432
+ 106538 words of memory out of 5000000
+ 5693 multiletter control sequences out of 15000+600000
+ 42031 words of font info for 75 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
- 38i,12n,23p,1015b,242s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,12n,23p,1015b,246s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
 xlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
@@ -325,14 +324,13 @@ onts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2014/texmf-dist/font
 s/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2014/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2014/texmf-dist/fonts/ty
-pe1/urw/courier/ucrr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/
-times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmb
-i8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
-usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on edic.pdf (5 pages, 453531 bytes).
+pe1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/ti
+mes/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmr8
+a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on edic.pdf (6 pages, 480178 bytes).
 PDF statistics:
- 104 PDF objects out of 1000 (max. 8388607)
- 74 compressed objects within 1 object stream
+ 105 PDF objects out of 1000 (max. 8388607)
+ 73 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
