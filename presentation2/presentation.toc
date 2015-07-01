@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.33pt}
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {2}{Background work}{7}{0}{2}
+\beamer@subsectionintoc {2}{1}{Learning Invariant Representations of Molecules for Atomization Energy Prediction}{8}{0}{2}
+\beamer@subsectionintoc {2}{2}{Self-taught Learning: Transfer Learning from Unlabeled Data}{11}{0}{2}
+\beamer@subsectionintoc {2}{3}{Information - Theoretic Regret Bounds for Gaussian Process Optimization in the Bandit Setting}{15}{0}{2}
+\beamer@sectionintoc {3}{Conclusions}{19}{0}{3}
