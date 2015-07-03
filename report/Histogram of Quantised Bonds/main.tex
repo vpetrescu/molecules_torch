@@ -135,9 +135,29 @@ ReLU activation function was shown to work well on sparse descriptors seemed to 
 
 
 This was the best neural network model trained and it comes at a fraction of cost in time, without even augumenting the dataset like in Random Sorted Coloumb with Neual Networks.
-	For the first dataset a MAE of 2.6+/0.4 was obtained.
-	For the second dataset, the same network configuration was trained on every property individually and the results are reported in ..
+	For the first dataset a MAE of 2.6+/0.8 was obtained.
+	For the second dataset, the same network configuration was trained on every property individually and the results are reported in Table \ref{resultstable}.
 
+ \begin{table}
+ 	\centering
+\caption{Mean Absolute Error for qm7b dataset}
+\label{resultstable}
+ \begin{tabular}{cc | cc}
+ \hline
+ \hline
+ Property & MAE&Property& MAE\\
+ \hline
+E(PBE0)&  2.4681 &  LUMO(PBE0) &  0.554\\
+ $\alpha (PBE0)$ & 1.6052  & LUMO(ZINDO)&  0.5017 \\
+ $\alpha (SCS)$ & 0.1442 &IP(ZINDO)&  0.4225 \\
+ HOMO(GW)& 0.6068 &  EA(ZINDO&  0.5621  \\
+  HOMO(PBE0) & 0.5089 &$E^*_{1st}(ZINDO)$ & 0.2838 \\
+  HOMO(ZINDO)& 0.7569 & $E_{max}(ZINDO)$&  0.3299\\
+  LUMO(GW)&  0.6190&    $I_{max}(ZINDO)$&  0.3158
+
+ \end{tabular}
+ \end{table}
+ 
 \section{Future work}
 As future work, we plan to experiment with different models such as RBF networks initialised with K-Means or Convolutional Neural Networks on the initial 2D Coloumb Matrix. Moreover, for a fair comparison with the state-of-the-art results the newly proposed descriptor BoBH can be used as input for a Laplacian kernel regression model.
 
