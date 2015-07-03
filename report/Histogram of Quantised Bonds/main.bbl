@@ -1,5 +1,10 @@
 \begin{thebibliography}{1}
 
+\bibitem{relu}
+Xavier Glorot, Antoine Bordes, and Yoshua Bengio.
+\newblock Deep sparse rectifier neural networks.
+\newblock 2011.
+
 \bibitem{cleanenergy}
 Johannes Hachmann, Roberto Olivares-Amaya, Sule Atahan-Evrenk, Carlos
   Amador-Bedolla, Roel~S. Sánchez-Carrera, Aryeh Gold-Parker, Leslie Vogt,

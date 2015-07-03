@@ -46,7 +46,8 @@ The desired properties of a molecular descriptor are
 \end{itemize}
 
 \subsection{Coloumb Matrix}
-The Coloumb matrix\citep{initialcoloumb} $M^{NxN}$ is a descriptor based on  Coloumb interaction terms between pairs of atoms. These are the terms that appear in equation.//TODO
+The Coloumb matrix\citep{initialcoloumb} $M^{N
+times N}$ is a descriptor based on  Coloumb interaction terms between pairs of atoms. These are the terms that appear in Schröedinger's equation:
 
 \[M(i,j) = \left\{
   \begin{array}{lr}
@@ -83,9 +84,8 @@ An example is given in Fig \ref{fig:BoBH} for a molecule $C_{4}H_{2}O$ with a qu
 \begin{figure}[h!]
 
 \includegraphics[scale=0.4]{HistogramOfDistances.png}
-\caption{Bag of Quantised Bonds.
+\caption{Bag of Bonds Histogram.
 Sample computation of Bag of Bonds Histogram for $C_2H_4O$ for a dataset which contains only atoms of type O, C and H. If the maximum distance between any two atoms in our dataset is 3, the size of the BoBH descriptor with quantization level  1 is 21, as shown above. The first entry encodes the number of H atoms, 4. The following 3 elements encode the number of (H,H) distances that fall in the interval [0,1), [1,2) and [2,3).
-//TODO -> add cool picture showin an actual histogram
 }
 \label{fig:BoBH}
 \end{figure}
@@ -110,9 +110,9 @@ distances between atoms instead of the actual 3D positions. Sorted Coloumb and R
 \subsection{Datasets description}
 We tested the performance of BoBH on two datasets for predicting atomization energy.
 The first curated dataset GDB-7 consists of 7165 molecules containing at most 23 atoms per molecules and at most 5 types of atoms (H,C,O,S,N). Five stratified folds for cross-validation were already given to us and are the same on which other people report their result.
-The other dataset consists of 7211 molecules containing at most 29 atoms per molecules and 6 types of atoms (H,C,O,S,N, Cl). Here we used 5000 training samples drawn randomly from the dataset and remaining 2211 for testing. The splitting was done as mentioned in Machine Learning Tutorial. First the molecules that contained very few non Hidrogen atoms per molecule were added to the dataset. Then, the molecules were sorted according to the number of atoms they have and split into 3 folds by adding to fold $i$ every other $i$th molecule.
-The third dataset contained 120000 molecules with 5 types of atoms (H,C,O,F,S) and 15 properties.
-We experimented only with atomization energy values.
+%The other dataset consists of 7211 molecules containing at most 29 atoms per molecules and 6 types of atoms (H,C,O,S,N, Cl). Here we used 5000 training samples drawn randomly from the dataset and remaining 2211 for testing. The splitting was done as mentioned in Machine Learning Tutorial by Matthias Rupp. First the molecules that contained very few non Hidrogen atoms per molecule were added to the dataset. Then, the molecules were sorted according to the number of atoms they have and split into 3 folds by adding to fold $i$ every other $i$th molecule.
+%The third dataset contained 120000 molecules with 5 types of atoms (H,C,O,F,S) and 15 properties.
+%We experimented only with atomization energy values.
 
 
 \subsection{State of the art results}
@@ -129,16 +129,17 @@ The data was normalised to have values between 0 and 1. Unlike standardization,w
 We experimented with various quantization level, between [1.0.5,0.25,0.20, 0.125]. We noticed an improvement in performance with decreasing quantization level up to  $q=0.20$. We believe that further decreasing the quantization level did not improve the results because the size of the descriptor was quite large (almost 3000) and our dataset was relatively small. 
 
 Finding the best arhitecture for a dataset can be quite challenging since we need to choose the number of neurons for every hidden layer, the type of activation and the learning rate.
-We used the Whetlab tool for finding best network setup \citep{whetlab} here. Unlike grid search, the tool uses gaussian processes for finding optimal parameters of the network.
+We used the Whetlab tool for finding best network setup \cite{whetlab} . Unlike grid search, the tool uses Gaussian Processes for finding optimal parameters of the network.
 The best setup was a fully connected NN, with 200 and 80 neurons for the first and second layers and with ReLU activation function. 
-ReLU activation function was shown to work well on sparse descriptors seemed to perform better, possibly also due to its inherently nature of generating sparse representations and for the inherently sparse nature of our feature descriptor. It was shown to work well for other histogram or sparse data \cite{relu}. Reducing the dummy 0 variables did not show a significant improvement. The descriptor was very sparse ->
+ReLU activation function was shown to work well on sparse descriptors seemed to perform better, possibly also due to its inherently nature of generating sparse representations and for the inherently sparse nature of our feature descriptor. It was shown to work well for other histogram or sparse data \cite{relu}. Although the descriptor was very sparse, removing the dummy 0 variables did not show a significant improvement.
 
 
-This is the best neural network model and it comes at a fraction of cost in time, without even augumenting the dataset like in Random Sorted Coloumb with NN.
+This was the best neural network model trained and it comes at a fraction of cost in time, without even augumenting the dataset like in Random Sorted Coloumb with Neual Networks.
+	For the first dataset a MAE of 2.6+/0.4 was obtained.
+	For the second dataset, the same network configuration was trained on every property individually and the results are reported in ..
 
 \section{Future work}
-Learning invariant features, trying RBF networks or using ConvNet on 2D matrix.
-Compare BoBH with Laplacian kernels.
+As future work, we plan to experiment with different models such as RBF networks initialised with K-Means or Convolutional Neural Networks on the initial 2D Coloumb Matrix. Moreover, for a fair comparison with the state-of-the-art results the newly proposed descriptor BoBH can be used as input for a Laplacian kernel regression model.
 
 \section{Conclusions}
 We proposed a new descriptor which solves the invariability to atom permutations problem. It gives best performance on both datasets using a neural network model and second after a BoB using Laplacian kernels. The downside of using kernel regression is the fact that it scales cubically with the number of samples in the training data. 
