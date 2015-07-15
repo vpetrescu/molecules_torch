@@ -33,9 +33,19 @@ local temp_labels = {}
 
 -- Iterate over all the folds in the train set and add them to trainData structure
 for fold_id, value in pairs(train_bucket_indices_set) do
-    local fullfilename = '../../data/test_'..base_filename..'_fold_'..tonumber(fold_id)..'.mat'
+--[[    local fullfilename = '../../data/test_'..base_filename..'_fold_'..tonumber(fold_id)..'.mat'
+    local lua_filename = '../../data/test_'..base_filename..'_fold_'..tonumber(fold_id)..'.luamat'
+    local write_file = torch.DiskFile(lua_filename, 'w')
     local tmp_fold = matio.load(fullfilename)
-    print('==> loading dataset '..fullfilename)
+
+    write_file:writeObject(tmp_fold)
+    write_file:close()--]]
+    local lua_filename = '../../data/test_'..base_filename..'_fold_'..tonumber(fold_id)..'.luamat'
+    local read_file = torch.DiskFile(lua_filename, 'r')
+    tmp_fold = read_file:readObject()
+    read_file:close()
+
+    print('==> loading dataset '..lua_filename)
     if #temp_data == 0 then
         temp_data = tmp_fold.testData.data
         temp_labels = tmp_fold.testData.labels
@@ -58,7 +68,11 @@ local testid = test_bucket
 if valid_bucket ~= 0 then
     testid = valid_bucket
 end
-local tmp_test = matio.load('../../data/test_'..base_filename..'_fold_'..tonumber(testid)..'.mat')
+--local tmp_test = matio.load('../../data/test_'..base_filename..'_fold_'..tonumber(testid)..'.mat')
+local lua_filename = '../../data/test_'..base_filename..'_fold_'..tonumber(testid)..'.luamat'
+read_file = torch.DiskFile(lua_filename, 'r')
+tmp_test = read_file:readObject()
+read_file:close()
 tesize = tmp_test.testData.data:size(1)
 testData = {
    data = tmp_test.testData.data,
