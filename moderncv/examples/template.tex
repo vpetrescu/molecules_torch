@@ -19,7 +19,7 @@
 %\usepackage{CJKutf8}                              % if you need to use CJK to typeset your resume in Chinese, Japanese or Korean
 
 % adjust the page margins
-\usepackage[scale=0.75]{geometry}
+\usepackage[scale=0.85]{geometry}
 \setlength{\hintscolumnwidth}{3cm}                % if you want to change the width of the column with the dates
 %\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
 
@@ -27,14 +27,15 @@
 \name{Viviana}{Petrescu}
 \title{Curriculum Vitae}                               % optional, remove / comment the line if not wanted
 \address{Avenue de la Gare, 40}{1003, Lausanne}{Switzerland}% optional, remove / comment the line if not wanted; the "postcode city" and "country" arguments can be omitted or provided empty
-\phone[mobile]{+1~(234)~567~890}                   % optional, remove / comment the line if not wanted; the optional "type" of the phone can be "mobile" (default), "fixed" or "fax"
+\phone[mobile]{+41~786~304~176}                   % optional, remove / comment the line if not wanted; the optional "type" of the phone can be "mobile" (default), "fixed" or "fax"
 \email{petrescu.viviana@gmail.com}                               % optional, remove / comment the line if not wanted
 %\homepage{www.johndoe.com}                         % optional, remove / comment the line if not wanted
 %\social[linkedin]{john.doe}                        % optional, remove / comment the line if not wanted
 %\social[github]{jdoe}                              % optional, remove / comment the line if not wanted
 %\extrainfo{additional information}                 % optional, remove / comment the line if not wanted
 \photo[64pt][0.4pt]{picture}                       % optional, remove / comment the line if not wanted; '64pt' is the height the picture must be resized to, 0.4pt is the thickness of the frame around it (put it to 0pt for no frame) and 'picture' is the name of the picture file
-\quote{I was into data before it was big}                                 % optional, remove / comment the line if not wanted
+\quote{Creative team player. Passionate about \textbf{data mining/machine learning}, \textbf{algorithms}, \textbf{data structures}, \textbf{object oriented programming}.}
+%\quote{I was into data before it was big}                                 % optional, remove / comment the line if not wanted
 
 % to show numerical labels in the bibliography (default is to show no labels); only useful if you make citations in your resume
 %\makeatletter
@@ -54,74 +55,116 @@
 \makecvtitle
 
 \section{Education}
-\cventry{09/2014 to date}{Ecole Polytechnique Federale de Lausanne}{Switzerland}{Phd Fellowship}{\textit{5.5/6}}{Worked on speeding up convoluational neural networks using separable filters and on predicting molecular properties using machine learning techniques.}  % arguments 3 to 6 can be left empty
-\cventry{09/2009 - 01/2012}{Eidgenossische Technische Hochshule}{Zurich}{Switzerland}{}{Master Degree in Computer Science - with focus on Visual Computing and Machine Learning. GPA: 5.45 on a scale 1-6}
-\cventry{09/2006 - 06/2009}{Jacobs University Bremen}{Bremen}{Germany}{}{Bachelor Degree in Computer Science. GPA: 1.53 on a scale 5-1}
-
-\section{Master thesis}
-\cvitem{title}{\emph{Title}}
-\cvitem{supervisors}{Supervisors}
-\cvitem{description}{Short thesis abstract}
+\cventry{09/2014 to date}{Ecole Polytechnique Federale de Lausanne}{Switzerland}{}{\textit{GPA: 5.5/6}}{\textit{Phd Fellowship}. Worked on speeding up Convoluational Neural Networks using separable filters and on predicting molecular properties using machine learning techniques. Libraries used: Theano (Python) and Torch (Lua). Courses taken: Pattern Classification and Machine Learning, BigData}  % arguments 3 to 6 can be left empty
+\cventry{09/2009 - 01/2012}{Eidgenossische Technische Hochshule}{Zurich, Switzerland, GPA: 5.45/6}{}{}{Master Degree in Computer Science - with focus on Visual Computing and Machine Learning}
+\cventry{09/2006 - 06/2009}{Jacobs University Bremen}{Germany, GPA: 1.53 on a scale 5-1}{}{}{Bachelor Degree in Computer Science.}
+\cventry{09/2002 - 07/2006}{"Carol I" National College}{Craiova}{Romania, GPA: 9.83/10}{}
+{Secondary education. Graduated in advanced Mathematics and Computer Science.}
 
 \section{Industry Experience}
+\cventry{04/2012 - 08/2014}{Scandit / ETH} {Zurich, Switzerland}{}{}{\textbf{C++ Softare Engineer R\&D}. Worked on real time computer vision algorithms for a leading barcode scanner SDK for iOS and Android. Added support for new barcode formats and improved existing image processing pipeline in order to better recognize barcodes in blurry images.}
+
+\cventry{10/2011 - 02/2012}{Nebion}{Zurich, Swizterland}{}{}{\textbf{Java Software Engineer intern}. Nebion provides a powerful search engine that integrates and instantly mines thousands of curated biological datasets. Optimized and implemented a new biclustering algorithm in Java - NP-complete problem}
+
+\cventry{06/2010-09/2010}{Disney Research Lab}{Zurich, Switzerland}{}{}
+{\textbf{C++ Software Engineer intern}. Implemented from scratch a user interface for controlling the LEDs of a dome using C++ and Qt. The colors of the LEDs were controlled either by XML configured files or by wrapping the colors of an image onto the dome's shape.}
+
+\cventry{10/2009-01/2010}{Disney Research Lab}{Zurich, Switzerland}{}{}
+{\textbf{C++ Software Engineer, part-time employment}. Porting to C++ the Matlab implementation of the Conjugate Gradient algorithm for stereo vision - the process of extracting 3D information from multiple 2D views of a scene.}
+
+\cventry{07/2009-09/2009}{Department of Geoinformatics}{University der Bundeswehr, Munchen, Germany}{}{}{\textbf{C++ Software engineer intern}. Developed a tool for visualising the underground pipes of the city in 3D-PDF using C++ and the library PDF3D-SDK.}
+
+\cventry{06/2008-09-2008}{Google}{Trondheim}{Norway}{}{
+C++ Software engineer intern. Built a tool for visualizing data flow in MapReduce jobs. Relevant information was extracted from logs and the flow was represented as directed graphs using GraphViz. The project aimed at discovering highly active cells for a better utilization of resources.}
 
 \section{Teaching Experience}
+\cventry{09/2007-05/2009}{Department of Computer Science, EPFL}{Lausanne}{Switzerland}{}{Student Assistant for Probability and Statistics. Tasks included grading exams and supporting students during lab sessions.}
 
+\cventry{09/2007-05/2009}{Department of Computer Science, ETH}{Zurich}{Switzerland}{}{Student Assistant for Informatics II D-MAVT and Discrete Mathematics courses. Tasks included grading weekly assigments and holding tutorials.}
 
-\subsection{Vocational}
-\cventry{year--year}{Job title}{Employer}{City}{}{General description no longer than 1--2 lines.\newline{}%
-Detailed achievements:%
-\begin{itemize}%
-\item Achievement 1;
-\item Achievement 2, with sub-achievements:
-  \begin{itemize}%
-  \item Sub-achievement (a);
-  \item Sub-achievement (b), with sub-sub-achievements (don't do this!);
-    \begin{itemize}
-    \item Sub-sub-achievement i;
-    \item Sub-sub-achievement ii;
-    \item Sub-sub-achievement iii;
-    \end{itemize}
-  \item Sub-achievement (c);
-  \end{itemize}
-\item Achievement 3.
-\end{itemize}}
-\cventry{year--year}{Job title}{Employer}{City}{}{Description line 1\newline{}Description line 2}
-\subsection{Miscellaneous}
-\cventry{year--year}{Job title}{Employer}{City}{}{Description}
+\cventry{09/2007-05/2009}{Department of Computer Science and Mathematics, Jacobs University Bremen}{Bremen}{Germany}{}{
+Teaching Assistant for C++ Object Oriented Programming lab and Algorithms and Data Structures lab, "Single Variable Calculus","Linear Algebra, Probability, Statistics". Tasks included grading weekly assigments and supporting students during lab sessions.}
+
+\section{Research and Project Experience}
+\cventry{03/2011 - 10/2011}{Master thesis}{ ETH Zurich}{ Switzerland}{}{
+Worked on a weakly supervised object recognition task on improving the memory and time
+complexity of LocLearn (algorithm for simultaneous localizing and learning an object class) -
+supervisor Prof. Dr. Vittorio Ferrari.
+(Can be found at http://e-collection.library.ethz.ch/eserv/eth:4671/eth-4671-01.pdf)}
+
+\cventry{02/2009 - 05/2009}{Guided research, Jacobs University} {Bremen, Germany}{}{}{ Guided research in improving single-word recognition using auxiliary trained feedback in Echo
+State Networks - supervisor Prof. Dr. Herbert Jaeger.
+(Can be found at https://svn.eecs.jacobs-university.de/svn/eecs/archive/bsc-2009/vpetrescu.pdf)}
+
+\cventry{09/2010 - 12/2010}{Modelling the performance of a system}{Advanced Systems Lab, ETH Zurich}{}{}{Worked in a team with Davide Arrigo and Darko Makreshanski. We developed and tested the stability and performance of a Java system consisting of multiple clients, middlewares and postgresql database servers, following the TPC-H specification.}
+%
+%\subsection{Vocational}
+%\cventry{year--year}{Job title}{Employer}{City}{}{General description no longer than 1--2 lines.\newline{}%
+%Detailed achievements:%
+%\begin{itemize}%
+%\item Achievement 1;
+%\item Achievement 2, with sub-achievements:
+%  \begin{itemize}%
+%  \item Sub-achievement (a);
+%  \item Sub-achievement (b), with sub-sub-achievements (don't do this!);
+%    \begin{itemize}
+%    \item Sub-sub-achievement i;
+%    \item Sub-sub-achievement ii;
+%    \item Sub-sub-achievement iii;
+%    \end{itemize}
+%  \item Sub-achievement (c);
+%  \end{itemize}
+%\item Achievement 3.
+%\end{itemize}}
+%\cventry{year--year}{Job title}{Employer}{City}{}{Description line 1\newline{}Description line 2}
+%\subsection{Miscellaneous}
+%\cventry{year--year}{Job title}{Employer}{City}{}{Description}
 
 \section{Languages}
-\cvitemwithcomment{Romanian}{mother tongue}{}
-\cvitemwithcomment{English}{profficient}{}
-\cvitemwithcomment{French}{A2}{European Framework}
-\cvitemwithcomment{German}{A2}{European Framework}
-
-\section{Computer skills}
-\cvdoubleitem{category 1}{XXX, YYY, ZZZ}{category 4}{XXX, YYY, ZZZ}
-\cvdoubleitem{category 2}{XXX, YYY, ZZZ}{category 5}{XXX, YYY, ZZZ}
-\cvdoubleitem{category 3}{XXX, YYY, ZZZ}{category 6}{XXX, YYY, ZZZ}
-
-\section{Interests}
-\cvitem{hobby 1}{Description}
-\cvitem{hobby 2}{Description}
-\cvitem{hobby 3}{Description}
-
-\section{Extra 1}
-\cvlistitem{Item 1}
-\cvlistitem{Item 2}
-\cvlistitem{Item 3. This item is particularly long and therefore normally spans over several lines. Did you notice the indentation when the line wraps?}
-
-\section{Extra 2}
-\cvlistdoubleitem{Item 1}{Item 4}
-\cvlistdoubleitem{Item 2}{Item 5\cite{book1}}
-\cvlistdoubleitem{Item 3}{Item 6. Like item 3 in the single column list before, this item is particularly long to wrap over several lines.}
-
-\section{References}
 \begin{cvcolumns}
-  \cvcolumn{Category 1}{\begin{itemize}\item Person 1\item Person 2\item Person 3\end{itemize}}
-  \cvcolumn{Category 2}{Amongst others:\begin{itemize}\item Person 1, and\item Person 2\end{itemize}(more upon request)}
-  \cvcolumn[0.5]{All the rest \& some more}{\textit{That} person, and \textbf{those} also (all available upon request).}
+  \cvcolumn{Romanian}{mother tongue}
+    \cvcolumn{English}{proficient}
+        \cvcolumn{German}{A2 - European level}
+    \cvcolumn{French}{A2 - European level}
 \end{cvcolumns}
+
+\section{Programming skills}
+
+Using a scale of beginner, intermediate, advanced and expert I rate my knowledge of:
+
+\cventry{Programming}{Good: C++, Matlab
+								    Intermediate: Java, Python, Postegresql}{}{}{}{}{}	
+\cventry{Frameworks}{Beginner: Torch (deep learning library), Spark, Hadoop}{}{}{}{}{}	
+								    		    						    
+\cvitem{Tools}{\textbf{vim, Eclipse, Git, GitHub}}
+%\cvitem{}{Spark, Hadoop}
+
+\subsection{Skills and Achievements}
+\cvitem{Publications}{B.Alexe, V.Petrescu and V.Ferrari, "Exploiting spatial overlap to efficiently compute appearance
+distances between image windows", Neural Information Processing Systems 2011}
+\cvitem{Workshops/Further education}{
+\begin{itemize}
+\item Product design workshop at Google office Zurich
+\item Trainer for Intercultural and Transition Management Workshop, Jacobs University Bremen, Germany - prepared freshmen for coping with a multicultural environment.
+\item Didactic training certification at ETH Zurich, Switzerland 2011
+\item Successfully completed 100/100 the online non-credit Machine Learningcourse offered by prof. Andrew Ng from Standford University, 2013
+\end{itemize}}
+
+\cvitem{\textbf{Awards}}{\begin{itemize}
+\item EMEA Anita Borg finalist 2010.
+\item Member of the President's list for high academic achievement in 2008/2009 at Jacobs University Bremen.
+\item Mention(bronze medal) at the National Olympiad of Mathematics in Romania from 2001 to 2004.
+						Various prizes at mathemaical competitions (more than 10) across Romania in 2002-2006
+						\end{itemize}}
+						
+						
+%
+%%\section{References}
+%\begin{cvcolumns}
+%  \cvcolumn{Category 1}{\begin{itemize}\item Person 1\item Person 2\item Person 3\end{itemize}}
+%  \cvcolumn{Category 2}{Amongst others:\begin{itemize}\item Person 1, and\item Person 2\end{itemize}(more upon request)}
+%  \cvcolumn[0.5]{All the rest \& some more}{\textit{That} person, and \textbf{those} also (all available upon request).}
+%\end{cvcolumns}
 
 % Publications from a BibTeX file without multibib
 %  for numerical labels: \renewcommand{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}% CONSIDER MERGING WITH PREAMBLE PART
