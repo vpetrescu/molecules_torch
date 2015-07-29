@@ -19,7 +19,8 @@
 %\usepackage{CJKutf8}                              % if you need to use CJK to typeset your resume in Chinese, Japanese or Korean
 
 % adjust the page margins
-\usepackage[scale=0.85]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[scale=0.9]{geometry}
 \setlength{\hintscolumnwidth}{3cm}                % if you want to change the width of the column with the dates
 %\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
 
@@ -33,8 +34,8 @@
 %\social[linkedin]{john.doe}                        % optional, remove / comment the line if not wanted
 %\social[github]{jdoe}                              % optional, remove / comment the line if not wanted
 %\extrainfo{additional information}                 % optional, remove / comment the line if not wanted
-\photo[64pt][0.4pt]{picture}                       % optional, remove / comment the line if not wanted; '64pt' is the height the picture must be resized to, 0.4pt is the thickness of the frame around it (put it to 0pt for no frame) and 'picture' is the name of the picture file
-\quote{Creative team player. Passionate about \textbf{data mining/machine learning}, \textbf{algorithms}, \textbf{data structures}, \textbf{object oriented programming}.}
+\photo[64pt][0.4pt]{vivi-smallmodified.png}                       % optional, remove / comment the line if not wanted; '64pt' is the height the picture must be resized to, 0.4pt is the thickness of the frame around it (put it to 0pt for no frame) and 'picture' is the name of the picture file
+%\quote{Creative team player. Passionate about \textbf{data mining/machine learning}, \textbf{algorithms}, \textbf{data structures}, \textbf{object oriented programming}.}
 %\quote{I was into data before it was big}                                 % optional, remove / comment the line if not wanted
 
 % to show numerical labels in the bibliography (default is to show no labels); only useful if you make citations in your resume
@@ -55,16 +56,15 @@
 \makecvtitle
 
 \section{Education}
-\cventry{09/2014 to date}{Ecole Polytechnique Federale de Lausanne}{Switzerland}{}{\textit{GPA: 5.5/6}}{\textit{Phd Fellowship}. Worked on speeding up Convoluational Neural Networks using separable filters and on predicting molecular properties using machine learning techniques. Libraries used: Theano (Python) and Torch (Lua). Courses taken: Pattern Classification and Machine Learning, BigData}  % arguments 3 to 6 can be left empty
-\cventry{09/2009 - 01/2012}{Eidgenossische Technische Hochshule}{Zurich, Switzerland, GPA: 5.45/6}{}{}{Master Degree in Computer Science - with focus on Visual Computing and Machine Learning}
+\cventry{09/2014 to date}{École Polytechnique Fédérale de Lausanne}{Switzerland}{}{\textit{GPA: 5.5/6}}{\textit{Phd Fellowship}. Worked on speeding up Convoluational Neural Networks using separable filters and on predicting molecular properties using machine learning techniques. Libraries used: Theano (Python) and Torch (Lua). Courses taken: Pattern Classification and Machine Learning, BigData.}  % arguments 3 to 6 can be left empty
+\cventry{09/2009 - 01/2012}{Eidgenössische Technische Hochschule}{Zurich, Switzerland, GPA: 5.45/6}{}{}{Master Degree in Computer Science - with focus on Visual Computing and Machine Learning.}
 \cventry{09/2006 - 06/2009}{Jacobs University Bremen}{Germany, GPA: 1.53 on a scale 5-1}{}{}{Bachelor Degree in Computer Science.}
-\cventry{09/2002 - 07/2006}{"Carol I" National College}{Craiova}{Romania, GPA: 9.83/10}{}
-{Secondary education. Graduated in advanced Mathematics and Computer Science.}
+
 
 \section{Industry Experience}
 \cventry{04/2012 - 08/2014}{Scandit / ETH} {Zurich, Switzerland}{}{}{\textbf{C++ Softare Engineer R\&D}. Worked on real time computer vision algorithms for a leading barcode scanner SDK for iOS and Android. Added support for new barcode formats and improved existing image processing pipeline in order to better recognize barcodes in blurry images.}
 
-\cventry{10/2011 - 02/2012}{Nebion}{Zurich, Swizterland}{}{}{\textbf{Java Software Engineer intern}. Nebion provides a powerful search engine that integrates and instantly mines thousands of curated biological datasets. Optimized and implemented a new biclustering algorithm in Java - NP-complete problem}
+\cventry{10/2011 - 02/2012}{Nebion}{Zurich, Swizterland}{}{}{\textbf{Java Software Engineer intern}. Nebion provides a powerful search engine that integrates and instantly mines thousands of curated biological datasets. Optimized and implemented a new biclustering algorithm in Java - NP-complete problem.}
 
 \cventry{06/2010-09/2010}{Disney Research Lab}{Zurich, Switzerland}{}{}
 {\textbf{C++ Software Engineer intern}. Implemented from scratch a user interface for controlling the LEDs of a dome using C++ and Qt. The colors of the LEDs were controlled either by XML configured files or by wrapping the colors of an image onto the dome's shape.}
@@ -72,18 +72,10 @@
 \cventry{10/2009-01/2010}{Disney Research Lab}{Zurich, Switzerland}{}{}
 {\textbf{C++ Software Engineer, part-time employment}. Porting to C++ the Matlab implementation of the Conjugate Gradient algorithm for stereo vision - the process of extracting 3D information from multiple 2D views of a scene.}
 
-\cventry{07/2009-09/2009}{Department of Geoinformatics}{University der Bundeswehr, Munchen, Germany}{}{}{\textbf{C++ Software engineer intern}. Developed a tool for visualising the underground pipes of the city in 3D-PDF using C++ and the library PDF3D-SDK.}
+\cventry{07/2009-09/2009}{Department of Geoinformatics}{University der Bundeswehr, München, Germany}{}{}{\textbf{C++ Software engineer intern}. Developed a tool for visualising the underground pipes of the city in 3D-PDF using C++ and the library PDF3D-SDK.}
 
 \cventry{06/2008-09-2008}{Google}{Trondheim}{Norway}{}{
 C++ Software engineer intern. Built a tool for visualizing data flow in MapReduce jobs. Relevant information was extracted from logs and the flow was represented as directed graphs using GraphViz. The project aimed at discovering highly active cells for a better utilization of resources.}
-
-\section{Teaching Experience}
-\cventry{09/2007-05/2009}{Department of Computer Science, EPFL}{Lausanne}{Switzerland}{}{Student Assistant for Probability and Statistics. Tasks included grading exams and supporting students during lab sessions.}
-
-\cventry{09/2007-05/2009}{Department of Computer Science, ETH}{Zurich}{Switzerland}{}{Student Assistant for Informatics II D-MAVT and Discrete Mathematics courses. Tasks included grading weekly assigments and holding tutorials.}
-
-\cventry{09/2007-05/2009}{Department of Computer Science and Mathematics, Jacobs University Bremen}{Bremen}{Germany}{}{
-Teaching Assistant for C++ Object Oriented Programming lab and Algorithms and Data Structures lab, "Single Variable Calculus","Linear Algebra, Probability, Statistics". Tasks included grading weekly assigments and supporting students during lab sessions.}
 
 \section{Research and Project Experience}
 \cventry{03/2011 - 10/2011}{Master thesis}{ ETH Zurich}{ Switzerland}{}{
@@ -92,11 +84,22 @@ complexity of LocLearn (algorithm for simultaneous localizing and learning an ob
 supervisor Prof. Dr. Vittorio Ferrari.
 (Can be found at http://e-collection.library.ethz.ch/eserv/eth:4671/eth-4671-01.pdf)}
 
+\cventry{09/2010 - 12/2010}{Modelling the performance of a system}{Advanced Systems Lab, ETH Zurich}{}{}{Worked in a team with Davide Arrigo and Darko Makreshanski. We developed and tested the stability and performance of a Java system consisting of multiple clients, middlewares and postgresql database servers, following the TPC-H specification.}
+
+
 \cventry{02/2009 - 05/2009}{Guided research, Jacobs University} {Bremen, Germany}{}{}{ Guided research in improving single-word recognition using auxiliary trained feedback in Echo
 State Networks - supervisor Prof. Dr. Herbert Jaeger.
 (Can be found at https://svn.eecs.jacobs-university.de/svn/eecs/archive/bsc-2009/vpetrescu.pdf)}
 
-\cventry{09/2010 - 12/2010}{Modelling the performance of a system}{Advanced Systems Lab, ETH Zurich}{}{}{Worked in a team with Davide Arrigo and Darko Makreshanski. We developed and tested the stability and performance of a Java system consisting of multiple clients, middlewares and postgresql database servers, following the TPC-H specification.}
+\cventry{02/2008 - 02/2008}{Mathematical Contest in Modelling}{}{}{}{Honorable Mention with team members Simon Schmitt and Momchil Minkov. Implemented an algorithm in Matlab for creating Sudoku puzzles of different levels of difficulty.}
+
+\section{Teaching Experience}
+\cventry{01/2015-06/2015}{Department of Computer Science, EPFL}{Lausanne}{Switzerland}{}{Student Assistant for \textit{Probability and Statistics}. Tasks included grading exams and supporting students during lab sessions.}
+
+\cventry{09/2007-05/2009}{Department of Computer Science, ETH}{Zurich}{Switzerland}{}{Student Assistant for \textit{Informatics II D-MAVT} and \textit{Discrete Mathematics} courses. Tasks included grading weekly assigments and holding tutorials.}
+
+\cventry{09/2007-05/2009}{Department of Computer Science and Mathematics, Jacobs University Bremen}{}{Germany}{}{
+Teaching Assistant for \textit{C++ Object Oriented Programming lab}, \textit{Algorithms and Data Structures lab}, \textit{Single Variable Calculus} and \textit{Linear Algebra, Probability, Statistics}. Tasks included grading weekly assigments and supporting students during lab sessions.}
 %
 %\subsection{Vocational}
 %\cventry{year--year}{Job title}{Employer}{City}{}{General description no longer than 1--2 lines.\newline{}%
@@ -124,37 +127,36 @@ State Networks - supervisor Prof. Dr. Herbert Jaeger.
 \begin{cvcolumns}
   \cvcolumn{Romanian}{mother tongue}
     \cvcolumn{English}{proficient}
-        \cvcolumn{German}{A2 - European level}
+       \cvcolumn{German}{A2 - European level}
     \cvcolumn{French}{A2 - European level}
 \end{cvcolumns}
-
 \section{Programming skills}
+\cvitem{}{On a scale from Beginner, Intermediate, Good to Expert I rate my knowledge of:}
 
-Using a scale of beginner, intermediate, advanced and expert I rate my knowledge of:
-
-\cventry{Programming}{Good: C++, Matlab
+\cventry{Programming}{Good: C++, Matlab.
 								    Intermediate: Java, Python, Postegresql}{}{}{}{}{}	
 \cventry{Frameworks}{Beginner: Torch (deep learning library), Spark, Hadoop}{}{}{}{}{}	
 								    		    						    
 \cvitem{Tools}{\textbf{vim, Eclipse, Git, GitHub}}
 %\cvitem{}{Spark, Hadoop}
 
-\subsection{Skills and Achievements}
-\cvitem{Publications}{B.Alexe, V.Petrescu and V.Ferrari, "Exploiting spatial overlap to efficiently compute appearance
+\section{Skills and Achievements}
+\cvitem{\textbf{Publications}}{B.Alexe, V.Petrescu and V.Ferrari, "Exploiting spatial overlap to efficiently compute appearance
 distances between image windows", Neural Information Processing Systems 2011}
-\cvitem{Workshops/Further education}{
+\cvitem{\textbf{Workshop/Further education}}{
 \begin{itemize}
-\item Product design workshop at Google office Zurich
-\item Trainer for Intercultural and Transition Management Workshop, Jacobs University Bremen, Germany - prepared freshmen for coping with a multicultural environment.
+\item Trainer for Intercultural and Transition Management Workshop, Jacobs University Bremen, Germany 2007 - prepared freshmen for coping with a multicultural environment
+\item Product design workshop at Google office Zurich in June 2010
 \item Didactic training certification at ETH Zurich, Switzerland 2011
-\item Successfully completed 100/100 the online non-credit Machine Learningcourse offered by prof. Andrew Ng from Standford University, 2013
+\item Successfully completed (100/100 points) the online non-credit Machine Learning course, offered by
+prof. Andrew Ng from Stanford University, 2013
 \end{itemize}}
 
 \cvitem{\textbf{Awards}}{\begin{itemize}
 \item EMEA Anita Borg finalist 2010.
-\item Member of the President's list for high academic achievement in 2008/2009 at Jacobs University Bremen.
-\item Mention(bronze medal) at the National Olympiad of Mathematics in Romania from 2001 to 2004.
-						Various prizes at mathemaical competitions (more than 10) across Romania in 2002-2006
+\item Member of the President's list for high academic achievement  at Jacobs University Bremen in 2008-2009.
+\item Mention (bronze medal) at the National Olympiad of Mathematics in Romania from 2001 to 2004.
+						Various prizes at mathemaical competitions (more than 10) across Romania in 2002-2006.
 						\end{itemize}}
 						
 						
@@ -182,27 +184,27 @@ distances between image windows", Neural Information Processing Systems 2011}
 %\bibliographystylemisc{plain}
 %\bibliographymisc{publications}                   % 'publications' is the name of a BibTeX file
 
-\clearpage
-%-----       letter       ---------------------------------------------------------
-% recipient data
-\recipient{Company Recruitment team}{Company, Inc.\\123 somestreet\\some city}
-\date{January 01, 1984}
-\opening{Dear Sir or Madam,}
-\closing{Yours faithfully,}
-\enclosure[Attached]{curriculum vit\ae{}}          % use an optional argument to use a string other than "Enclosure", or redefine \enclname
-\makelettertitle
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper neque sit amet lectus facilisis sed luctus nisl iaculis. Vivamus at neque arcu, sed tempor quam. Curabitur pharetra tincidunt tincidunt. Morbi volutpat feugiat mauris, quis tempor neque vehicula volutpat. Duis tristique justo vel massa fermentum accumsan. Mauris ante elit, feugiat vestibulum tempor eget, eleifend ac ipsum. Donec scelerisque lobortis ipsum eu vestibulum. Pellentesque vel massa at felis accumsan rhoncus.
-
-Suspendisse commodo, massa eu congue tincidunt, elit mauris pellentesque orci, cursus tempor odio nisl euismod augue. Aliquam adipiscing nibh ut odio sodales et pulvinar tortor laoreet. Mauris a accumsan ligula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse vulputate sem vehicula ipsum varius nec tempus dui dapibus. Phasellus et est urna, ut auctor erat. Sed tincidunt odio id odio aliquam mattis. Donec sapien nulla, feugiat eget adipiscing sit amet, lacinia ut dolor. Phasellus tincidunt, leo a fringilla consectetur, felis diam aliquam urna, vitae aliquet lectus orci nec velit. Vivamus dapibus varius blandit.
-
-Duis sit amet magna ante, at sodales diam. Aenean consectetur porta risus et sagittis. Ut interdum, enim varius pellentesque tincidunt, magna libero sodales tortor, ut fermentum nunc metus a ante. Vivamus odio leo, tincidunt eu luctus ut, sollicitudin sit amet metus. Nunc sed orci lectus. Ut sodales magna sed velit volutpat sit amet pulvinar diam venenatis.
-
-Albert Einstein discovered that $e=mc^2$ in 1905.
-
-\[ e=\lim_{n \to \infty} \left(1+\frac{1}{n}\right)^n \]
-
-\makeletterclosing
+%\clearpage
+%%-----       letter       ---------------------------------------------------------
+%% recipient data
+%\recipient{Company Recruitment team}{Company, Inc.\\123 somestreet\\some city}
+%\date{January 01, 1984}
+%\opening{Dear Sir or Madam,}
+%\closing{Yours faithfully,}
+%\enclosure[Attached]{curriculum vit\ae{}}          % use an optional argument to use a string other than "Enclosure", or redefine \enclname
+%\makelettertitle
+%
+%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper neque sit amet lectus facilisis sed luctus nisl iaculis. Vivamus at neque arcu, sed tempor quam. Curabitur pharetra tincidunt tincidunt. Morbi volutpat feugiat mauris, quis tempor neque vehicula volutpat. Duis tristique justo vel massa fermentum accumsan. Mauris ante elit, feugiat vestibulum tempor eget, eleifend ac ipsum. Donec scelerisque lobortis ipsum eu vestibulum. Pellentesque vel massa at felis accumsan rhoncus.
+%
+%Suspendisse commodo, massa eu congue tincidunt, elit mauris pellentesque orci, cursus tempor odio nisl euismod augue. Aliquam adipiscing nibh ut odio sodales et pulvinar tortor laoreet. Mauris a accumsan ligula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse vulputate sem vehicula ipsum varius nec tempus dui dapibus. Phasellus et est urna, ut auctor erat. Sed tincidunt odio id odio aliquam mattis. Donec sapien nulla, feugiat eget adipiscing sit amet, lacinia ut dolor. Phasellus tincidunt, leo a fringilla consectetur, felis diam aliquam urna, vitae aliquet lectus orci nec velit. Vivamus dapibus varius blandit.
+%
+%Duis sit amet magna ante, at sodales diam. Aenean consectetur porta risus et sagittis. Ut interdum, enim varius pellentesque tincidunt, magna libero sodales tortor, ut fermentum nunc metus a ante. Vivamus odio leo, tincidunt eu luctus ut, sollicitudin sit amet metus. Nunc sed orci lectus. Ut sodales magna sed velit volutpat sit amet pulvinar diam venenatis.
+%
+%Albert Einstein discovered that $e=mc^2$ in 1905.
+%
+%\[ e=\lim_{n \to \infty} \left(1+\frac{1}{n}\right)^n \]
+%
+%\makeletterclosing
 
 %\clearpage\end{CJK*}                              % if you are typesetting your resume in Chinese using CJK; the \clearpage is required for fancyhdr to work correctly with CJK, though it kills the page numbering by making \lastpage undefined
 \end{document}
