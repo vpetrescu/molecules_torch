@@ -92,3 +92,43 @@ end
 
 out_data = uniq_out_data;
 end
+% 
+% For 0001
+%     half_bucket = abs(fdistanceR - distanceR);
+%     half_bucket = floor(half_bucket*10)+1;
+%    
+% For 050
+%         if fdistanceR - distanceR > 0.5
+%               half_bucket = 2;
+%           else
+%               half_bucket = 1;
+% %           end
+%   For distance 0.25
+%           if fdistanceR - distanceR > 0.75
+%               half_bucket = 4;
+%           elseif fdistanceR - distanceR > 0.5
+%               half_bucket = 3;
+%           elseif fdistanceR - distanceR > 0.25
+%               half_bucket = 2;
+%           else
+%               half_bucket = 1;
+%           end
+% 
+%   For distance 0125
+%            if fdistanceR - distanceR > 0.875
+%               half_bucket = 8;         
+%            elseif fdistanceR - distanceR > 0.750
+%               half_bucket = 7;
+%            elseif fdistanceR - distanceR > 0.625
+%               half_bucket = 6;
+%            elseif fdistanceR - distanceR > 0.5
+%               half_bucket = 5;
+%           elseif fdistanceR - distanceR > 0.375
+%               half_bucket = 4;
+%           elseif fdistanceR - distanceR > 0.250
+%               half_bucket = 3;
+%           elseif fdistanceR - distanceR > 0.125
+%               half_bucket = 2;
+%           else
+%               half_bucket = 1;
+%           end
