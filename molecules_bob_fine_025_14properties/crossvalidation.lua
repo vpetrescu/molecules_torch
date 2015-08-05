@@ -104,6 +104,6 @@ print('mean %f', train_avg_rmse[{property, {}}]:mean())
 print('std %f', train_avg_rmse[{property, {}}]:std())
     --test_avg_mae[{{}, property}]:mean()
     --test_avg_mae[{{}, property}]:std()
-return 250 - test_avg_rmse
+return 250 - test_avg_rmse[{property, 1}]
 
 end

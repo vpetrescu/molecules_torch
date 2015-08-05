@@ -1,9 +1,10 @@
 
 special_name = 'special';
-current_method = 'BoB-20-fine020-noisy';
+current_method = 'BoB-20-fine020';
 
 method = {'Coloumb', ... % Original Coloumb matrix
           'SortedColoumb', ... % Coloumb matrix sorted by row norm
+           '2DSortedColoumb', ... % Coloumb matrix sorted by row norm
           'RandomSortedColoumb',... % 10x Sorted Coloumb by noise
           'Bob-20-fine05',... % same as Bob-20 but with 40 buckets
           'Bob-20-fine025',... % same as Bob-20 but with 40 buckets
@@ -122,7 +123,7 @@ for fold_nbr=1:5
       elseif strcmp(current_method, 'BoB-20-fine020-noisy')
         [testData.data, testData.labels] = compute_descriptor_bob20_020_noisy(teindices, data,...
                                                  n_distinct, mr,...
-                                                 nbr_dist_bins, molecule_size););
+                                                 nbr_dist_bins, molecule_size);
     end
     
  %   filename_train = sprintf('../../data/train_desc_%s_fold_%d.mat', ...

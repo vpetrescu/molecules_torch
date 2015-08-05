@@ -69,7 +69,7 @@ for fold_nbr=1,5 do
     dofile '3_loss.lua'
     dofile '4_train.lua'
     dofile '5_test.lua'
-    for epoch_id = 1,600 do
+    for epoch_id = 1,1 do
         train(epoch_id, fold_nbr)
         test_rmse, train_rmse = test()
     end

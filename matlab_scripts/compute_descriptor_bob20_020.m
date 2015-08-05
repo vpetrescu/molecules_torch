@@ -14,8 +14,8 @@ atoms_count = zeros(n_samples, n_distinct);
 
 n_samples = size(indices,1);
 
-%out_labels = zeros(n_samples, 1); % );
-out_labels = zeros(n_samples, size(data.T,2));
+out_labels = zeros(n_samples, 1); % );
+%out_labels = zeros(n_samples, size(data.T,2));
 
 
 %% Hard coded here
@@ -23,8 +23,8 @@ M = molecule_size;
 maxDistance = 0;
 for sample = 1:n_samples
   indext = indices(sample) + 1;
-  out_labels(sample,:) = data.T(indext,:);
-% out_labels(sample) = data.T(indext);
+%  out_labels(sample,:) = data.T(indext,:);
+ out_labels(sample) = data.T(indext);
   Zs = zeros([M,1]);
   Xs = data.X(indext,:,:);
   Xs = reshape(Xs, [M, M]);

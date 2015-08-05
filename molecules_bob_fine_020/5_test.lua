@@ -8,7 +8,7 @@ require 'gnuplot'
 require 'torch'   -- torch
 require 'xlua'    -- xlua provides useful tools, like progress bars
 require 'optim'   -- an optimization package, for online and batch methods
-require 'NNVizualizeStatistics'
+--require 'NNVizualizeStatistics'
 ----------------------------------------------------------------------
 print '==> defining test procedure'
 
