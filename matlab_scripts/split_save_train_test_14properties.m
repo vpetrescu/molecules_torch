@@ -45,7 +45,7 @@ teindices3 = allindices(3:3:size(allindices,1));
 
 %% Sort the other indices according to the number of atoms
 %% Split it into 5 sets
-current_method = 'BoB-6-fine020';
+current_method = 'SemiSortedColoumb';
 
 method = {'Coloumb', ... % Original Coloumb matrix
           'SortedColoumb', ... % Coloumb matrix sorted by row norm
@@ -70,9 +70,10 @@ allindices = 1:N;
 n_distinct = 6;
 nbr_dist_bins = 6;
 molecule_size = 23;
-keySet   = {1,6,7,8,16, 17};
+z_values   = {1,6,7,8,16, 17};
 valueSet = [ 1,2,3,4,5, 6];
-mr = containers.Map(keySet,valueSet);
+max_z_count = [16,7,3,3,1, 2];
+mr = containers.Map(z_values,valueSet);
 
 if strcmp(current_method, 'BoB-6-fine020')
     [testData.data, testData.labels] = ...
@@ -81,6 +82,18 @@ if strcmp(current_method, 'BoB-6-fine020')
                                      mr,...
                                      nbr_dist_bins,...
                                      molecule_size);
+elseif strcmp(current_method, 'SemiSortedColoumb')
+    [testData.data, testData.labels] = ...
+        compute_descriptor_semi_sorted_coloumb_map(allindices, data,...   
+                                     mr,...
+                                     z_values,...
+                                     max_z_count,...
+                                     molecule_size);
+elseif strcmp(current_method, 'SortedColoumb')
+    [testData.data, testData.labels] = compute_descriptor_sorted_coloumb(...
+                                                allindices, data,...
+                                                molecule_size);
+    
 end
 
 filename_test = sprintf('../../%s/descriptor_%s.mat', ...

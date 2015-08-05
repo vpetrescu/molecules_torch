@@ -29,12 +29,16 @@ if strcmp(dataset_type, 'qm7')
     n_distinct = 6;
     nbr_dist_bins = 19;    
     molecule_size = 23;
+    max_z_count = [16,7,3,3,1];
+    
 elseif strcmp(dataset_type, 'qm7b')
     keySet   = {1,6,7,8,16,17};
     valueSet = [ 1,2,3,4,5, 6];
     n_distinct = 6;
     nbr_dist_bins = 19; 
     molecule_size = 23;
+    max_z_count = [16,7,3,3,1, 2];
+        
 elseif strcmp(dataset_type, 'largeset')
     keySet   = {1,6,7,8,9};
     valueSet = [ 1,2,3,4,5];
@@ -42,6 +46,7 @@ elseif strcmp(dataset_type, 'largeset')
     molecule_size = 29;
     nbr_dist_bins = 19;%??? which one   
 end
+
 
 mr = containers.Map(keySet,valueSet);
 

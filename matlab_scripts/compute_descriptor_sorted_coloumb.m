@@ -1,30 +1,32 @@
-function [out_data, out_labels] = compute_descriptor_sorted_coloumb(indices, data)
+function [out_data, out_labels] = compute_descriptor_sorted_coloumb(indices,...,
+                                                                    data, ...
+                                                                    molecule_size)
 % transform molecules
-M = 23;
+M = molecule_size;
 n_data_size = size(indices,1);
-out_data = zeros(n_data_size,1,1, M*M);
-out_labels = zeros(n_data_size, 1);
+out_data = zeros(n_data_size, M*M);
+out_labels = zeros(size(data.T));
 
 % Hard coded here
 for sample = 1:size(indices,1)
   indext = indices(sample) + 1;
-  out_labels(sample) = data.T(indext);
+  out_labels(sample,:) = data.T(indext,:);
   % compute the norm of every row
   row_norms = sqrt(sum(abs(data.X(indext,:,:)).^2,2));  
   [~, sorted_indices] = sort(row_norms,'descend');
   cmat = data.X(indext,:,:);
   cmat = reshape(cmat, [M,M]);
   sorted_cmat = cmat(sorted_indices, sorted_indices);
-  out_data(sample,1,1,:) = sorted_cmat(:)';
+  out_data(sample,:) = sorted_cmat(:)';
 end
 
 
 
-uniq_out_data = zeros(n_data_size, 1,1, ...
+uniq_out_data = zeros(n_data_size, ...
                       M*(M+1)/2);
                   
 for s = 1: size(out_data,1)
-    onesample = out_data(s,1,1, :);
+    onesample = out_data(s, :);
     onesample = reshape(onesample, [M, M]);
     onesample = onesample';
     
@@ -36,7 +38,7 @@ for s = 1: size(out_data,1)
      onesample = onesample';
      onesample = onesample(:);
      onesample(onesample == -100) = [];
-     uniq_out_data(s,1,1,:) = onesample;
+     uniq_out_data(s,:) = onesample;
 end
 
 out_data = uniq_out_data;

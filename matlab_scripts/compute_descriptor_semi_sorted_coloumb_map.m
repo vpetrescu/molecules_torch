@@ -1,21 +1,17 @@
 function [out_data, out_labels] = ...
-    compute_descriptor_semi_sorted_coloumb_map(indices, data)
+    compute_descriptor_semi_sorted_coloumb_map(indices, data, ...
+                                               mr, z_values, ...
+                                               max_z_count, ...
+                                               molecule_size)
 
-z_values = [1,6,7,8,16];
-max_z_count = [16,7,3,3,1];
-
-keySet   = {1,6,7,8,16};
-valueSet = [ 1,2,3,4,5];
-mr = containers.Map(keySet,valueSet);
 % Hard coded here
-
 n_samples = size(indices, 1);
 
-out_labels = zeros(n_samples, 1);
-data2.X = zeros(n_samples, 23,23);
+out_labels = zeros(size(data.T));
+data2.X = zeros(n_samples, molecule_size, molecule_size);
 for sample = 1:n_samples
   indext = indices(sample) + 1;
-  out_labels(sample) = data.T(indext);
+  out_labels(sample,:) = data.T(indext,:);
   data2.X(sample,:,:) = data.X(indext,:,:);
 end
 
@@ -27,10 +23,9 @@ max_pairs_length = max(max_z_count);
 pairs_structure = zeros(n_samples, n_atom_types, n_atom_types, max_pairs_length);
 pairs_indices = ones(n_samples, n_atom_types, n_atom_types);
 for s = 1:n_samples
-    s
   % The size of the descriptor 
   z_values = zeros([23,1]);
-  for i=1:23
+  for i=1:molecule_size
     data2.X(s,:,:);
     z_values(i) = round((2*data2.X(s,i,i))^(1/2.4));
   end
