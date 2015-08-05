@@ -1,6 +1,7 @@
 
-special_name = 'special';
-current_method = 'BoB-20-fine020';
+
+current_method = 'BoB-20-fine020';%
+%current_method = '2DSortedColoumb'
 
 method = {'Coloumb', ... % Original Coloumb matrix
           'SortedColoumb', ... % Coloumb matrix sorted by row norm
@@ -64,6 +65,9 @@ for fold_nbr=1:5
                     compute_descriptor_sorted_coloumb(trindices, data);
         [testData.data, testData.labels] = ...
                     compute_descriptor_sorted_coloumb(teindices, data);
+    elseif strcmp(current_method, '2DSortedColoumb')
+        [testData.data, testData.labels] = ...
+                    compute_descriptor_2D_sorted_coloumb(teindices, data);
     elseif strcmp(current_method, 'SemiSortedColoumb')
    %     [trainData.data, trainData.labels] = ...
    %                 compute_descriptor_semi_sorted_coloumb_map(trindices, data);

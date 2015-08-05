@@ -13,9 +13,7 @@ pairs_structure = zeros(n_samples, n_distinct, n_distinct, ...
 atoms_count = zeros(n_samples, n_distinct);
 
 n_samples = size(indices,1);
-
-out_labels = zeros(n_samples, 1); % );
-%out_labels = zeros(n_samples, size(data.T,2));
+out_labels = zeros(size(data.T));
 
 
 %% Hard coded here
@@ -24,7 +22,7 @@ maxDistance = 0;
 for sample = 1:n_samples
   indext = indices(sample) + 1;
 %  out_labels(sample,:) = data.T(indext,:);
- out_labels(sample) = data.T(indext);
+  out_labels(sample) = data.T(indext);
   Zs = zeros([M,1]);
   Xs = data.X(indext,:,:);
   Xs = reshape(Xs, [M, M]);
@@ -32,7 +30,7 @@ for sample = 1:n_samples
     Zs(i) = round((2*Xs(i,i))^(1/2.4));
     % increase count of this molecule
     if (Zs(i) ~= 0)
-        Zs(i)
+       % Zs(i)
         atoms_count(sample, mr(Zs(i))) = atoms_count(sample, mr(Zs(i))) + 1;
     end
     for j=i+1:M   
@@ -40,11 +38,12 @@ for sample = 1:n_samples
         if (Zs(i) ~= 0 && Zs(j)~= 0)
           %% increase count of Zs(i), Zs(j) pair  
           fdistanceR = Zs(i)*Zs(j)/Xs(i,j);
+           if maxDistance < fdistanceR
+            maxDistance = fdistanceR;
+          end
           distanceR = floor(fdistanceR);
           distanceR = min(distanceR, nbr_dist_bins);
-          if maxDistance < distanceR
-            maxDistance = distanceR;
-          end
+      
           if fdistanceR - distanceR > 0.80
               half_bucket = 5;
           elseif fdistanceR - distanceR > 0.60
@@ -67,7 +66,7 @@ for sample = 1:n_samples
  end
 end
 
-maxDistance
+fprintf(1,'max distance in dataset %f\n',maxDistance);
 %pause
 NN = n_distinct*(n_distinct+1)/2* nbr_dist_bins * quantization_level + n_distinct;
 uniq_out_data = zeros(n_samples, NN);
