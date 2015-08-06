@@ -1,4 +1,5 @@
- load('qm7bZ.mat');
+%% This script computes the maximum number of atom types per element.
+load('qm7bZ.mat');
 
 z_values = [1,6,7,8,16, 17];
 max_z_count = [0,0,0,0,0, 0];

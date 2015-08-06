@@ -1,4 +1,4 @@
-function [out_data, out_labels] = compute_descriptor_sorted_coloumb(indices,...,
+function [out_data, out_labels] = compute_descriptor_SortedColoumb(indices,...,
                                                                     data, ...
                                                                     molecule_size)
 % transform molecules

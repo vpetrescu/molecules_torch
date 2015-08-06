@@ -1,3 +1,7 @@
+%% The qm7b dataset contains only the Coloumb matrix and labels data.X 
+%% and data.T
+%% This script computes and saves also data.Z in a new file qm7bZ.mat
+
 data = load('qm7b.mat');
 
 N = size(data.X,1);
