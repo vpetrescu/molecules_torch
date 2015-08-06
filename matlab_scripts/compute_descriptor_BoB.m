@@ -1,18 +1,24 @@
 function [out_data, out_labels] = ...
-    compute_descriptor_BoB(indices, data, ...
-    mr, init_z_values, ...
-    max_z_count, ...
-    molecule_size,...
-    n_atom_types)
+    compute_descriptor_BoB(indices,... % a subset of the sample indices in the data, Nx1 
+    data, ... % contains data.X, data.Z, data.T
+    map_zvalues, ... % maps the Z value to an index between 1..nbr_atoms
+    init_z_values, ... % the set of Z_values present in the dataset
+    max_z_count, ... % the maximum nbr of atoms of certain type in the molecules across dataset
+    molecule_size,... % the maximum molecule size
+    n_atom_types)   % the number of different atom types
 
 % Hard coded here
-n_samples = size(indices, 2);
+n_samples = max(size(indices));
 
 out_labels = zeros(size(data.T));
 data2.X = zeros(n_samples, molecule_size, molecule_size);
 for sample = 1:n_samples
-  indext = indices(sample) + 1;
-  out_labels(sample,:) = data.T(indext,:);
+  indext = indices(sample);
+  if size(data.T,1) ~= 1
+    out_labels(sample,:) = data.T(indext,:);
+  else
+     out_labels(sample) = data.T(indext); 
+  end
   data2.X(sample,:,:) = data.X(indext,:,:);
 end
 
@@ -27,7 +33,7 @@ for s = 1:n_samples
   z_values = zeros([molecule_size,1]);
   for i=1:molecule_size
     data2.X(s,:,:);
-    z_values(i) = round((2*data2.X(s,i,i))^(1/2.4));
+    z_values(i) = round((2*data.X(s,i,i))^(1/2.4));
   end
   z_values = z_values(z_values ~= 0);
 
@@ -36,12 +42,12 @@ for s = 1:n_samples
     for z2 = z1+1:size(z_values,2)
         %% bin distance z1, z2
         % index of atom, can be 1..5
-        i1 = mr(z_values(z1));
-        i2 = mr(z_values(z2));
+        i1 = map_zvalues(z_values(z1));
+        i2 = map_zvalues(z_values(z2));
         mini = min(i1,i2);
         maxi = max(i1, i2);
         idx = pairs_indices(s, mini, maxi);
-        pairs_structure(s,mini,maxi,idx) = data2.X(s,z1,z2);
+        pairs_structure(s,mini,maxi,idx) = data.X(s,z1,z2);
         pairs_indices(s, mini, maxi) = pairs_indices(s, mini, maxi)+1;
     end
   end
@@ -58,8 +64,8 @@ for s = 1:n_samples
     for z2 = z1:n_atom_types
         %% bin distance z1, z2
         % index of atom, can be 1..5
-        i1 = mr(init_z_values(z1));
-        i2 = mr(init_z_values(z2));
+        i1 = map_zvalues(init_z_values(z1));
+        i2 = map_zvalues(init_z_values(z2));
         mini = min(i1,i2);
         maxi = max(i1, i2);
         Nsize1 = max_z_count(mini);

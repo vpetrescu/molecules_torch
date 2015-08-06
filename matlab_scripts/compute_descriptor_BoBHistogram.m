@@ -3,16 +3,16 @@ function [out_data, out_labels] = compute_descriptor_BoBHistogram(indices, ...
                                                                n_distinct,...
                                                                mr,...
                                                                nbr_dist_bins,...
+                                                               quantization_level,...
                                                                molecule_size)
 
 
-quantization_level = 5;
-n_samples = size(indices,1);
+%quantization_level = 5;
+n_samples = max(size(indices));
 pairs_structure = zeros(n_samples, n_distinct, n_distinct, ...
                      nbr_dist_bins * quantization_level);
 atoms_count = zeros(n_samples, n_distinct);
 
-n_samples = size(indices,1);
 out_labels = zeros(size(data.T));
 
 
@@ -20,9 +20,13 @@ out_labels = zeros(size(data.T));
 M = molecule_size;
 maxDistance = 0;
 for sample = 1:n_samples
-  indext = indices(sample) + 1;
-%  out_labels(sample,:) = data.T(indext,:);
-  out_labels(sample) = data.T(indext);
+  indext = indices(sample);
+  
+  if (size(data.T,1)~=1)
+    out_labels(sample,:) = data.T(indext,:);
+  else
+    out_labels(sample) = data.T(indext);
+  end
   Zs = zeros([M,1]);
   Xs = data.X(indext,:,:);
   Xs = reshape(Xs, [M, M]);
@@ -43,7 +47,9 @@ for sample = 1:n_samples
           end
           distanceR = floor(fdistanceR);
           distanceR = min(distanceR, nbr_dist_bins);
-      
+          difference = abs(distanceR - fdistanceR); % is in [0,1]
+          
+          half_bucket2 = max(1, ceil(difference* quantization_level));
           if fdistanceR - distanceR > 0.80
               half_bucket = 5;
           elseif fdistanceR - distanceR > 0.60
@@ -55,6 +61,7 @@ for sample = 1:n_samples
           else
               half_bucket = 1;
           end
+          assert(half_bucket == half_bucket2)
           minz = min(mr(Zs(i)), mr(Zs(j)));
           maxz = max(mr(Zs(i)), mr(Zs(j)));
           pairs_structure(sample, minz,maxz, quantization_level*distanceR + half_bucket) = ...
