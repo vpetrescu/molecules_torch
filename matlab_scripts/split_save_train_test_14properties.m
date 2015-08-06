@@ -22,15 +22,15 @@ uniq_z_count = unique(z_count, 'rows');
 % Find number of non Hidrogen atoms
 z_count_non_h = z_count(:,2:end);
 non_h_per_molecule = sum(z_count_non_h,2);
+% Plot the number of non H atoms per molecule
 hist(non_h_per_molecule)
 for i=1:8
-    sum(non_h_per_molecule==i)
+    sum(non_h_per_molecule==i);
 end
 
 %% get the indices with less than 4 non H atoms
 train_indices = (non_h_per_molecule < 5);
 temp = 1:N;
-temp(train_indices);
 
 z_count = sum(data.Z(60:end,:)~=0, 2);
 [zvalues, zind] = sort(z_count);
@@ -45,7 +45,6 @@ teindices3 = allindices(3:3:size(allindices,1));
 
 %% Sort the other indices according to the number of atoms
 %% Split it into 5 sets
-current_method = 'SemiSortedColoumb';
 
 method = {'Coloumb', ... % Original Coloumb matrix
           'SortedColoumb', ... % Coloumb matrix sorted by row norm
@@ -65,15 +64,17 @@ path_to_data = 'data14properties';
 %path_to_data = 'data14properties';
 
 
-allindices = 1:N;
+allindices = 1:size(data.Z, 1);
 
 n_distinct = 6;
 nbr_dist_bins = 6;
 molecule_size = 23;
-z_values   = {1,6,7,8,16, 17};
+z_values   = [1,6,7,8,16, 17];
 valueSet = [ 1,2,3,4,5, 6];
 max_z_count = [16,7,3,3,1, 2];
 mr = containers.Map(z_values,valueSet);
+
+current_method = '2DSortedColoumb';
 
 if strcmp(current_method, 'BoB-6-fine020')
     [testData.data, testData.labels] = ...
@@ -89,12 +90,18 @@ elseif strcmp(current_method, 'SemiSortedColoumb')
                                      mr,...
                                      z_values,...
                                      max_z_count,...
-                                     molecule_size);
+                                     molecule_size,...
+                                     n_distinct);
 elseif strcmp(current_method, 'SortedColoumb')
     [testData.data, testData.labels] = compute_descriptor_sorted_coloumb(...
                                                 allindices, data,...
                                                 molecule_size);
-    
+elseif strcmp(current_method, '2DSortedColoumb')
+      allindices = allindices - 1;
+    [testData.data, testData.labels] = compute_descriptor_2D_sorted_coloumb(...
+                                                allindices, data,...
+                                                molecule_size);
+        
 end
 
 filename_test = sprintf('../../%s/descriptor_%s.mat', ...

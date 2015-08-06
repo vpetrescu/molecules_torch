@@ -1,11 +1,12 @@
 function [out_data, out_labels] = ...
     compute_descriptor_semi_sorted_coloumb_map(indices, data, ...
-                                               mr, z_values, ...
+                                               mr, init_z_values, ...
                                                max_z_count, ...
-                                               molecule_size)
+                                               molecule_size,...
+                                               n_atom_types)
 
 % Hard coded here
-n_samples = size(indices, 1);
+n_samples = size(indices, 2);
 
 out_labels = zeros(size(data.T));
 data2.X = zeros(n_samples, molecule_size, molecule_size);
@@ -18,19 +19,17 @@ end
 N = computeSize(max_z_count);
 out_data = zeros(n_samples, N);
 % current fill index for the pair (i,j)
-n_atom_types = 5;
-max_pairs_length = max(max_z_count);
+max_pairs_length = 1000;max(max_z_count);
 pairs_structure = zeros(n_samples, n_atom_types, n_atom_types, max_pairs_length);
 pairs_indices = ones(n_samples, n_atom_types, n_atom_types);
 for s = 1:n_samples
   % The size of the descriptor 
-  z_values = zeros([23,1]);
+  z_values = zeros([molecule_size,1]);
   for i=1:molecule_size
     data2.X(s,:,:);
     z_values(i) = round((2*data2.X(s,i,i))^(1/2.4));
   end
   z_values = z_values(z_values ~= 0);
-  
 
   % loop over non zero charges
   for z1 = 1:size(z_values,2)
@@ -52,7 +51,6 @@ for s = 1:n_samples
 end
 
 for s = 1:n_samples
-    s
   % loop over non zero charges
   temp = zeros(1,N);
   idx = 1;
@@ -60,8 +58,8 @@ for s = 1:n_samples
     for z2 = z1:n_atom_types
         %% bin distance z1, z2
         % index of atom, can be 1..5
-        i1 = mr(z_values(z1));
-        i2 = mr(z_values(z2));
+        i1 = mr(init_z_values(z1));
+        i2 = mr(init_z_values(z2));
         mini = min(i1,i2);
         maxi = max(i1, i2);
         Nsize1 = max_z_count(mini);

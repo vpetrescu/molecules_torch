@@ -1,20 +1,14 @@
 function [out_data_triplets, out_labels] = ...
-    compute_descriptor_semi_sorted_triplets_map(indices, data)
+    compute_descriptor_semi_sorted_triplets_map(indices, data,...
+                                                 mr, max_z_count,...
+                                                 molecule_size, ...
+                                                 n_atom_types)
 
-% max count of atom type in a molecule
-max_z_count = [16,7,3,3,1];
-
-% atom charges
-keySet   = {1,6,7,8,16};
-% atom tyep index
-valueSet = [1,2,3,4,5];
-% map charges to atom type index
-mr = containers.Map(keySet,valueSet);
 
 n_samples = size(indices, 1);
 
-out_labels = zeros(n_samples, 1);
-data2.X = zeros(n_samples, 23,23);
+out_labels = zeros(size(data.T));
+data2.X = zeros(n_samples, molecule_size, molecule_size);
 for sample = 1:n_samples
   indext = indices(sample) + 1;
   out_labels(sample) = data.T(indext);
@@ -26,17 +20,17 @@ nbr_triplets = computeSize(max_z_count);
 % multiply with 3 to account for (zi,zj,1/Rij) triplets
 out_data_triplets = zeros(n_samples, 3*nbr_triplets);
 
-n_atom_types = 5;
+
 max_pairs_length = nchoose2(max(max_z_count));
 pairs_structure = zeros(n_samples, n_atom_types, n_atom_types, max_pairs_length);
 pairs_indices = ones(n_samples, n_atom_types, n_atom_types);
 for s = 1:n_samples
     s
   % keep only the non zero values
-  z_values = zeros([23,1]);
+  z_values = zeros([molecule_size,1]);
   Xs = data.X2(s,:,:);
-  Xs = reshape(Xs, [23, 23]);
-  for i=1:23
+  Xs = reshape(Xs, [molecule_size, molecule_size]);
+  for i=1:molecule_size
     z_values(i) = round((2*Xs(i,i))^(1/2.4));
   end
   z_values = z_values(z_values ~= 0);
