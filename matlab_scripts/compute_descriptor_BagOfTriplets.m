@@ -1,16 +1,17 @@
 function [out_data_triplets, out_labels] = ...
-    compute_descriptor_semi_sorted_triplets_map(indices, data,...
+    compute_descriptor_BagOfTriplets(indices, data,...
                                                  mr, max_z_count,...
+                                                 init_z_values,...
                                                  molecule_size, ...
                                                  n_atom_types)
 
 
-n_samples = size(indices, 1);
+n_samples = max(size(indices));
 
 out_labels = zeros(size(data.T));
 data2.X = zeros(n_samples, molecule_size, molecule_size);
 for sample = 1:n_samples
-  indext = indices(sample) + 1;
+  indext = indices(sample);
   out_labels(sample) = data.T(indext);
   data2.X(sample,:,:) = data.X(indext,:,:);
 end
@@ -21,14 +22,14 @@ nbr_triplets = computeSize(max_z_count);
 out_data_triplets = zeros(n_samples, 3*nbr_triplets);
 
 
-max_pairs_length = nchoose2(max(max_z_count));
+max_pairs_length = 1000;%nchoose2(max(max_z_count));
 pairs_structure = zeros(n_samples, n_atom_types, n_atom_types, max_pairs_length);
 pairs_indices = ones(n_samples, n_atom_types, n_atom_types);
 for s = 1:n_samples
     s
   % keep only the non zero values
   z_values = zeros([molecule_size,1]);
-  Xs = data.X2(s,:,:);
+  Xs = data2.X(s,:,:);
   Xs = reshape(Xs, [molecule_size, molecule_size]);
   for i=1:molecule_size
     z_values(i) = round((2*Xs(i,i))^(1/2.4));
@@ -62,8 +63,8 @@ for s = 1:n_samples
     for z2 = z1:n_atom_types
         %% bin distance z1, z2
         % index of atom, can be 1..5
-        i1 = mr(z_values(z1));
-        i2 = mr(z_values(z2));
+        i1 = mr(init_z_values(z1));
+        i2 = mr(init_z_values(z2));
         mini = min(i1,i2);
         maxi = max(i1, i2);
         Nsize1 = max_z_count(mini);
@@ -88,6 +89,8 @@ for s = 1:n_samples
         idx = idx + Length;
     end
   end
+  size(temp)
+  size(out_data_triplets)
   out_data_triplets(s,:) = temp;
 %  plot(reshape(out_data(s,1,1,:),[1,436]));
 %  pause

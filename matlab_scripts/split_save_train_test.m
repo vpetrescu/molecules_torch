@@ -7,7 +7,6 @@ method = {'Coloumb', ... % Original Coloumb matrix
           'BoBH-dist20-fine020',... % same as Bob-20 but with 20 buckets
            'BoBH-dist20-fine020-noisy-10',... % same as Bob-20 but with distance bins with 0 elements removed
           'BagOfBonds',... % BoB type of descritptor
-          'Triplets',... % {{Zi,Zj,1/Rij}, {...},..} sorted according to Coloumb
           'SemiSortedTriples'}; % sorted according to BoB
       
 %data = load('qm7b.mat');   
@@ -16,7 +15,7 @@ data = load('qm7.mat');
 path_to_data = 'data';
 
 
-current_method = 'BoBH';%
+%current_method = 'BoBH';%
 %current_method = '2DSortedColoumb'
 
 dataset_type = 'qm7'; %{'qm7', 'qm7b', 'largeset'};
@@ -44,7 +43,7 @@ elseif strcmp(dataset_type, 'largeset')
     nbr_dist_bins = 19;%??? which one   
 end
 
-
+current_method = 'SemiSortedTriplets';
 mr = containers.Map(keySet,valueSet);
 
 for fold_nbr=1:5
@@ -54,6 +53,8 @@ for fold_nbr=1:5
     teindices = teindices(:) + 1;
     
     out_data = []; out_labels = [];
+
+    
     if strcmp(current_method, 'Coloumb')
         [foldData.data, foldData.labels] = ...
                     compute_descriptor_coloumb(teindices, data);
@@ -81,7 +82,12 @@ for fold_nbr=1:5
                     compute_descriptor_triplets(teindices, data);
     elseif strcmp(current_method, 'SemiSortedTriplets')
         [foldData.data, foldData.labels] = ...
-                    compute_descriptor_semi_sorted_triplets_map(teindices, data);
+                    compute_descriptor_semi_sorted_triplets_map(teindices,...
+                                                 data,...
+                                                 mr, max_z_count,...
+                                                 z_values,...
+                                                 molecule_size, ...
+                                                 n_atom_types);
      elseif strcmp(current_method, 'BoBH')
          quantization_level = 5;
         [foldData.data, foldData.labels] = ...

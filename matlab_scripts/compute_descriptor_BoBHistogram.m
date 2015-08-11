@@ -49,19 +49,8 @@ for sample = 1:n_samples
           distanceR = min(distanceR, nbr_dist_bins);
           difference = abs(distanceR - fdistanceR); % is in [0,1]
           
-          half_bucket2 = max(1, ceil(difference* quantization_level));
-          if fdistanceR - distanceR > 0.80
-              half_bucket = 5;
-          elseif fdistanceR - distanceR > 0.60
-              half_bucket = 4;
-          elseif fdistanceR - distanceR > 0.4
-              half_bucket = 3;
-          elseif fdistanceR - distanceR > 0.2
-              half_bucket = 2;
-          else
-              half_bucket = 1;
-          end
-          assert(half_bucket == half_bucket2)
+          half_bucket = max(1, ceil(difference* quantization_level));
+
           minz = min(mr(Zs(i)), mr(Zs(j)));
           maxz = max(mr(Zs(i)), mr(Zs(j)));
           pairs_structure(sample, minz,maxz, quantization_level*distanceR + half_bucket) = ...
