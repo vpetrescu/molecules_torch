@@ -46,8 +46,7 @@ The desired properties of a molecular descriptor are
 \end{itemize}
 
 \subsection{Coloumb Matrix}
-The Coloumb matrix\citep{initialcoloumb} $M^{N
-times N}$ is a descriptor based on  Coloumb interaction terms between pairs of atoms. These are the terms that appear in Schröedinger's equation:
+The Coloumb matrix\citep{initialcoloumb} $M^{N\times N}$ is a descriptor based on  Coloumb interaction terms between pairs of atoms. These are the terms that appear in Schröedinger's equation:
 
 \[M(i,j) = \left\{
   \begin{array}{lr}
@@ -57,7 +56,7 @@ times N}$ is a descriptor based on  Coloumb interaction terms between pairs of a
 \right.
 \]
 
-The size of the Coloumb descriptor is given by $\frac{N*(N - 1)}{2}$ if we take into account the symmetry of the matrix.
+The size of the Coloumb descriptor is given by $\frac{N*(N + 1)}{2}$ if we take into account the symmetry of the matrix.
 
 While the Coloumb matrix solves the translation and rotation invariance, the permutation of atom indexes is solved using variants of the descriptor called Sorted Coloumb Matrix or Randomly Sorted Coloumb Matrices.  Sorted Coloumb Matrix uses the ordering of the atoms obtained by sorting the rows according to their norm. Unlike the simple Coloumb matrix, any molecule has a unique Sorted Coloumb matrix representation.
 In practice,  the norm of the rows of a matrix are very close to each other and therefore susceptible to small noise which can lead to a different ordering of the atoms for a molecule. Randomly Sorted Coloumb matrices have been introduced to cope with this issue by adding a small Gaussian noise to every row in the Coloumb Matrix and sort according to the new noisy norm value.
@@ -79,7 +78,7 @@ for every different atom type present in the dataset, count how many times it ap
 for every pair of atoms of certain type, count how many times the distance between them is in a given quantization interval 
 \end{itemize}
 
-An example is given in Fig \ref{fig:BoBH} for a molecule $C_{4}H_{2}O$ with a quantization level of $q=1$. In this example, first the bags containing H were concatenated, then the ones containing C and in the end the ones containing O, resulting in a descriptor of size 21. In general, the size of the descriptor is given by $NA + \sum_i \frac{N_A*(N_A+1)}{2} *\frac{D_{max}}{q} $ 
+An example is given in Fig \ref{fig:BoBH} for a molecule $C_{4}H_{2}O$ with a quantization level of $q=1$. In this example, first the bags containing H were concatenated, then the ones containing C and in the end the ones containing O, resulting in a descriptor of size 21. In general, the size of the descriptor is given by $NA +  \frac{N_A*(N_A+1)}{2} *\frac{D_{max}}{q} $ 
 
 \begin{figure}[h!]
 
